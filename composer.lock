@@ -4,9 +4,10 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "da4629b87e8749bec2a353f89d0ceaad",
-    "content-hash": "54398b61696c8b9f795ab613167d6f9a",
-    "packages": [
+    "hash": "357348601701f3270af4da6e75e2da5c",
+    "content-hash": "84c01abaee961a9163cf8fe283622354",
+    "packages": [],
+    "packages-dev": [
         {
             "name": "components/handlebars.js",
             "version": "dev-master",
@@ -57,6 +58,60 @@
                 "mustache"
             ],
             "time": "2015-09-24 03:42:14"
+        },
+        {
+            "name": "doctrine/instantiator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/instantiator.git",
+                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8e884e78f9f0eb1329e445619e04456e64d8051d",
+                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3,<8.0-DEV"
+            },
+            "require-dev": {
+                "athletic/athletic": "~0.1.8",
+                "ext-pdo": "*",
+                "ext-phar": "*",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Instantiator\\": "src/Doctrine/Instantiator/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com",
+                    "homepage": "http://ocramius.github.com/"
+                }
+            ],
+            "description": "A small, lightweight utility to instantiate objects in PHP without invoking their constructors",
+            "homepage": "https://github.com/doctrine/instantiator",
+            "keywords": [
+                "constructor",
+                "instantiate"
+            ],
+            "time": "2015-06-14 21:17:01"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -135,156 +190,6 @@
                 "minification"
             ],
             "time": "2015-10-01 14:26:07"
-        },
-        {
-            "name": "robloach/component-installer",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/RobLoach/component-installer.git",
-                "reference": "0b4307800d17bcc4160bbf93803fbf2bc034b074"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/0b4307800d17bcc4160bbf93803fbf2bc034b074",
-                "reference": "0b4307800d17bcc4160bbf93803fbf2bc034b074",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0",
-                "kriswallsmith/assetic": "1.*",
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "composer/composer": "1.*@alpha",
-                "phpunit/phpunit": "4.*"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                },
-                "class": "ComponentInstaller\\ComponentInstallerPlugin"
-            },
-            "autoload": {
-                "psr-0": {
-                    "ComponentInstaller": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rob Loach",
-                    "homepage": "http://robloach.net"
-                }
-            ],
-            "description": "Allows installation of Components via Composer.",
-            "time": "2015-09-09 19:12:42"
-        },
-        {
-            "name": "symfony/process",
-            "version": "2.8.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/process.git",
-                "reference": "4e1daf58b375ea7c506d525dc7801df1c9a6ebbd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/4e1daf58b375ea7c506d525dc7801df1c9a6ebbd",
-                "reference": "4e1daf58b375ea7c506d525dc7801df1c9a6ebbd",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.8-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Process\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Process Component",
-            "homepage": "https://symfony.com",
-            "time": "2015-10-11 08:29:26"
-        }
-    ],
-    "packages-dev": [
-        {
-            "name": "doctrine/instantiator",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8e884e78f9f0eb1329e445619e04456e64d8051d",
-                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3,<8.0-DEV"
-            },
-            "require-dev": {
-                "athletic/athletic": "~0.1.8",
-                "ext-pdo": "*",
-                "ext-phar": "*",
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "~2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\Instantiator\\": "src/Doctrine/Instantiator/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marco Pivetta",
-                    "email": "ocramius@gmail.com",
-                    "homepage": "http://ocramius.github.com/"
-                }
-            ],
-            "description": "A small, lightweight utility to instantiate objects in PHP without invoking their constructors",
-            "homepage": "https://github.com/doctrine/instantiator",
-            "keywords": [
-                "constructor",
-                "instantiate"
-            ],
-            "time": "2015-06-14 21:17:01"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -764,6 +669,54 @@
             "time": "2015-10-02 06:51:40"
         },
         {
+            "name": "robloach/component-installer",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RobLoach/component-installer.git",
+                "reference": "0b4307800d17bcc4160bbf93803fbf2bc034b074"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/0b4307800d17bcc4160bbf93803fbf2bc034b074",
+                "reference": "0b4307800d17bcc4160bbf93803fbf2bc034b074",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0",
+                "kriswallsmith/assetic": "1.*",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "composer/composer": "1.*@alpha",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                },
+                "class": "ComponentInstaller\\ComponentInstallerPlugin"
+            },
+            "autoload": {
+                "psr-0": {
+                    "ComponentInstaller": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Loach",
+                    "homepage": "http://robloach.net"
+                }
+            ],
+            "description": "Allows installation of Components via Composer.",
+            "time": "2015-09-09 19:12:42"
+        },
+        {
             "name": "sebastian/comparator",
             "version": "dev-master",
             "source": {
@@ -1136,17 +1089,63 @@
             "time": "2015-06-21 13:59:46"
         },
         {
+            "name": "symfony/process",
+            "version": "2.8.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/process.git",
+                "reference": "4e1daf58b375ea7c506d525dc7801df1c9a6ebbd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/process/zipball/4e1daf58b375ea7c506d525dc7801df1c9a6ebbd",
+                "reference": "4e1daf58b375ea7c506d525dc7801df1c9a6ebbd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Process\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-10-11 08:29:26"
+        },
+        {
             "name": "symfony/yaml",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "2941ac34966be9795beb3b854f12364380db8d60"
+                "reference": "8d32eb597b531eb915b4fee3dc582ade5ae1fe6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/2941ac34966be9795beb3b854f12364380db8d60",
-                "reference": "2941ac34966be9795beb3b854f12364380db8d60",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/8d32eb597b531eb915b4fee3dc582ade5ae1fe6a",
+                "reference": "8d32eb597b531eb915b4fee3dc582ade5ae1fe6a",
                 "shasum": ""
             },
             "require": {
@@ -1179,7 +1178,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-10-11 09:14:55"
+            "time": "2015-10-13 16:01:35"
         }
     ],
     "aliases": [],
@@ -1191,7 +1190,7 @@
     "prefer-lowest": false,
     "platform": {
         "php": ">=5.5",
-        "ext-v8js": "^0.2"
+        "ext-v8js": "^0.3"
     },
     "platform-dev": []
 }
