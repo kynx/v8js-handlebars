@@ -206,12 +206,27 @@ class HandlebarsTest extends TestCase
     public function testRegisterPhpBasicBlockHelper()
     {
         $hb = Handlebars::create();
-        $hb->registerHelper('helper', function($this, $options) {
-            return '<h1>' . $options->fn($this) . '</h1>';
+        $hb->registerHelper('helper', function($self, $options) {
+            return '<h1>' . $options->fn($self) . '</h1>';
         });
         $template = $hb->compile('{{#helper}}{{ content }}{{/helper}}');
         $result = $template(['content' => '**content output**']);
         $this->assertEquals('<h1>**content output**</h1>', $result);
+    }
+
+    public function testRegisterPhpIteratorHelper()
+    {
+        $hb = Handlebars::create();
+        $hb->registerHelper('helper', function($self, $context, $options) {
+            $ret = '';
+            for ($i=0; $i<count($context); $i++) {
+                $ret .= '<h1>' . $options->fn($context[$i]) . '</h1>';
+            }
+            return $ret;
+        });
+        $template = $hb->compile('{{#helper contents}}{{ item }}{{/helper}}');
+        $result = $template(['contents' => [['item' => '**first**'], ['item' => '**second**']]]);
+        $this->assertEquals('<h1>**first**</h1><h1>**second**</h1>', $result);
     }
 
     /**

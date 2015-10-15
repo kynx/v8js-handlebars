@@ -5,12 +5,13 @@ php:
     - 5.6
 
 before_install:
-    - pecl install v8js
-    - composer self-update
+    - sudo apt-get update -qq
+    - sudo apt-get install -y libv8-dev
+    - printf "\n" | pecl install v8js
+    - composer self-update --quiet --no-interaction
 
 install:
-    - COMPOSER_ROOT_VERSION=0.4.1 travis_retry composer install --no-interaction --ignore-platform-reqs --prefer-source
-    - composer info -i
+    - COMPOSER_ROOT_VERSION=dev-master travis_retry composer install --no-interaction --prefer-source
 
 script:
     - ./vendor/bin/phpunit

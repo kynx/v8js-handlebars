@@ -218,7 +218,7 @@ final class Handlebars implements LoggerAwareInterface
     private function registerCallable($type, $name, $callable)
     {
         $this->v8->callables->$name = $callable;
-        // would be really nice to be able to do a .call(this, context, options), but it doesn't work :(
+        // in PHP7 we'll be able to .call(this, context, options) to mirror the JS helper signature exactly
         $script = 'function(context, options) { return phpHb.callables.' . $name . '(this, context, options) }';
         return $this->registerJs($type, $name, $script);
     }
