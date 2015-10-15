@@ -5,34 +5,34 @@
 
 namespace Kynx\V8js;
 
-use Kynx\V8js\Exception\ScriptException;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use V8Js;
 
-final class Handlebars
+/**
+ * Thin wrapper around handlebars.js
+ * @link http://handlebarsjs.com/reference.html
+ */
+final class Handlebars implements LoggerAwareInterface
 {
     const EXTN_HANDLEBARS = 'handlebars';
     const EXTN_RUNTIME = 'handlebars-runtime';
 
     /**
-     * @var \V8Js
+     * @var V8Js
      */
     private $v8;
-
-    /**
-     * @var \V8JSObject
-     */
-    private $jsTemplate;
+    private $isRuntime;
 
     /**
      * Private constructor. Always get instance via self::create() factory
-     * @param string $extension
-     * @param array $variables
      * @param array $extensions
      * @param bool|true $report_uncaught_exceptions
      */
-    private function __construct($extension, $variables, $extensions, $report_uncaught_exceptions)
+    private function __construct($extensions, $report_uncaught_exceptions = true)
     {
-        $extensions = array_merge($extensions, [$extension]);
-        $this->v8 = new \V8Js('phpHb', $variables, $extensions, $report_uncaught_exceptions);
+        $this->v8 = new V8Js('phpHb', [], $extensions, $report_uncaught_exceptions);
+        $this->isRuntime = in_array(self::EXTN_RUNTIME, $extensions);
     }
 
     /**
@@ -43,7 +43,9 @@ final class Handlebars
      */
     public static function register($handlebarsSource)
     {
-        \V8Js::registerExtension(self::EXTN_HANDLEBARS, $handlebarsSource, array(), false);
+        if (empty(V8Js::getExtensions()[self::EXTN_HANDLEBARS])) {
+            V8Js::registerExtension(self::EXTN_HANDLEBARS, $handlebarsSource, array(), false);
+        }
     }
 
     /**
@@ -54,63 +56,46 @@ final class Handlebars
      */
     public static function registerRuntime($runtimeSource)
     {
-        \V8Js::registerExtension(self::EXTN_RUNTIME, $runtimeSource, array(), false);
+        if (empty(V8Js::getExtensions()[self::EXTN_RUNTIME])) {
+            V8Js::registerExtension(self::EXTN_RUNTIME, $runtimeSource, array(), false);
+        }
     }
 
     /**
      * Returns configured Handlebars instance
-     * @param string $extension
-     * @param array $variables
+     * @param boolean $runtime
      * @param array $extensions
      * @param bool|true $report_uncaught_exceptions
      * @return Handlebars
      */
-    public static function create($extension = self::EXTN_HANDLEBARS, $variables = [], $extensions = [], $report_uncaught_exceptions = true)
+    public static function create($runtime = false, $extensions = [], $report_uncaught_exceptions = true)
     {
-        if (!in_array($extension, [self::EXTN_HANDLEBARS, self::EXTN_RUNTIME])) {
-            throw new \InvalidArgumentException(
-                sprintf("Extension should be one of ['%s', '%s'], '%s' given",
-                    self::EXTN_HANDLEBARS, self::EXTN_RUNTIME, $extension
-                )
-            );
+        $extension = $runtime ? self::EXTN_RUNTIME : self::EXTN_HANDLEBARS;
+        if (empty(V8Js::getExtensions()[$extension])) {
+            throw new \InvalidArgumentException(sprintf("Extension '%s' not registered", $extension));
         }
-        if (!in_array($extension, \V8Js::getExtensions())) {
-            throw new \InvalidArgumentException(
-                sprintf("Extension '%s' not registered", $extension)
-            );
-        }
-        return new Handlebars($extension, $variables, $extensions, $report_uncaught_exceptions);
-    }
 
-    /**
-     * Runs template with given context, returning result
-     * @param array $context
-     * @param array $options
-     * @return string
-     */
-    public function __invoke($context, $options = [])
-    {
-        return $this->jsTemplate($context, $options);
+        $extensions = array_merge($extensions, [$extension]);
+        return new Handlebars($extensions, $report_uncaught_exceptions);
     }
 
     /**
      * Compiles a template so it can be executed immediately
      * @param string $template
      * @param array $options
+     * @return callable
      */
     public function compile($template, $options = [])
     {
-        if (!in_array(self::EXTN_HANDLEBARS, $this->v8->getExtensions())) {
-            throw new \BadMethodCallException("Cannot compile templates without full handlebars extension");
+        if ($this->isRuntime) {
+            throw new \BadMethodCallException("Cannot compile templates using runtime");
         }
-        try {
-            $this->v8->template = $template;
-            $this->v8->options = $options ?: [];
-            $this->jsTemplate = $this->v8->executeString('Handlebars.compile(phpHb.template, phpHb.options)');
-        }
-        catch (\V8JsScriptException $e) {
-            throw new ScriptException($e->getMessage(), $e->getCode(), $e);
-        }
+
+        $this->v8->template = $template;
+        $this->v8->options = $options ?: [];
+        return $this->v8->executeString('Handlebars.compile(phpHb.template, phpHb.options)',
+            __CLASS__ . '::' . __METHOD__ . '()'
+        );
     }
 
     /**
@@ -121,32 +106,27 @@ final class Handlebars
      */
     public function precompile($template, $options = [])
     {
-        if (!in_array(self::EXTN_HANDLEBARS, $this->v8->getExtensions())) {
-            throw new \BadMethodCallException("Cannot precompile templates without full handlebars extension");
+        if ($this->isRuntime) {
+            throw new \BadMethodCallException("Cannot precompile templates using runtime");
         }
-        try {
-            $this->v8->template = $template;
-            $this->v8->options = $options;
-            return $this->v8->executeString('Handlebars.precompile(phpHb.template, phpHb.options)');
-        }
-        catch (\V8JsScriptException $e) {
-            throw new ScriptException($e->getMessage(), $e->getCode(), $e);
-        }
+
+        $this->v8->template = $template;
+        $this->v8->options = $options;
+        return $this->v8->executeString('Handlebars.precompile(phpHb.template, phpHb.options)',
+            __CLASS__ . '::' . __METHOD__ . '()'
+        );
     }
 
     /**
      * Sets up a template that was precompiled with self::precompile()
      * @param $templateSpec
+     * @return callable
      */
     public function template($templateSpec)
     {
-        try {
-            $this->v8->templateSpec = $templateSpec;
-            $this->jsTemplate = $this->v8->executeScript('Handlebars.template(phpHb.templateSpec)');
-        }
-        catch (\V8JsScriptException $e) {
-            throw new ScriptException($e->getMessage(), $e->getCode(), $e);
-        }
+        return $this->v8->executeString('Handlebars.template(' . $templateSpec . ')',
+            __CLASS__ . '::' . __METHOD__ . '()'
+        );
     }
 
     /**
@@ -156,7 +136,7 @@ final class Handlebars
      */
     public function registerPartial($name, $partial)
     {
-        $this->registerscript('partial', $name, $partial);
+        $this->registerScript('partial', $name, $partial);
     }
 
     /**
@@ -171,11 +151,16 @@ final class Handlebars
     /**
      * Registers helpers accessible by any template in the environment
      * @param string $name
-     * @param $helper
+     * @param string|callable $helper
      */
     public function registerHelper($name, $helper)
     {
-        $this->registerScript('helper', $name, $helper);
+        if (is_object($helper)) {
+            $this->registerScript('helper', $name, $helper);
+        }
+        else {
+            $this->registerJs('helper', $name, $helper);
+        }
     }
 
     /**
@@ -206,30 +191,44 @@ final class Handlebars
         $this->unregisterScript('decorator', $name);
     }
 
+    /**
+     * Sets logger
+     * @param LoggerInterface $logger
+     * @todo Do JS log levels match PHP ones, or do we need to map them?
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->v8->logger = $logger;
+        $this->v8->executeString('Handlebars.log = phpHb.logger',
+            __CLASS__ . '::' . __METHOD__ . '()'
+        );
+    }
+
     private function registerScript($type, $name, $script)
     {
         $method = 'register' . ucfirst($type);
         $this->v8->name = $name;
-        try {
-            if (is_object($script)) {
-                // PHP object
-                $this->v8->script = $script;
-                $this->v8->executeString('Handlebars.' . $method . '(phpHb.name, phpHb.script)');
-            } elseif (is_string($script)) {
-                // @fixme How to check this is valid?
-                $this->v8->executeString('Handlebars.' . $script . '(phpHb.name, ' . $script . ')');
-            }
-        }
-        catch (\V8JsScriptException $e) {
-            throw new ScriptException($e->getMessage(), $e->getCode(), $e);
-        }
-        throw new \BadMethodCallException("Invalid ' . $type . ':" . gettype($script));
+        $this->v8->script = $script;
+        return $this->v8->executeString('Handlebars.' . $method . '(phpHb.name, phpHb.script)',
+            __CLASS__ . '::' . __METHOD__ . '()'
+        );
+    }
+
+    private function registerJs($type, $name, $javascript)
+    {
+        $method = 'register' . ucfirst($type);
+        $this->v8->name = $name;
+        return $this->v8->executeString('Handlebars.' . $method . '(phpHb.name, ' . $javascript . ')',
+            __CLASS__ . '::' . __METHOD__ . '()'
+        );
     }
 
     private function unregisterScript($type, $name)
     {
         $method = 'unregister' . ucfirst($type);
         $this->v8->name = $name;
-        $this->v8->executeString('Handlebars.' . $method . '(phpHb.name)');
+        $this->v8->executeString('Handlebars.' . $method . '(phpHb.name)',
+            __CLASS__ . '::' . __METHOD__ . '()'
+        );
     }
 }
