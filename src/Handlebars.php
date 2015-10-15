@@ -32,6 +32,7 @@ final class Handlebars implements LoggerAwareInterface
     private function __construct($extensions, $report_uncaught_exceptions = true)
     {
         $this->v8 = new V8Js('phpHb', [], $extensions, $report_uncaught_exceptions);
+        $this->v8->callables = new \stdClass();
         $this->isRuntime = in_array(self::EXTN_RUNTIME, $extensions);
     }
 
@@ -155,8 +156,8 @@ final class Handlebars implements LoggerAwareInterface
      */
     public function registerHelper($name, $helper)
     {
-        if (is_object($helper)) {
-            $this->registerScript('helper', $name, $helper);
+        if (is_callable($helper)) {
+            $this->registerCallable('helper', $name, $helper);
         }
         else {
             $this->registerJs('helper', $name, $helper);
@@ -212,6 +213,14 @@ final class Handlebars implements LoggerAwareInterface
         return $this->v8->executeString('Handlebars.' . $method . '(phpHb.name, phpHb.script)',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
+    }
+
+    private function registerCallable($type, $name, $callable)
+    {
+        $this->v8->callables->$name = $callable;
+        // would be really nice to be able to do a .call(this, context, options), but it doesn't work :(
+        $script = 'function(context, options) { return phpHb.callables.' . $name . '(this, context, options) }';
+        return $this->registerJs($type, $name, $script);
     }
 
     private function registerJs($type, $name, $javascript)

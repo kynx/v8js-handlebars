@@ -192,33 +192,41 @@ class HandlebarsTest extends TestCase
         $result = $template(['test' => '**context variable**']);
     }
 
-    public function testRegisterJsHelper()
+    public function testRegisterJsBasicBlockHelper()
     {
         $hb = Handlebars::create();
-        $hb->registerHelper('helper', 'function() { return "**helper output**"; }');
-        $template = $hb->compile('{{ helper }}');
-        $result = $template();
-        $this->assertEquals('**helper output**', $result);
+        $hb->registerHelper('helper', 'function(options) {
+            return "<h1>" + options.fn(this) + "</h1>"
+        }');
+        $template = $hb->compile('{{#helper}}{{ content }}{{/helper}}');
+        $result = $template(['content' => '**content output**']);
+        $this->assertEquals('<h1>**content output**</h1>', $result);
     }
 
-    public function testRegisterPhpHelper()
+    public function testRegisterPhpBasicBlockHelper()
     {
         $hb = Handlebars::create();
-        $hb->registerHelper('helper', function() {
-            return "**helper output**";
+        $hb->registerHelper('helper', function($this, $options) {
+            return '<h1>' . $options->fn($this) . '</h1>';
         });
-        $template = $hb->compile('{{ helper }}');
-        $result = $template();
-        $this->assertEquals('**helper output**', $result);
+        $template = $hb->compile('{{#helper}}{{ content }}{{/helper}}');
+        $result = $template(['content' => '**content output**']);
+        $this->assertEquals('<h1>**content output**</h1>', $result);
     }
 
+    /**
+     * @expectedException \V8JsScriptException
+     * @expectedExceptionMessage Error: "helper" not defined in [object Array]
+     */
     public function testUnregisterHelper()
     {
         $hb = Handlebars::create();
-        $hb->registerHelper('helper', 'function() { return "**helper output**"; }');
-        $hb->unregisterPartial('helper');
-        $template = $hb->compile('{{ helper }}', ['strict' => true]);
-        $result = $template();
+        $hb->registerHelper('helper', 'function(options) {
+            return "<h1>" + options.fn(this) + "</h1>"
+        }');
+        $hb->unregisterHelper('helper');
+        $template = $hb->compile('{{#helper}}{{ content }}{{/helper}}', ['strict' => true]);
+        $result = $template(['content' => '**content output**']);
     }
 
 
