@@ -32,7 +32,21 @@ final class Handlebars implements LoggerAwareInterface
     private function __construct($extensions, $report_uncaught_exceptions = true)
     {
         $this->v8 = new V8Js('phpHb', [], $extensions, $report_uncaught_exceptions);
-        $this->v8->callables = new \stdClass();
+        $this->v8->helpers = new \stdClass();
+        $this->v8->decorators = new \stdClass();
+
+        /* Handlebars does a lot of checking against obj.__toString() == '[object Object]', which doesn't work
+         * with V8Js objects ('[object stdClass]' / '[object Array]'). This helper works around that.
+         */
+        $this->v8->executeString('phpHb.jsObject = function(obj) {
+            var k, o = {};
+            for (k in obj) {
+              if (obj.hasOwnProperty(k)) {
+                o[k] = obj[k];
+              }
+            }
+            return o;
+        }');
         $this->isRuntime = in_array(self::EXTN_RUNTIME, $extensions);
     }
 
@@ -40,9 +54,9 @@ final class Handlebars implements LoggerAwareInterface
      * Registers handlebars script with V8Js
      *
      * This *must* be called before the first call to self::create()
-     * @param $handlebarsSource
+     * @param string $handlebarsSource
      */
-    public static function register($handlebarsSource)
+    public static function registerHandlebars($handlebarsSource)
     {
         if (empty(V8Js::getExtensions()[self::EXTN_HANDLEBARS])) {
             V8Js::registerExtension(self::EXTN_HANDLEBARS, $handlebarsSource, array(), false);
@@ -53,7 +67,7 @@ final class Handlebars implements LoggerAwareInterface
      * Registers handlebars runtime with V8Js
      *
      * This *must* be called before the first call to self::create().
-     * @param $runtimeSource
+     * @param string $runtimeSource
      */
     public static function registerRuntime($runtimeSource)
     {
@@ -135,9 +149,19 @@ final class Handlebars implements LoggerAwareInterface
      * @param string $name
      * @param string $partial
      */
-    public function registerPartial($name, $partial)
+    public function registerPartial($name, $partial = false)
     {
-        $this->registerScript('partial', $name, $partial);
+        $partials = [];
+        if (is_array($name)) {
+            $partials = $name;
+        } elseif (is_object($name)) {
+            $partials = get_object_vars($name);
+        }
+        if (count($partials)) {
+            $this->registerScript('partial', $partials);
+        } else {
+            $this->registerScript('partial', $name, $partial);
+        }
     }
 
     /**
@@ -157,15 +181,17 @@ final class Handlebars implements LoggerAwareInterface
     public function registerHelper($name, $helper)
     {
         if (is_callable($helper)) {
-            $this->registerCallable('helper', $name, $helper);
-        }
-        else {
+            $this->registerJs('helper', $name, $this->wrapHelper($name, $helper));
+        } elseif (is_string($helper)) {
             $this->registerJs('helper', $name, $helper);
+        } else {
+            throw new \InvalidArgumentException("Helper must be a PHP callable or a string");
         }
+
     }
 
     /**
-     * Unregisters a previously registered helper.
+     * Unregisters a previously registered helper
      * @param string $name
      */
     public function unregisterHelper($name)
@@ -195,41 +221,47 @@ final class Handlebars implements LoggerAwareInterface
     /**
      * Sets logger
      * @param LoggerInterface $logger
-     * @todo Do JS log levels match PHP ones, or do we need to map them?
+     * @return null|void
      */
     public function setLogger(LoggerInterface $logger)
     {
         $this->v8->logger = $logger;
-        $this->v8->executeString('Handlebars.log = phpHb.logger',
+        $this->v8->executeString('Handlebars.log = phpHb.logger.log',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
     }
 
-    private function registerScript($type, $name, $script)
+    private function wrapHelper($name, $helper)
+    {
+        $this->v8->helpers->{$name} = $helper;
+        // in PHP7 we'll be able to .call(this, context, options) to mirror the HB helper signature exactly
+        return "function(context, options) {
+            return phpHb.helpers['" . addslashes($name) . "'](this, context, options)
+        }";
+    }
+
+    private function registerScript($type, $name, $script = false)
     {
         $method = 'register' . ucfirst($type);
         $this->v8->name = $name;
-        $this->v8->script = $script;
-        return $this->v8->executeString('Handlebars.' . $method . '(phpHb.name, phpHb.script)',
-            __CLASS__ . '::' . __METHOD__ . '()'
-        );
+        if ($script === false) {
+            return $this->v8->executeString('Handlebars.' . $method . '(phpHb.jsObject(phpHb.name))',
+                __CLASS__ . '::' . __METHOD__ . '()'
+            );
+        } else {
+            $this->v8->script = $script;
+            return $this->v8->executeString('Handlebars.' . $method . '(phpHb.name, phpHb.script)',
+                __CLASS__ . '::' . __METHOD__ . '()'
+            );
+        }
     }
 
-    private function registerCallable($type, $name, $callable)
+    private function registerJs($type, $name, $javascript = false)
     {
-        $this->v8->callables->$name = $callable;
-        // in PHP7 we'll be able to .call(this, context, options) to mirror the JS helper signature exactly
-        $script = 'function(context, options) { return phpHb.callables.' . $name . '(this, context, options) }';
-        return $this->registerJs($type, $name, $script);
-    }
-
-    private function registerJs($type, $name, $javascript)
-    {
-        $method = 'register' . ucfirst($type);
-        $this->v8->name = $name;
-        return $this->v8->executeString('Handlebars.' . $method . '(phpHb.name, ' . $javascript . ')',
+        $script = $this->v8->executeString('(' . $javascript . ')',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
+        return $this->registerScript($type, $name, $script);
     }
 
     private function unregisterScript($type, $name)

@@ -17,9 +17,9 @@ class HandlebarsTest extends TestCase
     public function setUp()
     {
         $this->baseDir = dirname(__DIR__);
-        $handlebarsSource = file_get_contents($this->baseDir . '/components/handlebars/handlebars-built.js');
+        $handlebarsSource = file_get_contents($this->baseDir . '/components/handlebars/handlebars.js');
         $runtimeSource = file_get_contents($this->baseDir . '/components/handlebars/handlebars.runtime.js');
-        Handlebars::register($handlebarsSource);
+        Handlebars::registerHandlebars($handlebarsSource);
         Handlebars::registerRuntime($runtimeSource);
     }
 
@@ -37,7 +37,7 @@ class HandlebarsTest extends TestCase
     public function testReRegistration()
     {
         $handlebarsSource = file_get_contents($this->baseDir . '/components/handlebars/handlebars-built.js');
-        Handlebars::register($handlebarsSource);
+        Handlebars::registerHandlebars($handlebarsSource);
         $registered = V8Js::getExtensions();
         $this->assertArrayHasKey(Handlebars::EXTN_HANDLEBARS, $registered);
     }
@@ -174,6 +174,61 @@ class HandlebarsTest extends TestCase
     {
         $hb = Handlebars::create();
         $hb->registerPartial('partial', '<h1>{{ test }}</h1>');
+        $template = $hb->compile('{{> partial }}');
+        $result = $template(['test' => '**context variable**']);
+        $this->assertEquals('<h1>**context variable**</h1>', $result);
+    }
+
+    public function testReregisterPartial()
+    {
+        $hb = Handlebars::create();
+        $hb->registerPartial('partial', '<h1>{{ test1 }}</h1>');
+        $hb->registerPartial('partial', '<h1>{{ test2 }}</h1>');
+        $template = $hb->compile('{{> partial }}');
+        $result = $template(['test1' => '**first**', 'test2' => '**second**']);
+        $this->assertEquals('<h1>**second**</h1>', $result);
+    }
+
+    public function testRegisterTwoPartials()
+    {
+        $hb = Handlebars::create();
+        $hb->registerPartial('partial1', '<h1>{{ test1 }}</h1>');
+        $hb->registerPartial('partial2', '<h1>{{ test2 }}</h1>');
+        $template = $hb->compile('{{> partial1 }}{{> partial2 }}');
+        $result = $template(['test1' => '**first**', 'test2' => '**second**']);
+        $this->assertEquals('<h1>**first**</h1><h1>**second**</h1>', $result);
+    }
+
+    public function testRegisterPartialArray()
+    {
+        $hb = Handlebars::create();
+        $arr = [
+            'partial1' => '<h1>{{ test1 }}</h1>',
+            'partial2' => '<h1>{{ test2 }}</h1>'
+        ];
+        $hb->registerPartial($arr);
+        $template = $hb->compile('{{> partial1 }}{{> partial2 }}');
+        $result = $template(['test1' => '**first**', 'test2' => '**second**']);
+        $this->assertEquals('<h1>**first**</h1><h1>**second**</h1>', $result);
+    }
+
+    public function testRegisterPartialObject()
+    {
+        $hb = Handlebars::create();
+        $obj = new \stdClass();
+        $obj->partial1 = '<h1>{{ test1 }}</h1>';
+        $obj->partial2 = '<h1>{{ test2 }}</h1>';
+        $hb->registerPartial($obj);
+        $template = $hb->compile('{{> partial1 }}{{> partial2 }}');
+        $result = $template(['test1' => '**first**', 'test2' => '**second**']);
+        $this->assertEquals('<h1>**first**</h1><h1>**second**</h1>', $result);
+    }
+
+    public function testRegisterPrecompiledPartial()
+    {
+        $hb = Handlebars::create();
+        $partial = $hb->precompile('<h1>{{ test }}</h1>');
+        $hb->registerPartial('partial', $hb->template($partial));
         $template = $hb->compile('{{> partial }}');
         $result = $template(['test' => '**context variable**']);
         $this->assertEquals('<h1>**context variable**</h1>', $result);
