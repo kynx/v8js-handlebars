@@ -124,8 +124,8 @@ Registering multiple partials at once, using a javascript string:
 ```php
 $handlebars = new Handlebars();
 $handlebars->registerPartial('{
-    partial1 : '<h1>{{ test }}</h1>',
-    partial2 : '<h2>{{ test }}</h2>'
+    partial1 : "<h1>{{ test }}</h1>",
+    partial2 : "<h2>{{ test }}</h2>"
 }');
 ```
     
@@ -158,9 +158,9 @@ Registering a javascript helper:
 $handlebars = new Handlebars();
 $handlebars->registerHelper('bold', 'function(options) {
     return new Handlebars.SafeString(
-        '<div class="mybold">'
+        "<div class=\\"mybold\\">"
         + options.fn(this)
-        + '</div>');
+        + "</div>");
 }');
 ```
 
@@ -235,7 +235,7 @@ $template([], ['data' => ['level' => 'debug']]);
 ### Handlebars::isRegistered($runtime = false)
 
 Static method that returns true if the handlebars source has been registered as V8Js extension. Since the handlebars 
-extension can persist between requests, you can use this to avoid a file-system hit:
+extension can persist between requests, you can use this to avoid the file-system hit and registration costs:
 
 ```php
 if (!Handlebars::isRegistered()) {
