@@ -1,15 +1,18 @@
 # v8js-handlebars
 
 A thin wrapper around the [Handlebars](http://handlebarsjs.com) javascript library, utilising the 
-[V8Js](https://github.com/phpv8/v8js) extension to compile and render templates from PHP with Googles V8 javascript
+[V8Js](https://github.com/phpv8/v8js) extension to compile and render templates from PHP with Google's V8 javascript
 engine.
 
 ## Features
 
 * Pre-compile templates for fast rendering
+* Feature complete: if it works in handlebarsjs, it works in PHP
 * Use the same javascript helpers client-side as on the server
-* Use existing PHP code for helpers server-side
+* Use existing PHP code for helpers server-side (if you have to)
 * Faithfully mirrors the handlebars [API](http://handlebarsjs.com/reference.html): less stuff to learn
+
+Use it as a renderer for your templating system or to compile templates as part of your asset pipeline.
 
 
 ## Quickstart
@@ -165,7 +168,7 @@ $handlebars->registerHelper('bold', 'function(options) {
 ```
 
 The chances are you'll be keeping your javascript helpers in a separate file. So long as this contains a single object
-something like `{ partial1 : function(...) {...}, partial2 : function (...) {...} }`, you can register them all at once:
+something like `{ helper1 : function(...) {...}, helper2 : function (...) {...} }`, you can register them all at once:
 
 ```php
 $handlebars = new Handlebars();
@@ -193,13 +196,14 @@ You can also pass an array of PHP callables or a class to `registerHelper()`.
 
 ### create($runtime = false, $extensions = [], $report_uncaught_exceptions = true)
 
-In javascript Handlebars, this creates an isolated Handlebars environment with its own partials and helpers. There is 
-an odd feature with V8Js extensions where they can actually persist between requests. This has some advantages: we don't 
-have to reload the handlebars source with each request. But it does introduce a potential problem: things one script 
-added to the main Handlebars object might suddenly be appearing in another request.
+In javascript Handlebars, this creates an isolated Handlebars environment with its own partials and helpers. 
 
-To avoid poluting the main Handlebars instance, we always call `Handlebars.create()` when instantiating a new Handlebars 
-class. This static method is a simple factory that returns a new PHP Handlebars instance. The following are identical:
+There is an odd feature with V8Js extensions where they can actually persist between requests. This has some advantages: 
+we don't have to reload the handlebars source with each request. But it does introduce a potential problem: things one 
+script adds to the main Handlebars object might suddenly appear in another request.
+
+To avoid polluting the main Handlebars instance, we always call `Handlebars.create()` when instantiating a new Handlebars 
+class. The following are identical:
 
 ```php
 $handlebars = new Handlebars();
@@ -211,7 +215,7 @@ $handlebars = Handlebars::create();
 ### __construct($runtime = false, $extensions = [], $report_uncaught_exceptions = true)
 
 The `$extensions` parameter allows you to specify other extensions registered via `V8Js::registerExtension()` that 
-should be available to your javascript. `$report_uncaught_exceptions` specifies whether V8JS will throw javascript 
+should be available to your javascript. `$report_uncaught_exceptions` specifies whether V8Js will throw javascript 
 errors as PHP exceptions. We recommend leaving it at the default.
   
 ### setLogger(LoggerInterface $logger)
@@ -234,7 +238,7 @@ $template([], ['data' => ['level' => 'debug']]);
 
 ### Handlebars::isRegistered($runtime = false)
 
-Static method that returns true if the handlebars source has been registered as V8Js extension. Since the handlebars 
+Static method that returns true if the handlebars source has been registered as a V8Js extension. Since the handlebars 
 extension can persist between requests, you can use this to avoid the file-system hit and registration costs:
 
 ```php
@@ -256,8 +260,8 @@ The following exist in the Handlebars API, but haven't been implemented.
 
 * `Handlebars.noConflict()` - this enables loading different versions of Handlebars into the global space. I can't see
   a use case for this in v8js-handlebars.
-* `Handlebars.SafeString()` and `Handlebars.escapeExpression()`. These are for use within helpers and are available to
-  any javascript helpers you write, but are not exposed in the PHP API.
+* `Handlebars.SafeString()`, `Handlebars.escapeExpression()` and `Handlebars.Util`. These are for use within helpers and 
+  are available to any javascript helpers you write, but are not exposed in the PHP API.
 * `Handlebars.log()` - see `setLogger()` above.
 
 
@@ -268,9 +272,7 @@ and helpers and will throw the odd `InvalidArgumentException` if it doesn't like
 `BadMethodCallException` if you're trying to do something with the runtime that requires compilation.
 
 The exceptions you're most likely to want to handle gracefully will occur when you actually render your template. 
-Problems here will throw a [`V8JsScriptException`](http://www.php.net/manual/en/class.v8jsexception.php), which contains 
-useful information on what the engine choked on.
-
-
-
+Calling `$template($data)` is executing a javascript function. Problems here will throw a 
+[`V8JsScriptException`](http://www.php.net/manual/en/class.v8jsexception.php), which contains some information on what 
+the engine choked on.
 
