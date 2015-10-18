@@ -8,19 +8,23 @@ namespace KynxTest\V8js;
 
 use Kynx\V8js\Handlebars;
 use PHPUnit_Framework_TestCase as TestCase;
+use Prophecy\Argument;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use V8Js;
 
 class HandlebarsTest extends TestCase
 {
     protected $baseDir;
+    protected $logs;
 
     public function setUp()
     {
         $this->baseDir = dirname(__DIR__);
         $handlebarsSource = file_get_contents($this->baseDir . '/components/handlebars/handlebars.js');
         $runtimeSource = file_get_contents($this->baseDir . '/components/handlebars/handlebars.runtime.js');
-        Handlebars::registerHandlebars($handlebarsSource);
-        Handlebars::registerRuntime($runtimeSource);
+        Handlebars::registerHandlebarsExtension($handlebarsSource);
+        Handlebars::registerHandlebarsExtension($runtimeSource, true);
     }
 
     public function testRegistration()
@@ -36,8 +40,8 @@ class HandlebarsTest extends TestCase
 
     public function testReRegistration()
     {
-        $handlebarsSource = file_get_contents($this->baseDir . '/components/handlebars/handlebars-built.js');
-        Handlebars::registerHandlebars($handlebarsSource);
+        $handlebarsSource = file_get_contents($this->baseDir . '/components/handlebars/handlebars.js');
+        Handlebars::registerHandlebarsExtension($handlebarsSource);
         $registered = V8Js::getExtensions();
         $this->assertArrayHasKey(Handlebars::EXTN_HANDLEBARS, $registered);
     }
@@ -57,6 +61,7 @@ class HandlebarsTest extends TestCase
     {
         $hb = Handlebars::create(true);
         $template = $hb->compile('<h1>{{ test }}</h1>');
+        $this->fail("This test should fail");
     }
 
     /**
@@ -68,6 +73,7 @@ class HandlebarsTest extends TestCase
         $hb = Handlebars::create();
         $template = $hb->compile('<h1>{{ test ');
         $result = $template(['test' => '**context variable**']);
+        $this->fail("This test should fail");
     }
 
     public function testCompileNoContext()
@@ -94,6 +100,7 @@ class HandlebarsTest extends TestCase
         $hb = Handlebars::create();
         $template = $hb->compile('<h1>{{ test }}</h1>', ['strict' => true]);
         $result = $template([]);
+        $this->fail("This test should fail");
     }
 
     public function testPrecompile()
@@ -111,6 +118,7 @@ class HandlebarsTest extends TestCase
     {
         $hb = Handlebars::create(true);
         $compiled = $hb->precompile('<h1>{{ test }}</h1>');
+        $this->fail("This test should fail");
     }
 
     /**
@@ -120,6 +128,7 @@ class HandlebarsTest extends TestCase
     {
         $hb = Handlebars::create();
         $compiled = $hb->precompile('<h1>{{ test ');
+        $this->fail("This test should fail");
     }
 
     public function testTemplate()
@@ -168,6 +177,7 @@ class HandlebarsTest extends TestCase
         $compiled = $hb->precompile('<h1>{{ test }}</h1>', ['strict' => true]);
         $template = $hb->template($compiled);
         $result = $template([]);
+        $this->fail("This test should fail");
     }
 
     public function testRegisterPartial()
@@ -224,6 +234,19 @@ class HandlebarsTest extends TestCase
         $this->assertEquals('<h1>**first**</h1><h1>**second**</h1>', $result);
     }
 
+    public function testRegisterPartialJsString()
+    {
+        $hb = Handlebars::create();
+        $js = '{
+            "partial1" : "<h1>{{ test1 }}</h1>",
+            "partial2" : "<h1>{{ test2 }}</h1>"
+        }';
+        $hb->registerPartial($js);
+        $template = $hb->compile('{{> partial1 }}{{> partial2 }}');
+        $result = $template(['test1' => '**first**', 'test2' => '**second**']);
+        $this->assertEquals('<h1>**first**</h1><h1>**second**</h1>', $result);
+    }
+
     public function testRegisterPrecompiledPartial()
     {
         $hb = Handlebars::create();
@@ -232,6 +255,22 @@ class HandlebarsTest extends TestCase
         $template = $hb->compile('{{> partial }}');
         $result = $template(['test' => '**context variable**']);
         $this->assertEquals('<h1>**context variable**</h1>', $result);
+    }
+
+    /**
+     * @expectedException \V8JsScriptException
+     * @expectedExceptionMessage Error: The partial partial could not be compiled when running in runtime-only mode
+     */
+    public function testRegisterPartialRuntime()
+    {
+        $hb = Handlebars::create();
+        $precompiled = $hb->precompile('{{> partial }}');
+
+        $hb = Handlebars::create(true);
+        $hb->registerPartial('partial', '<h1>{{ test }}</h1>');
+        $template = $hb->template($precompiled);
+        $result = $template(['test' => '**context variable**']);
+        $this->fail("This test should fail");
     }
 
     /**
@@ -245,6 +284,7 @@ class HandlebarsTest extends TestCase
         $hb->unregisterPartial('partial');
         $template = $hb->compile('{{> partial }}');
         $result = $template(['test' => '**context variable**']);
+        $this->fail("This test should fail");
     }
 
     public function testRegisterJsBasicBlockHelper()
@@ -261,7 +301,7 @@ class HandlebarsTest extends TestCase
     public function testRegisterPhpBasicBlockHelper()
     {
         $hb = Handlebars::create();
-        $hb->registerHelper('helper', function($self, $options) {
+        $hb->registerHelper('helper', function ($self, $options) {
             return '<h1>' . $options->fn($self) . '</h1>';
         });
         $template = $hb->compile('{{#helper}}{{ content }}{{/helper}}');
@@ -272,7 +312,7 @@ class HandlebarsTest extends TestCase
     public function testRegisterPhpIteratorHelper()
     {
         $hb = Handlebars::create();
-        $hb->registerHelper('helper', function($self, $context, $options) {
+        $hb->registerHelper('helper', function ($self, $context, $options) {
             $ret = '';
             for ($i=0; $i<count($context); $i++) {
                 $ret .= '<h1>' . $options->fn($context[$i]) . '</h1>';
@@ -282,6 +322,17 @@ class HandlebarsTest extends TestCase
         $template = $hb->compile('{{#helper contents}}{{ item }}{{/helper}}');
         $result = $template(['contents' => [['item' => '**first**'], ['item' => '**second**']]]);
         $this->assertEquals('<h1>**first**</h1><h1>**second**</h1>', $result);
+    }
+
+    public function testRegisterPhpObjectHelper()
+    {
+        $hb = Handlebars::create();
+        $helper = new HandlebarsHelper();
+        $hb->registerHelper($helper);
+        $template = $hb->compile('{{#helper1 contents}}{{ item }}{{/helper1}}'
+            . '{{#helper2 contents}}{{ item }}{{/helper2}}');
+        $result = $template(['contents' => [['item' => '**first**'], ['item' => '**second**']]]);
+        $this->assertEquals('<h1>**first**</h1><h1>**second**</h1><h2>**first**</h2><h2>**second**</h2>', $result);
     }
 
     /**
@@ -299,6 +350,41 @@ class HandlebarsTest extends TestCase
         $result = $template(['content' => '**content output**']);
     }
 
+    // @todo Decorator tests... can't find any simple examples of decorators :(
 
+    public function testSetLogLevel()
+    {
+        $hb = Handlebars::create();
+        $template = $hb->compile('<h1>{{ @level }}</h1>');
+        $result = $template([], ['data' => ['level' => 'debug']]);
+        $this->assertEquals('<h1>debug</h1>', $result);
+    }
 
+    public function testLogDebug()
+    {
+        $hb = Handlebars::create();
+        $logs = [];
+        $logger = $this->getLogger($logs)->reveal();
+        $hb->setLogger($logger);
+        $template = $hb->compile('{{ log "Debug!" level="debug" }}');
+        $result = $template([], ['data' => ['level' => LogLevel::DEBUG]]);
+        $this->assertContains("Debug!", $logs[LogLevel::DEBUG]);
+    }
+
+    /**
+     * @return \Prophecy\Prophecy\ObjectProphecy
+     */
+    protected function getLogger(&$logs)
+    {
+        $logger = $this->prophesize(LoggerInterface::class);
+        $logger->log(Argument::type('string'), Argument::type('string'))->will(function ($args) use (&$logs) {
+            $level = $args[0];
+            $message = $args[1];
+            if (empty($logs[$level])) {
+                $logs[$level] = [];
+            }
+            $logs[$level][] = $message;
+        });
+        return $logger;
+    }
 }

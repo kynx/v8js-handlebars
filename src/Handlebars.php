@@ -26,14 +26,24 @@ final class Handlebars implements LoggerAwareInterface
 
     /**
      * Private constructor. Always get instance via self::create() factory
+     * @param bool $runtime
      * @param array $extensions
      * @param bool|true $report_uncaught_exceptions
      */
-    private function __construct($extensions, $report_uncaught_exceptions = true)
+    public function __construct($runtime = false, $extensions = [], $report_uncaught_exceptions = true)
     {
-        $this->v8 = new V8Js('phpHb', [], $extensions, $report_uncaught_exceptions);
+        $extension = $runtime ? self::EXTN_RUNTIME : self::EXTN_HANDLEBARS;
+        if (!self::isRegistered($runtime)) {
+            throw new \InvalidArgumentException(sprintf("Extension '%s' not registered", $extension));
+        }
+
+        $this->isRuntime = $runtime;
+        $this->v8 = new V8Js('phpHb', [], array_merge($extensions, [$extension]), $report_uncaught_exceptions);
         $this->v8->helpers = new \stdClass();
         $this->v8->decorators = new \stdClass();
+
+        // Always work on private copy to avoid polluting extension (which may persist between requests)
+        $this->v8->executeString('var jsHb = Handlebars.create()');
 
         /* Handlebars does a lot of checking against obj.__toString() == '[object Object]', which doesn't work
          * with V8Js objects ('[object stdClass]' / '[object Array]'). This helper works around that.
@@ -47,32 +57,32 @@ final class Handlebars implements LoggerAwareInterface
             }
             return o;
         }');
-        $this->isRuntime = in_array(self::EXTN_RUNTIME, $extensions);
+
+    }
+
+    /**
+     * Returns true if the handlebars has been registered with V8Js
+     * @param bool|false $runtime
+     * @return bool
+     */
+    public static function isRegistered($runtime = false)
+    {
+        $extension = $runtime ? self::EXTN_RUNTIME : self::EXTN_HANDLEBARS;
+        return isset(V8Js::getExtensions()[$extension]);
     }
 
     /**
      * Registers handlebars script with V8Js
      *
      * This *must* be called before the first call to self::create()
-     * @param string $handlebarsSource
+     * @param string $source
+     * @param boolean $runtime
      */
-    public static function registerHandlebars($handlebarsSource)
+    public static function registerHandlebarsExtension($source, $runtime = false)
     {
-        if (empty(V8Js::getExtensions()[self::EXTN_HANDLEBARS])) {
-            V8Js::registerExtension(self::EXTN_HANDLEBARS, $handlebarsSource, array(), false);
-        }
-    }
-
-    /**
-     * Registers handlebars runtime with V8Js
-     *
-     * This *must* be called before the first call to self::create().
-     * @param string $runtimeSource
-     */
-    public static function registerRuntime($runtimeSource)
-    {
-        if (empty(V8Js::getExtensions()[self::EXTN_RUNTIME])) {
-            V8Js::registerExtension(self::EXTN_RUNTIME, $runtimeSource, array(), false);
+        if (!self::isRegistered($runtime)) {
+            $extension = $runtime ? self::EXTN_RUNTIME : self::EXTN_HANDLEBARS;
+            V8Js::registerExtension($extension, $source, [], false);
         }
     }
 
@@ -85,13 +95,7 @@ final class Handlebars implements LoggerAwareInterface
      */
     public static function create($runtime = false, $extensions = [], $report_uncaught_exceptions = true)
     {
-        $extension = $runtime ? self::EXTN_RUNTIME : self::EXTN_HANDLEBARS;
-        if (empty(V8Js::getExtensions()[$extension])) {
-            throw new \InvalidArgumentException(sprintf("Extension '%s' not registered", $extension));
-        }
-
-        $extensions = array_merge($extensions, [$extension]);
-        return new Handlebars($extensions, $report_uncaught_exceptions);
+        return new Handlebars($runtime, $extensions, $report_uncaught_exceptions);
     }
 
     /**
@@ -108,7 +112,8 @@ final class Handlebars implements LoggerAwareInterface
 
         $this->v8->template = $template;
         $this->v8->options = $options ?: [];
-        return $this->v8->executeString('Handlebars.compile(phpHb.template, phpHb.options)',
+        return $this->v8->executeString(
+            'jsHb.compile(phpHb.template, phpHb.options)',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
     }
@@ -127,7 +132,8 @@ final class Handlebars implements LoggerAwareInterface
 
         $this->v8->template = $template;
         $this->v8->options = $options;
-        return $this->v8->executeString('Handlebars.precompile(phpHb.template, phpHb.options)',
+        return $this->v8->executeString(
+            'jsHb.precompile(phpHb.template, phpHb.options)',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
     }
@@ -139,15 +145,16 @@ final class Handlebars implements LoggerAwareInterface
      */
     public function template($templateSpec)
     {
-        return $this->v8->executeString('Handlebars.template(' . $templateSpec . ')',
+        return $this->v8->executeString(
+            'jsHb.template(' . $templateSpec . ')',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
     }
 
     /**
      * Registers partials accessible by any template in the environment
-     * @param string $name
-     * @param string $partial
+     * @param string|array|object $name
+     * @param string|bool $partial
      */
     public function registerPartial($name, $partial = false)
     {
@@ -157,10 +164,13 @@ final class Handlebars implements LoggerAwareInterface
         } elseif (is_object($name)) {
             $partials = get_object_vars($name);
         }
+
         if (count($partials)) {
-            $this->registerScript('partial', $partials);
+            $this->registerPhpArray('partial', $partials);
+        } elseif ($partial === false) {
+            $this->registerJavascriptObject('partial', $name);
         } else {
-            $this->registerScript('partial', $name, $partial);
+            $this->register('partial', $name, $partial);
         }
     }
 
@@ -170,24 +180,29 @@ final class Handlebars implements LoggerAwareInterface
      */
     public function unregisterPartial($name)
     {
-        $this->unregisterScript('partial', $name);
+        $this->unregister('partial', $name);
     }
 
     /**
      * Registers helpers accessible by any template in the environment
-     * @param string $name
-     * @param string|callable $helper
+     * @param string|array|object $name
+     * @param string|callable|bool $helper
      */
-    public function registerHelper($name, $helper)
+    public function registerHelper($name, $helper = false)
     {
-        if (is_callable($helper)) {
-            $this->registerJs('helper', $name, $this->wrapHelper($name, $helper));
-        } elseif (is_string($helper)) {
-            $this->registerJs('helper', $name, $helper);
+        if (is_array($name)) {
+            foreach ($name as $n => $helper) {
+                $this->registerHelper($n, $helper);
+            }
+        } elseif (is_object($name)) {
+            $this->registerJavascriptObject('helper', $this->wrapHelperObject($name));
+        } elseif ($helper === false) {
+            $this->registerJavascriptObject('helper', $name);
+        } elseif (is_callable($helper)) {
+            $this->registerJavascriptFunction('helper', $name, $this->wrapHelperCallable($name, $helper));
         } else {
-            throw new \InvalidArgumentException("Helper must be a PHP callable or a string");
+            $this->registerJavascriptFunction('helper', $name, $helper);
         }
-
     }
 
     /**
@@ -196,17 +211,25 @@ final class Handlebars implements LoggerAwareInterface
      */
     public function unregisterHelper($name)
     {
-        $this->unregisterScript('helper', $name);
+        $this->unregister('helper', $name);
     }
 
     /**
      * Registers a decorator accessible by any template in the environment
-     * @param $name
-     * @param $decorator
+     * @param string|object $name
+     * @param string|callable|bool $decorator
      */
     public function registerDecorator($name, $decorator)
     {
-        $this->registerScript('decorator', $name, $decorator);
+        if (is_object($name)) {
+            $this->registerJavascriptObject('decorator', $this->wrapDecoratorObject($name));
+        } elseif ($decorator === false) {
+            $this->registerJavascriptObject('decorator', $name);
+        } elseif (is_callable($decorator)) {
+            $this->registerJavascriptFunction('decorator', $name, $this->wrapDecoratorCallable($name, $decorator));
+        } else {
+            $this->registerJavascriptFunction('decorator', $name, $decorator);
+        }
     }
 
     /**
@@ -215,7 +238,7 @@ final class Handlebars implements LoggerAwareInterface
      */
     public function unregisterDecorator($name)
     {
-        $this->unregisterScript('decorator', $name);
+        $this->unregister('decorator', $name);
     }
 
     /**
@@ -226,49 +249,108 @@ final class Handlebars implements LoggerAwareInterface
     public function setLogger(LoggerInterface $logger)
     {
         $this->v8->logger = $logger;
-        $this->v8->executeString('Handlebars.log = phpHb.logger.log',
+        $this->v8->executeString(
+            'jsHb.log = function(level, message) {
+                phpHb.logger.log(level, message)
+            }',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
     }
 
-    private function wrapHelper($name, $helper)
+    private function wrapHelperCallable($name, $helper)
     {
         $this->v8->helpers->{$name} = $helper;
         // in PHP7 we'll be able to .call(this, context, options) to mirror the HB helper signature exactly
         return "function(context, options) {
-            return phpHb.helpers['" . addslashes($name) . "'](this, context, options)
+            return phpHb.helpers['$name'](this, context, options)
         }";
     }
 
-    private function registerScript($type, $name, $script = false)
+    private function wrapHelperObject($helper)
+    {
+        $class = get_class($helper);
+        $name = str_replace('\\', '.', $class);
+        $this->v8->helpers->{$name} = $helper;
+        $helpers = [];
+        foreach (get_class_methods($class) as $method) {
+            $helpers[] = "$method : function(context, options) {
+                return phpHb.helpers['$name'].__call('$method', [this, context, options]);
+            }";
+        }
+        return '{' . join(',', $helpers) . '}';
+    }
+
+    private function wrapDecoratorCallable($name, $decorator)
+    {
+        $this->v8->decorators->{$name} = $decorator;
+        return "function(program, props, container, context, data, blockParams, depths) {
+            return phpHb.decorators['$name'](this, program, props, container, context, data, blockParams, depths)
+        }";
+
+    }
+
+    private function wrapDecoratorObject($decorator)
+    {
+        $class = get_class($decorator);
+        $name = str_replace('\\', '.', $class);
+        $this->v8->decorators->{$name} = $decorator;
+        $decorators = [];
+        foreach (get_class_methods($class) as $method) {
+            $decorators[] = "$method : function(program, props, container, context, data, blockParams, depths) {
+                return phpHb.decorators['$name'](this, program, props, container, context, data, blockParams, depths)
+            }";
+        }
+        return '{' . join(',', $decorators) . '}';
+
+    }
+
+    private function register($type, $name, $script = false)
     {
         $method = 'register' . ucfirst($type);
         $this->v8->name = $name;
-        if ($script === false) {
-            return $this->v8->executeString('Handlebars.' . $method . '(phpHb.jsObject(phpHb.name))',
-                __CLASS__ . '::' . __METHOD__ . '()'
-            );
-        } else {
-            $this->v8->script = $script;
-            return $this->v8->executeString('Handlebars.' . $method . '(phpHb.name, phpHb.script)',
-                __CLASS__ . '::' . __METHOD__ . '()'
-            );
-        }
-    }
-
-    private function registerJs($type, $name, $javascript = false)
-    {
-        $script = $this->v8->executeString('(' . $javascript . ')',
+        $this->v8->script = $script;
+        return $this->v8->executeString(
+            'jsHb.' . $method . '(phpHb.name, phpHb.script)',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
-        return $this->registerScript($type, $name, $script);
     }
 
-    private function unregisterScript($type, $name)
+    private function registerPhpArray($type, $array)
+    {
+        $method = 'register' . ucfirst($type);
+        $this->v8->script = $array;
+        return $this->v8->executeString(
+            'jsHb.' . $method . '(phpHb.jsObject(phpHb.script))',
+            __CLASS__ . '::' . __METHOD__ . '()'
+        );
+
+    }
+
+    private function registerJavascriptObject($type, $javascript)
+    {
+        $method = 'register' . ucfirst($type);
+        return $this->v8->executeString(
+            'jsHb.' . $method . '(' . $javascript . ')',
+            __CLASS__ . '::' . __METHOD__ . '()'
+        );
+    }
+
+    private function registerJavascriptFunction($type, $name, $javascript = false)
+    {
+        $method = 'register' . ucfirst($type);
+        $script = $this->v8->executeString(
+            '(' . $javascript . ')',
+            __CLASS__ . '::' . __METHOD__ . '()'
+        );
+        return $this->register($type, $name, $script);
+    }
+
+    private function unregister($type, $name)
     {
         $method = 'unregister' . ucfirst($type);
         $this->v8->name = $name;
-        $this->v8->executeString('Handlebars.' . $method . '(phpHb.name)',
+        $this->v8->executeString(
+            'jsHb.' . $method . '(phpHb.name)',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
     }
