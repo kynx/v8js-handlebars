@@ -22,7 +22,7 @@
     "require": {
         "php": ">=5.5",
         "ext-v8js": "*",
-        "psr/log": "^1.0@dev"
+        "psr/log": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8",
