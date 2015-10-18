@@ -1,14 +1,14 @@
 {
-    "name": "kynx/handlebars-v8js",
+    "name": "kynx/v8js-handlebars",
     "description": "Handlebars templating using v8js",
+    "keywords": ["templating", "handlebars", "template", "mustache", "v8Js", "php"],
     "license": "MIT",
     "authors": [
         {
             "name": "Matt Kynaston",
-            "homepage": "https://github.org/kynx"
+            "homepage": "https://www.kynx.org"
         }
     ],
-    "minimum-stability": "dev",
     "autoload" : {
         "psr-4" : {
             "Kynx\\V8js\\" : "src/"
@@ -21,8 +21,8 @@
     },
     "require": {
         "php": ">=5.5",
-        "ext-v8js": "^0.3",
-        "psr/log": "^1.0@dev"
+        "ext-v8js": "*",
+        "psr/log": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8",

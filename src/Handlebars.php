@@ -25,10 +25,9 @@ final class Handlebars implements LoggerAwareInterface
     private $isRuntime;
 
     /**
-     * Private constructor. Always get instance via self::create() factory
-     * @param bool $runtime
-     * @param array $extensions
-     * @param bool|true $report_uncaught_exceptions
+     * @param bool $runtime      Set to true to use registered handlebars runtime
+     * @param array $extensions  Array of extensions registered via V8Js::registerExtension() to make available
+     * @param bool $report_uncaught_exceptions  You want this on
      */
     public function __construct($runtime = false, $extensions = [], $report_uncaught_exceptions = true)
     {
