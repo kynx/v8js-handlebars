@@ -13,5 +13,7 @@
 
     <php>
         <ini name="date.timezone" value="UTC" />
+        <!-- Don't stress about '[object Array]' in zorbius tests -->
+        <env name="ALLOW_ARRAY_OBJECT_TYPES" value="1" />
     </php>
 </phpunit>
