@@ -1,0 +1,7 @@
+# Fixtures from https://github.com/zordius/HandlebarsTest
+# git clone https://github.com/zordius/HandlebarsTest /path/to/HandlebarsTest
+# cp /path/to/HandlebarsTest/fixtures/*.{json,txt,tmpl} tests/zordius
+
+# Ignore everything. Don't ignore me.
+*
+!.gitignore
