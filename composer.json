@@ -27,6 +27,7 @@
     "require-dev": {
         "phpunit/phpunit": "^4.8",
         "components/handlebars.js": "dev-master",
+        "jbboehr/handlebars-spec": "dev-handlebars-v4",
         "squizlabs/php_codesniffer": "^2.3"
     },
     "suggest": {

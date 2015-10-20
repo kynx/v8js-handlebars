@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "67674a7dcef5cca7ff0734367ad440d7",
-    "content-hash": "ceee4d4e2c5839f9cef0c1cc264e8eeb",
+    "hash": "5fe615a50244fad432c301f2f742a745",
+    "content-hash": "06b86e1c41398318ca10176cffad6a8b",
     "packages": [
         {
             "name": "psr/log",
@@ -151,6 +151,39 @@
                 "instantiate"
             ],
             "time": "2015-06-14 21:17:01"
+        },
+        {
+            "name": "jbboehr/handlebars-spec",
+            "version": "dev-handlebars-v4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jbboehr/handlebars-spec.git",
+                "reference": "ae4766f31086a6fbde5f21a945022e45ebc1c1e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jbboehr/handlebars-spec/zipball/ae4766f31086a6fbde5f21a945022e45ebc1c1e6",
+                "reference": "ae4766f31086a6fbde5f21a945022e45ebc1c1e6",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPLv3"
+            ],
+            "authors": [
+                {
+                    "name": "John Boehr",
+                    "email": "jbboehr@gmail.com"
+                }
+            ],
+            "description": "Handlebars Specification",
+            "homepage": "http://github.com/jbboehr/handlebars-spec",
+            "keywords": [
+                "handlebars",
+                "mustache"
+            ],
+            "time": "2015-09-20 07:17:04"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -1302,7 +1335,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "components/handlebars.js": 20
+        "components/handlebars.js": 20,
+        "jbboehr/handlebars-spec": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
