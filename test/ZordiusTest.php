@@ -67,7 +67,28 @@ class ZordiusTest implements Test
                     '001-simple-vars' => file_get_contents($dirName . '/001-simple-vars.tmpl'),
                     '017-hb-with' => file_get_contents($dirName . '/017-hb-with.tmpl')
                 ]);
+                $hb->registerHelper('helper1', "function (url, text) {
+                    return '<a href=\"' + url + '\">' + text + '</a>';
+                }");
+                $hb->registerHelper('helper2', "function (options) {
+                    return '<a href=\"' + options.hash.url + '\">' + options.hash.text + '</a>(' + options.hash['ur\"l'] + ')';
+                }");
+                $hb->registerHelper('helper3', "function () {
+                    var options = arguments[arguments.length-1];
+                    return options.fn(['test1', 'test2', 'test3']);
+                }");
+                $hb->registerHelper('helper4', "function () {
+                    var options = arguments[arguments.length-1];
 
+                    if (typeof options.hash.val !== 'undefined') {
+                        this.helper4_value = options.hash.val % 2;
+                        return options.fn(this);
+                    }
+                    if (typeof options.hash.odd !== 'undefined') {
+                        return options.fn([1,3,5,7,9]);
+                    }
+                    return '';
+                }");
                 $tmpl = file_get_contents($matches[1] . '.tmpl');
                 $context = json_decode(file_get_contents($json), true);
                 $expected = file_get_contents($base . '.txt');

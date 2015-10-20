@@ -37,25 +37,26 @@ final class Handlebars implements LoggerAwareInterface
         }
 
         $this->isRuntime = $runtime;
-        $this->v8 = new V8Js('phpHb', [], array_merge($extensions, [$extension]), $report_uncaught_exceptions);
+        $this->v8 = new V8Js('kynx', [], array_merge($extensions, [$extension]), $report_uncaught_exceptions);
         $this->v8->helpers = new \stdClass();
         $this->v8->decorators = new \stdClass();
 
-        // Always work on private copy to avoid polluting extension (which may persist between requests)
-        $this->v8->executeString('var jsHb = Handlebars.create()');
+        $this->v8->executeString('
+            // Always work on private copy to avoid polluting extension (which may persist between requests)
+            kynx.Handlebars = Handlebars.create()
 
-        /* Handlebars does a lot of checking against obj.__toString() == '[object Object]', which doesn't work
-         * with V8Js objects ('[object stdClass]' / '[object Array]'). This helper works around that.
-         */
-        $this->v8->executeString('phpHb.jsObject = function(obj) {
-            var k, o = {};
-            for (k in obj) {
-              if (obj.hasOwnProperty(k)) {
-                o[k] = obj[k];
-              }
+            // Handlebars does a lot of checking against obj.toString() == "[object Object]", which does not work
+            // with V8Js objects ("[object stdClass]" / "[object Array]"). This helper works around that.
+            kynx.jsObject = function(obj) {
+                var k, o = {};
+                for (k in obj) {
+                  if (obj.hasOwnProperty(k)) {
+                    o[k] = obj[k];
+                  }
+                }
+                return o;
             }
-            return o;
-        }');
+        ');
 
     }
 
@@ -112,7 +113,7 @@ final class Handlebars implements LoggerAwareInterface
         $this->v8->template = $template;
         $this->v8->options = $options ?: [];
         return $this->v8->executeString(
-            'jsHb.compile(phpHb.template, phpHb.options)',
+            'kynx.Handlebars.compile(kynx.template, kynx.options)',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
     }
@@ -132,7 +133,7 @@ final class Handlebars implements LoggerAwareInterface
         $this->v8->template = $template;
         $this->v8->options = $options;
         return $this->v8->executeString(
-            'jsHb.precompile(phpHb.template, phpHb.options)',
+            'kynx.Handlebars.precompile(kynx.template, kynx.options)',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
     }
@@ -145,7 +146,7 @@ final class Handlebars implements LoggerAwareInterface
     public function template($templateSpec)
     {
         return $this->v8->executeString(
-            'jsHb.template(' . $templateSpec . ')',
+            'kynx.Handlebars.template(' . $templateSpec . ')',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
     }
@@ -249,8 +250,8 @@ final class Handlebars implements LoggerAwareInterface
     {
         $this->v8->logger = $logger;
         $this->v8->executeString(
-            'jsHb.log = function(level, message) {
-                phpHb.logger.log(level, message)
+            'kynx.Handlebars.log = function(level, message) {
+                kynx.logger.log(level, message)
             }',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
@@ -261,7 +262,7 @@ final class Handlebars implements LoggerAwareInterface
         $this->v8->helpers->{$name} = $helper;
         // in PHP7 we'll be able to .call(this, context, options) to mirror the HB helper signature exactly
         return "function(context, options) {
-            return phpHb.helpers['$name'](this, context, options)
+            return kynx.helpers['$name'](this, context, options)
         }";
     }
 
@@ -273,7 +274,7 @@ final class Handlebars implements LoggerAwareInterface
         $helpers = [];
         foreach (get_class_methods($class) as $method) {
             $helpers[] = "$method : function(context, options) {
-                return phpHb.helpers['$name'].__call('$method', [this, context, options]);
+                return kynx.helpers['$name'].__call('$method', [this, context, options]);
             }";
         }
         return '{' . join(',', $helpers) . '}';
@@ -283,7 +284,7 @@ final class Handlebars implements LoggerAwareInterface
     {
         $this->v8->decorators->{$name} = $decorator;
         return "function(program, props, container, context, data, blockParams, depths) {
-            return phpHb.decorators['$name'](this, program, props, container, context, data, blockParams, depths)
+            return kynx.decorators['$name'](this, program, props, container, context, data, blockParams, depths)
         }";
 
     }
@@ -296,7 +297,7 @@ final class Handlebars implements LoggerAwareInterface
         $decorators = [];
         foreach (get_class_methods($class) as $method) {
             $decorators[] = "$method : function(program, props, container, context, data, blockParams, depths) {
-                return phpHb.decorators['$name'](this, program, props, container, context, data, blockParams, depths)
+                return kynx.decorators['$name'](this, program, props, container, context, data, blockParams, depths)
             }";
         }
         return '{' . join(',', $decorators) . '}';
@@ -309,7 +310,7 @@ final class Handlebars implements LoggerAwareInterface
         $this->v8->name = $name;
         $this->v8->script = $script;
         return $this->v8->executeString(
-            'jsHb.' . $method . '(phpHb.name, phpHb.script)',
+            'kynx.Handlebars.' . $method . '(kynx.name, kynx.script)',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
     }
@@ -319,7 +320,7 @@ final class Handlebars implements LoggerAwareInterface
         $method = 'register' . ucfirst($type);
         $this->v8->script = $array;
         return $this->v8->executeString(
-            'jsHb.' . $method . '(phpHb.jsObject(phpHb.script))',
+            'kynx.Handlebars.' . $method . '(kynx.jsObject(kynx.script))',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
 
@@ -329,7 +330,7 @@ final class Handlebars implements LoggerAwareInterface
     {
         $method = 'register' . ucfirst($type);
         return $this->v8->executeString(
-            'jsHb.' . $method . '(' . $javascript . ')',
+            'kynx.Handlebars.' . $method . '(' . $javascript . ')',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
     }
@@ -349,7 +350,7 @@ final class Handlebars implements LoggerAwareInterface
         $method = 'unregister' . ucfirst($type);
         $this->v8->name = $name;
         $this->v8->executeString(
-            'jsHb.' . $method . '(phpHb.name)',
+            'kynx.Handlebars.' . $method . '(kynx.name)',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
     }
