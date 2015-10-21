@@ -30,8 +30,13 @@ class SpecTest extends TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testSpec($name, $template, $data, $partials, $helpers, $compileOptions, $expected)
+    public function testSpec($name, $template, $data, $partials, $helpers, $compileOptions, $expected, $skipped)
     {
+        if ($skipped) {
+            $this->markTestSkipped($name . ':' . $skipped);
+            return;
+        }
+        // echo "$name\n";
         $this->counter++;
         $hb = new Handlebars();
         if (!empty($partials)) {
@@ -66,50 +71,42 @@ class SpecTest extends TestCase
         $tests = [];
         $testName = $case['description'] . ' - ' . $case['it'];
         $js = $php = [];
-        if (isset($case['data']) && is_array($case['data'])) {
-            foreach ($case['data'] as $name => $value) {
-                if (!empty($value['!code'])) {
-                    list($j, $p) = $this->evaluateCode($value);
-                    if ($j) {
-                        $js['data'][$name] = $j;
+        $skipped = false;
+        foreach (['data', 'helpers'] as $sec) {
+            if (isset($case[$sec]) && is_array($case[$sec])) {
+                foreach ($case[$sec] as $name => $value) {
+                    if (!empty($value['!code'])) {
+                        list($j, $p, $skipped) = $this->evaluateCode($value);
+                        if ($j) {
+                            $js[$sec][$name] = $j;
+                        }
+                        if ($p) {
+                            $php[$sec][$name] = $p;
+                        }
+                        if (!$skipped && !($j || $p)) {
+                            $skipped = 'No code could be evaluated';
+                        }
+                        unset($case[$sec][$name]);
                     }
-                    if ($p) {
-                        $php['data'][$name] = $p;
-                    }
-                    unset($case['data'][$name]);
-                }
-            }
-        }
-        if (!empty($case['helpers'])) {
-            foreach ($case['helpers'] as $name => $value) {
-                if (!empty($helper['!code'])) {
-                    list($j, $p) = $this->evaluateCode($value);
-                    if ($j) {
-                        $js['helpers'][$name] = $j;
-                    }
-                    if ($php) {
-                        $php['helpers'][$name] = $p;
-                    }
-                    unset($case['helpers'][$name]);
                 }
             }
         }
         if (empty($js) && empty($php)) {
-            $tests[] = $this->makeTest($testName, $case);
+            $tests[] = $this->makeTest($testName, $case, $skipped);
         }
         if (!empty($js)) {
-            $tests[] = $this->makeTest($testName, $case, $js, ' - js');
+            $tests[] = $this->makeTest($testName, $case, '', $js, ' - js');
         }
         if (!empty($php)) {
-            $tests[] = $this->makeTest($testName, $case, $php, ' - php');
+            $tests[] = $this->makeTest($testName, $case, '', $php, ' - php');
         }
         return $tests;
     }
 
-    private function makeTest($testName, $case, $override = [], $suffix = '')
+    private function makeTest($testName, $case, $skipped, $override = [], $suffix = '')
     {
         foreach (['data', 'helpers'] as $sec) {
-            if (isset($case[$sec]) && (is_array($case[$sec]) || is_array($override[$sec]))) {
+            if ((isset($case[$sec]) && is_array($case[$sec])) || (isset($override[$sec]) && is_array($override[$sec]))) {
                 if (empty($case[$sec])) {
                     $case[$sec] = [];
                 }
@@ -133,20 +130,34 @@ class SpecTest extends TestCase
             'partials' => $case['partials'],
             'helpers' => empty($case['helpers']) ? [] : $case['helpers'],
             'compileOptions' => $case['compileOptions'],
-            'expected' => isset($case['expected']) ? $case['expected'] : ''
+            'expected' => isset($case['expected']) ? $case['expected'] : '',
+            'skipped' => $skipped
         ];
     }
 
     private function evaluateCode($code)
     {
-        $js = $php = false;
-        if (!empty($code['php'])) {
-            $php = eval($code['php'] . ';');
+        $js = $php = $skipped = false;
+        if (isset($code['php']) && strstr($code['php'], 'Utils::')) {
+            $skipped = "Code calls Utils class";
+        }
+        // some php function include calls to static class 'Utils', which we don't have
+        elseif (isset($code['php'])) {
+            // turn array references into object properties ($options['data'] -> $options->data
+            $code['php'] = preg_replace('/\[[\'"](.*)[\'"]\]/U', '->$1', $code['php']);
+            eval('$php = ' . $code['php'] . ';');
+
+            /*
+            if (preg_match('/function\s*\(([^\)]*)\)\s*\{\s*(.*)}/s', $code['php'], $matches)) {
+                $php = create_function($matches[1], $matches[2]);
+                echo is_callable($php) ? "callable\n" : "not callable\n"; die();
+            }
+            */
         }
         if (!empty($code['javascript'])) {
             //echo "--JS: " . $code['javascript'] . "\n";
             //$js = $this->v8->executeString('(' . $code['javascript'] . ')');
         }
-        return [$js, $php];
+        return [$js, $php, $skipped];
     }
 }
