@@ -257,6 +257,14 @@ final class Handlebars implements LoggerAwareInterface
         );
     }
 
+    public function evalJavascript($javascript)
+    {
+        return $this->v8->executeString(
+            '(' . $javascript . ')',
+            __CLASS__ . '::' . __METHOD__ . '()'
+        );
+    }
+
     private function wrapHelperCallable($name, $helper)
     {
         $this->v8->helpers->{$name} = $helper;
