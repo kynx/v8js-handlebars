@@ -14,10 +14,10 @@ use V8js;
 class SpecTest extends TestCase
 {
     /**
-     * @var V8Js
+     * @var Handlebars
      */
-    private $v8;
-    private $counter = 0;
+    private $hb;
+    private $counters = [];
 
     public function setUp()
     {
@@ -31,20 +31,91 @@ class SpecTest extends TestCase
      */
     public function testSpec($spec)
     {
-        $this->markTestSkipped("Still working on this...");
-        /*
-        echo "$name\n"; flush();
-        $this->counter++;
-        if (!empty($partials)) {
-            $this->hb->registerPartial($partials);
+        if ($spec['type'] == 'php') {
+            $this->markTestSkipped("Still working on php...");
         }
-        if (!empty($helpers)) {
-            $this->hb->registerHelper($helpers);
+        //echo "$name\n"; flush();
+        $name = $spec['name'] . ($spec['type'] ? ' - ' . $spec['type'] : '');
+        if (empty($this->counters[$name])) {
+            $this->counters[$name] = 0;
         }
-        $template = $this->hb->compile($template, $compileOptions);
-        $actual = $template($data);
-        $this->assertEquals($expected, $actual, $name . ' ' . $this->counter);
-        */
+        $this->counters[$name]++;
+
+        $spec = $this->prepareSpec($spec);
+        if (!empty($spec['partials'])) {
+            $this->hb->registerPartial($spec['partials']);
+        }
+        if (!empty($spec['helpers'])) {
+            $this->hb->registerHelper($spec['helpers']);
+        }
+        if (!empty($spec['decorators'])) {
+            $this->hb->registerDecorator($spec['decorators']);
+        }
+        $template = $this->hb->compile($spec['template'], $spec['compileOptions']);
+        $actual = $template($spec['data']);
+        $this->assertEquals($spec['expected'], $actual, $name - $this->counters[$name]);
+    }
+
+    private function prepareSpec($spec)
+    {
+        $default = [
+            'partials' => [],
+            'helpers' => [],
+            'decorators' => [],
+            'data' => [],
+            'compileOptions' => [],
+            'globalPartials' => [],
+            'globalHelpers' => [],
+            'globalDecorators' => [],
+        ];
+        $spec = array_merge($default, $spec);
+        foreach (['partials', 'helpers', 'decorators'] as $sec) {
+            $spec[$sec] = array_merge($spec['global' . ucfirst($sec)], $spec[$sec]);
+        }
+
+        if ($spec['type'] == 'php') {
+            foreach ($spec['helpers'] as $name => $helper) {
+                $spec['helpers'][$name] = $this->evalPhp($helper);
+            }
+            foreach ($spec['decorators'] as $name => $decorator) {
+                $spec['decorators'][$name] = $this->evalPhp($decorator);
+            }
+            foreach ($spec['data'] as $name => $inline) {
+                if ($this->isFunction($inline)) {
+                    $spec['data'][$name] = $this->evalPhp($inline);
+                }
+            }
+        } elseif ($spec['type'] == 'javascript') {
+            foreach ($spec['helpers'] as $name => $helper) {
+                $spec['helpers'][$name] = $this->evalJavascript($helper);
+            }
+            foreach ($spec['decorators'] as $name => $decorator) {
+                $spec['decorators'][$name] = $this->evalJavascript($decorator);
+            }
+            foreach ($spec['data'] as $name => $inline) {
+                if ($this->isFunction($inline)) {
+                    $spec['data'][$name] = $this->evalJavascript($inline);
+                }
+            }
+        }
+        return $spec;
+    }
+
+    private function isFunction($code)
+    {
+        return preg_match('/function\s*\(/', $code);
+    }
+
+    private function evalPhp($php)
+    {
+        $php = preg_replace('/\[[\'"](.*)[\'"]\]/U', '->$1', $php);
+        eval('$php = ' . $php . ';');
+        return $php;
+    }
+
+    private function evalJavascript($javascript)
+    {
+        return $this->hb->evalJavascript('(' . $javascript . ')');
     }
 
     public function specProvider()
@@ -75,6 +146,7 @@ class SpecTest extends TestCase
         }
         // no code found
         if (empty($tests)) {
+            $case['type'] = '';
             $tests[] = [ $case ];
         }
         return $tests;
