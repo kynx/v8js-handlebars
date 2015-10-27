@@ -9,7 +9,8 @@ namespace KynxTest\V8js;
 
 use Kynx\V8js\Handlebars;
 use PHPUnit_Framework_TestCase as TestCase;
-use V8js;
+use V8Js;
+use V8JsScriptException;
 
 class SpecTest extends TestCase
 {
@@ -17,7 +18,8 @@ class SpecTest extends TestCase
      * @var Handlebars
      */
     private $hb;
-    private $counters = [];
+    private static $counter = 0;
+    private static $counters = [];
 
     public function setUp()
     {
@@ -29,19 +31,27 @@ class SpecTest extends TestCase
     /**
      * @dataProvider specProvider
      */
-    public function testSpec($spec)
+    public function testSpec($case)
     {
-        if ($spec['type'] == 'php') {
+        if ($case['type'] == 'php') {
             $this->markTestSkipped("Still working on php...");
         }
-        //echo "$name\n"; flush();
-        $name = $spec['name'] . ($spec['type'] ? ' - ' . $spec['type'] : '');
-        if (empty($this->counters[$name])) {
-            $this->counters[$name] = 0;
+        if (!isset($case['name'])) {
+            var_dump($case); die();
         }
-        $this->counters[$name]++;
+        //echo "$name\n"; flush();
+        $name = $case['name'] . ($case['type'] ? ' - ' . $case['type'] : '');
+        if (empty(self::$counters[$name])) {
+            self::$counters[$name] = 0;
+        }
+        self::$counter++;
+        self::$counters[$name]++;
 
-        $spec = $this->prepareSpec($spec);
+        $spec = $this->prepareSpec($case);
+        if (!$spec) {
+            $this->markTestSkipped("Couldn't evaluate test '" . $name . "'");
+        }
+
         if (!empty($spec['partials'])) {
             $this->hb->registerPartial($spec['partials']);
         }
@@ -52,8 +62,13 @@ class SpecTest extends TestCase
             $this->hb->registerDecorator($spec['decorators']);
         }
         $template = $this->hb->compile($spec['template'], $spec['compileOptions']);
+        if ($spec['exception']) {
+            $this->setExpectedException(V8JsScriptException::class);
+        }
         $actual = $template($spec['data']);
-        $this->assertEquals($spec['expected'], $actual, $name - $this->counters[$name]);
+        if (!$spec['exception']) {
+            $this->assertEquals($spec['expected'], $actual, $name . ' #' . self::$counters[$name]);
+        }
     }
 
     private function prepareSpec($spec)
@@ -67,55 +82,45 @@ class SpecTest extends TestCase
             'globalPartials' => [],
             'globalHelpers' => [],
             'globalDecorators' => [],
+            'exception' => false,
+            'message' => '',
         ];
         $spec = array_merge($default, $spec);
         foreach (['partials', 'helpers', 'decorators'] as $sec) {
-            $spec[$sec] = array_merge($spec['global' . ucfirst($sec)], $spec[$sec]);
+            $global = 'global' . ucfirst($sec);
+            if (!is_array($spec[$sec])) {
+                $spec[$sec] = [];
+            }
+            $spec[$sec] = array_merge($spec[$global], $spec[$sec]);
+            unset($spec[$global]);
         }
 
-        if ($spec['type'] == 'php') {
-            foreach ($spec['helpers'] as $name => $helper) {
-                $spec['helpers'][$name] = $this->evalPhp($helper);
-            }
-            foreach ($spec['decorators'] as $name => $decorator) {
-                $spec['decorators'][$name] = $this->evalPhp($decorator);
-            }
-            foreach ($spec['data'] as $name => $inline) {
-                if ($this->isFunction($inline)) {
-                    $spec['data'][$name] = $this->evalPhp($inline);
+        return $this->evalCode($spec, $spec['type']);
+    }
+
+    private function evalCode($node, $type)
+    {
+        foreach ($node as $k => $v) {
+            if ("$k" == '!code') {
+                if (isset($node[$type])) {
+                    if ($type == 'javascript') {
+                        return $this->hb->evalJavascript('(' . $node[$type] . ')');
+                    } else {
+                        $php = preg_replace('/\[[\'"](.*)[\'"]\]/U', '->$1', $node[$type]);
+                        eval('$php = ' . $php . ';');
+                        return $php;
+                    }
                 }
+                return false;
             }
-        } elseif ($spec['type'] == 'javascript') {
-            foreach ($spec['helpers'] as $name => $helper) {
-                $spec['helpers'][$name] = $this->evalJavascript($helper);
-            }
-            foreach ($spec['decorators'] as $name => $decorator) {
-                $spec['decorators'][$name] = $this->evalJavascript($decorator);
-            }
-            foreach ($spec['data'] as $name => $inline) {
-                if ($this->isFunction($inline)) {
-                    $spec['data'][$name] = $this->evalJavascript($inline);
+            if (is_array($v)) {
+                $node[$k] = $this->evalCode($v, $type);
+                if ($node[$k] === false) {
+                    return false;
                 }
             }
         }
-        return $spec;
-    }
-
-    private function isFunction($code)
-    {
-        return preg_match('/function\s*\(/', $code);
-    }
-
-    private function evalPhp($php)
-    {
-        $php = preg_replace('/\[[\'"](.*)[\'"]\]/U', '->$1', $php);
-        eval('$php = ' . $php . ';');
-        return $php;
-    }
-
-    private function evalJavascript($javascript)
-    {
-        return $this->hb->evalJavascript('(' . $javascript . ')');
+        return $node;
     }
 
     public function specProvider()
@@ -138,8 +143,8 @@ class SpecTest extends TestCase
         $tests = [];
         $case['name'] = $case['description'] . ' - ' . $case['it'];
         foreach (['php', 'javascript'] as $type) {
-            $new = $this->searchForCode($case, $type);
-            if ($new && $new != $case) {
+            $new = $case;
+            if ($this->hasCode($case, $type)) {
                 $new['type'] = $type;
                 $tests[] = [ $new ];
             }
@@ -152,47 +157,16 @@ class SpecTest extends TestCase
         return $tests;
     }
 
-    private function searchForCode($node, $type)
+    private function hasCode($node, $type)
     {
         foreach ($node as $k => $v) {
-            if ($k == '!code') {
-                return isset($node[$type]) ? $node[$type] : false;
+            if ("$k" == '!code') {
+                return isset($node[$type]);
             }
-            if (is_array($v)) {
-                $node[$k] = $this->searchForCode($v, $type);
-                if ($node[$k] === false) {
-                    return false;
-                }
+            if (is_array($v) && $this->hasCode($v, $type)) {
+                return true;
             }
         }
-        return $node;
-    }
-
-
-    private function evaluateCode($code)
-    {
-        $js = $php = $skipped = false;
-        if (isset($code['php']) && strstr($code['php'], 'Utils::')) {
-            $skipped = "Code calls Utils class";
-        }
-        // some php function include calls to static class 'Utils', which we don't have
-        elseif (isset($code['php'])) {
-            /*
-            // turn array references into object properties ($options['data'] -> $options->data
-            $code['php'] = preg_replace('/\[[\'"](.*)[\'"]\]/U', '->$1', $code['php']);
-            eval('$php = ' . $code['php'] . ';');
-            */
-            /*
-            if (preg_match('/function\s*\(([^\)]*)\)\s*\{\s*(.*)}/s', $code['php'], $matches)) {
-                $php = create_function($matches[1], $matches[2]);
-                echo is_callable($php) ? "callable\n" : "not callable\n"; die();
-            }
-            */
-        }
-        if (!empty($code['javascript'])) {
-            //echo "--JS: " . $code['javascript'] . "\n";
-            $js = $this->hb->evalJavascript('(' . $code['javascript'] . ')');
-        }
-        return [$js, $php, $skipped];
+        return false;
     }
 }

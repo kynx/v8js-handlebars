@@ -219,9 +219,13 @@ final class Handlebars implements LoggerAwareInterface
      * @param string|object $name
      * @param string|callable|bool $decorator
      */
-    public function registerDecorator($name, $decorator)
+    public function registerDecorator($name, $decorator = false)
     {
-        if (is_object($name)) {
+        if (is_array($name)) {
+            foreach ($name as $n => $decorator) {
+                $this->registerDecorator($n, $decorator);
+            }
+        } elseif (is_object($name)) {
             $this->registerJavascriptObject('decorator', $this->wrapDecoratorObject($name));
         } elseif ($decorator === false) {
             $this->registerJavascriptObject('decorator', $name);
