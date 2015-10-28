@@ -8,3 +8,4 @@ components
 src/V8Js.php
 *.iml
 .idea
+test/node_modules

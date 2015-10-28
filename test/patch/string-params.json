@@ -1,0 +1,77 @@
+{
+    "string params mode-arguments to helpers can be retrieved from options hash in string form-00": {
+        "helpers": {
+            "wycats": {
+                "phpstub": "function (passiveVoice, noun) {\n        return 'HELP ME MY BOSS ' + passiveVoice + ' ' + noun;\n      }"
+            }
+        }
+    },
+    "string params mode-hash parameters get context information-00": {
+        "helpers": {
+            "tomdale": {
+                "phpstub": "function (exclamation, options) {\n        equal(exclamation, 'he.says');\n        equal(options.types[0], 'PathExpression');\n\n        equal(options.contexts.length, 1);\n        equal(options.hashContexts.noun, context);\n        equal(options.hash.desire, 'need');\n        equal(options.hash.noun, 'dad.joke');\n        equal(options.hash.bool, true);\n        return 'Helper called';\n      }"
+            },
+            "with": {
+                "phpstub": "function (withContext, options) {\n        return options.fn(options.contexts[0][withContext]);\n      }"
+            }
+        }
+    },
+    "string params mode-hash parameters get type information-00": {
+        "helpers": {
+            "tomdale": {
+                "phpstub": "function (exclamation, options) {\n        equal(exclamation, 'he.says');\n        equal(options.types[0], 'PathExpression');\n\n        equal(options.hashTypes.desire, 'StringLiteral');\n        equal(options.hashTypes.noun, 'PathExpression');\n        equal(options.hashTypes.bool, 'BooleanLiteral');\n        equal(options.hash.desire, 'need');\n        equal(options.hash.noun, 'dad.joke');\n        equal(options.hash.bool, true);\n        return 'Helper called';\n      }"
+            }
+        }
+    },
+    "string params mode-information about the types is passed along-00": {
+        "helpers": {
+            "tomdale": {
+                "phpstub": "function (desire, noun, trueBool, falseBool, options) {\n        equal(options.types[0], 'StringLiteral', 'the string type is passed');\n        equal(options.types[1], 'PathExpression', 'the expression type is passed');\n        equal(options.types[2], 'BooleanLiteral', 'the expression type is passed');\n        equal(desire, 'need', 'the string form is passed for strings');\n        equal(noun, 'dad.joke', 'the string form is passed for expressions');\n        equal(trueBool, true, 'raw booleans are passed through');\n        equal(falseBool, false, 'raw booleans are passed through');\n        return 'Helper called';\n      }"
+            }
+        }
+    },
+    "string params mode-should handle data-00": {
+        "helpers": {
+            "foo": {
+                "phpstub": "function (bar, options) {\n        equal(bar, '@bar');\n        equal(options.types[0], 'PathExpression');\n        return 'Foo!';\n      }"
+            }
+        }
+    },
+    "string params mode-when inside a block in string mode, .. passes the appropriate context in the options hash to a block helper-00": {
+        "helpers": {
+            "tomdale": {
+                "phpstub": "function (desire, noun, options) {\n        return 'STOP ME FROM READING HACKER NEWS I ' +\n                options.contexts[0][desire] + ' ' + noun + ' ' +\n                options.fn(this);\n      }"
+            },
+            "with": {
+                "phpstub": "function (context, options) {\n        return options.fn(options.contexts[0][context]);\n      }"
+            }
+        }
+    },
+    "string params mode-when inside a block in string mode, .. passes the appropriate context in the options hash-00": {
+        "helpers": {
+            "tomdale": {
+                "phpstub": "function (desire, noun, options) {\n        return 'STOP ME FROM READING HACKER NEWS I ' +\n                options.contexts[0][desire] + ' ' + noun;\n      }"
+            },
+            "with": {
+                "phpstub": "function (context, options) {\n        return options.fn(options.contexts[0][context]);\n      }"
+            }
+        }
+    },
+    "string params mode-when using block form, arguments to helpers can be retrieved from options hash in string form-00": {
+        "helpers": {
+            "wycats": {
+                "phpstub": "function (passiveVoice, noun, options) {\n        return 'HELP ME MY BOSS ' + passiveVoice + ' ' +\n                noun + ': ' + options.fn(this);\n      }"
+            }
+        }
+    },
+    "string params mode-with nested block ambiguous-00": {
+        "helpers": {
+            "with": {
+                "phpstub": "function () {\n        return 'WITH';\n      }"
+            },
+            "view": {
+                "phpstub": "function () {\n        return 'VIEW';\n      }"
+            }
+        }
+    }
+}

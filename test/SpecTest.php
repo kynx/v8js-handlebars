@@ -23,7 +23,7 @@ class SpecTest extends TestCase
 
     public function setUp()
     {
-        $handlebarsSource = file_get_contents(dirname(__DIR__) . '/components/handlebars/handlebars.js');
+        $handlebarsSource = __DIR__ . '/handlebars.js/lib/handlebars.js';
         Handlebars::registerHandlebarsExtension($handlebarsSource);
         $this->hb = new Handlebars();
     }
@@ -52,20 +52,20 @@ class SpecTest extends TestCase
             $this->markTestSkipped("Couldn't evaluate test '" . $name . "'");
         }
 
-        if (!empty($spec['partials'])) {
-            $this->hb->registerPartial($spec['partials']);
+        if (!empty($spec['globalPartials'])) {
+            $this->hb->registerPartial($spec['globalPartials']);
         }
-        if (!empty($spec['helpers'])) {
-            $this->hb->registerHelper($spec['helpers']);
+        if (!empty($spec['globalHelpers'])) {
+            $this->hb->registerHelper($spec['globalHelpers']);
         }
-        if (!empty($spec['decorators'])) {
-            $this->hb->registerDecorator($spec['decorators']);
+        if (!empty($spec['globalDecorators'])) {
+            $this->hb->registerDecorator($spec['globalDecorators']);
         }
         $template = $this->hb->compile($spec['template'], $spec['compileOptions']);
         if ($spec['exception']) {
             $this->setExpectedException(V8JsScriptException::class);
         }
-        $actual = $template($spec['data']);
+        $actual = $template($spec['data'], $spec['options']);
         if (!$spec['exception']) {
             $this->assertEquals($spec['expected'], $actual, $name . ' #' . self::$counters[$name]);
         }
@@ -78,14 +78,27 @@ class SpecTest extends TestCase
             'helpers' => [],
             'decorators' => [],
             'data' => [],
+            'options' => [],
             'compileOptions' => [],
             'globalPartials' => [],
             'globalHelpers' => [],
             'globalDecorators' => [],
+            'expected' => null,
             'exception' => false,
             'message' => '',
         ];
         $spec = array_merge($default, $spec);
+        if (!empty($spec['helpers'])) {
+            $spec['options']['helpers'] = $spec['helpers'];
+        }
+        if (!empty($spec['partials'])) {
+            $spec['options']['partials'] = $spec['partials'];
+        }
+        if (!empty($spec['decorators'])) {
+            $spec['options']['decorators'] = $spec['decorators'];
+        }
+        /*
+        $spec['options'] = array_merge($spec['compileOptions'], $spec['options']);
         foreach (['partials', 'helpers', 'decorators'] as $sec) {
             $global = 'global' . ucfirst($sec);
             if (!is_array($spec[$sec])) {
@@ -94,7 +107,7 @@ class SpecTest extends TestCase
             $spec[$sec] = array_merge($spec[$global], $spec[$sec]);
             unset($spec[$global]);
         }
-
+        */
         return $this->evalCode($spec, $spec['type']);
     }
 
@@ -125,7 +138,7 @@ class SpecTest extends TestCase
 
     public function specProvider()
     {
-        $specDir = __DIR__ . '/../vendor/jbboehr/handlebars-spec/spec';
+        $specDir = __DIR__ . '/spec';
         $tests = [];
         $ignore = ['parser.json', 'tokenizer.json'];
         foreach (glob($specDir . '/*.json') as $specFile) {

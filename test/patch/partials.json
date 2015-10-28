@@ -1,0 +1,37 @@
+{
+    "inline partials-should override global partials-00": {
+        "partials": {
+            "myPartial": {
+                "phpstub": "function () { return 'fail'; }"
+            }
+        }
+    },
+    "partials-dynamic partials-00": {
+        "helpers": {
+            "partial": {
+                "phpstub": "function () {\n        return 'dude';\n      }"
+            }
+        }
+    },
+    "partials-dynamic partials-01": {
+        "helpers": {
+            "partial": {
+                "phpstub": "function () {\n        return 'dude';\n      }"
+            }
+        }
+    },
+    "partials-failing dynamic partials-00": {
+        "helpers": {
+            "partial": {
+                "phpstub": "function () {\n        return 'missing';\n      }"
+            }
+        }
+    },
+    "partials-rendering function partial in vm mode-00": {
+        "partials": {
+            "dude": {
+                "phpstub": "function partial(context) {\n      return context.name + ' (' + context.url + ') ';\n    }"
+            }
+        }
+    }
+}

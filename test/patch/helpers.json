@@ -1,0 +1,760 @@
+{
+    "block params-should allow block params on chained helpers-00": {
+        "helpers": {
+            "goodbyes": {
+                "phpstub": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn({value: 'bar'}, {blockParams: [1, 2]});\n        }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "block params-should not take presedence over pathed values-00": {
+        "helpers": {
+            "value": {
+                "phpstub": "function () {\n          return 'foo';\n        }"
+            },
+            "goodbyes": {
+                "phpstub": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn(this, {blockParams: [1, 2]});\n        }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "block params-should take presedence over context values-00": {
+        "helpers": {
+            "goodbyes": {
+                "phpstub": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn({value: 'bar'}, {blockParams: [1, 2]});\n        }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "block params-should take presedence over helper values-00": {
+        "helpers": {
+            "value": {
+                "phpstub": "function () {\n          return 'foo';\n        }"
+            },
+            "goodbyes": {
+                "phpstub": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn({}, {blockParams: [1, 2]});\n        }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "block params-should take presednece over parent block params-00": {
+        "helpers": {
+            "goodbyes": {
+                "phpstub": "function (options) {\n          return options.fn({value: 'bar'}, {blockParams: options.fn.blockParams === 1 ? [value++, value++] : undefined});\n        }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "blockhelpermissing-lambdas are resolved by blockhelpermissing, not handlebars proper-00": {
+        "data": {
+            "truthy": {
+                "phpstub": "function () { return true; }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "blockhelpermissing-lambdas resolved by blockhelpermissing are bound to the context-00": {
+        "data": {
+            "truthy": {
+                "phpstub": "function () { return this.truthiness(); }"
+            },
+            "truthiness": {
+                "phpstub": "function () { return false; }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "decimal number literals work-decimal number literals work-00": {
+        "helpers": {
+            "hello": {
+                "phpstub": "function (times, times2) {\n      if (typeof times !== 'number') { times = 'NaN'; }\n      if (typeof times2 !== 'number') { times2 = 'NaN'; }\n      return 'Hello ' + times + ' ' + times2 + ' times';\n    }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "hash-block helpers can take an optional hash with booleans-00": {
+        "helpers": {
+            "goodbye": {
+                "phpstub": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this);\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }"
+            }
+        }
+    },
+    "hash-block helpers can take an optional hash with booleans-01": {
+        "helpers": {
+            "goodbye": {
+                "phpstub": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this);\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }"
+            }
+        }
+    },
+    "hash-block helpers can take an optional hash with single quoted stings-00": {
+        "helpers": {
+            "goodbye": {
+                "phpstub": "function (options) {\n          return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this) + ' ' + options.hash.times + ' TIMES';\n        }"
+            }
+        }
+    },
+    "hash-block helpers can take an optional hash-00": {
+        "helpers": {
+            "goodbye": {
+                "phpstub": "function (options) {\n          return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this) + ' ' + options.hash.times + ' TIMES';\n        }"
+            }
+        }
+    },
+    "hash-helpers can take an optional hash with booleans-00": {
+        "helpers": {
+            "goodbye": {
+                "phpstub": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.hash.world;\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }"
+            }
+        }
+    },
+    "hash-helpers can take an optional hash with booleans-01": {
+        "helpers": {
+            "goodbye": {
+                "phpstub": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.hash.world;\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }"
+            }
+        }
+    },
+    "hash-helpers can take an optional hash-00": {
+        "helpers": {
+            "goodbye": {
+                "phpstub": "function (options) {\n          return 'GOODBYE ' + options.hash.cruel + ' ' + options.hash.world + ' ' + options.hash.times + ' TIMES';\n        }"
+            }
+        }
+    },
+    "helpermissing-if a context is not found, custom helpermissing is used-00": {
+        "helpers": {
+            "helperMissing": {
+                "phpstub": "function (mesg, options) {\n          if (options.name === 'link_to') {\n            return new Handlebars.SafeString('<a>' + mesg + '<\/a>');\n          }\n        }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "helpermissing-if a value is not found, custom helpermissing is used-00": {
+        "helpers": {
+            "helperMissing": {
+                "phpstub": "function (options) {\n          if (options.name === 'link_to') {\n            return new Handlebars.SafeString('<a>winning<\/a>');\n          }\n        }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "helpers hash-in cases of conflict, helpers win-00": {
+        "helpers": {
+            "lookup": {
+                "phpstub": "function () { return 'helpers'; }"
+            }
+        }
+    },
+    "helpers hash-in cases of conflict, helpers win-01": {
+        "helpers": {
+            "lookup": {
+                "phpstub": "function () { return 'helpers'; }"
+            }
+        }
+    },
+    "helpers hash-providing a helpers hash-00": {
+        "helpers": {
+            "world": {
+                "phpstub": "function () { return 'world'; }"
+            }
+        }
+    },
+    "helpers hash-providing a helpers hash-01": {
+        "helpers": {
+            "world": {
+                "phpstub": "function () { return 'world'; }"
+            }
+        }
+    },
+    "helpers hash-the helper hash should augment the global hash-00": {
+        "helpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            }
+        },
+        "globalHelpers": {
+            "test_helper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "helpers hash-the helpers hash is available is nested contexts-00": {
+        "helpers": {
+            "helper": {
+                "phpstub": "function () { return 'helper'; }"
+            }
+        }
+    },
+    "helpers-block helper inverted sections-00": {
+        "helpers": {
+            "list": {
+                "phpstub": "function list(context, options) {\n      if (context.length > 0) {\n        var out = '<ul>';\n        for (var i = 0, j = context.length; i < j; i++) {\n          out += '<li>';\n          out += options.fn(context[i]);\n          out += '<\/li>';\n        }\n        out += '<\/ul>';\n        return out;\n      } else {\n        return '<p>' + options.inverse(this) + '<\/p>';\n      }\n    }"
+            }
+        }
+    },
+    "helpers-block helper inverted sections-01": {
+        "helpers": {
+            "list": {
+                "phpstub": "function list(context, options) {\n      if (context.length > 0) {\n        var out = '<ul>';\n        for (var i = 0, j = context.length; i < j; i++) {\n          out += '<li>';\n          out += options.fn(context[i]);\n          out += '<\/li>';\n        }\n        out += '<\/ul>';\n        return out;\n      } else {\n        return '<p>' + options.inverse(this) + '<\/p>';\n      }\n    }"
+            }
+        }
+    },
+    "helpers-block helper inverted sections-02": {
+        "helpers": {
+            "list": {
+                "phpstub": "function list(context, options) {\n      if (context.length > 0) {\n        var out = '<ul>';\n        for (var i = 0, j = context.length; i < j; i++) {\n          out += '<li>';\n          out += options.fn(context[i]);\n          out += '<\/li>';\n        }\n        out += '<\/ul>';\n        return out;\n      } else {\n        return '<p>' + options.inverse(this) + '<\/p>';\n      }\n    }"
+            }
+        }
+    },
+    "helpers-block helper passing a complex path context-00": {
+        "helpers": {
+            "form": {
+                "phpstub": "function (context, options) { return '<form>' + options.fn(context) + '<\/form>'; }"
+            }
+        }
+    },
+    "helpers-block helper passing a new context-00": {
+        "helpers": {
+            "form": {
+                "phpstub": "function (context, options) { return '<form>' + options.fn(context) + '<\/form>'; }"
+            }
+        }
+    },
+    "helpers-block helper should have context in this-00": {
+        "helpers": {
+            "link": {
+                "phpstub": "function link(options) {\n      return '<a href=\"\/people\/' + this.id + '\">' + options.fn(this) + '<\/a>';\n    }"
+            }
+        }
+    },
+    "helpers-block helper staying in the same context-00": {
+        "helpers": {
+            "form": {
+                "phpstub": "function (options) { return '<form>' + options.fn(this) + '<\/form>'; }"
+            }
+        }
+    },
+    "helpers-block helper-00": {
+        "helpers": {
+            "goodbyes": {
+                "phpstub": "function (options) { return options.fn({text: 'GOODBYE'}); }"
+            }
+        }
+    },
+    "helpers-helper block with complex lookup expression-00": {
+        "helpers": {
+            "goodbyes": {
+                "phpstub": "function (options) {\n      var out = '';\n      var byes = ['Goodbye', 'goodbye', 'GOODBYE'];\n      for (var i = 0, j = byes.length; i < j; i++) {\n        out += byes[i] + ' ' + options.fn({}) + '! ';\n      }\n      return out;\n    }"
+            }
+        }
+    },
+    "helpers-helper block with identical context-00": {
+        "helpers": {
+            "goodbyes": {
+                "phpstub": "function (options) {\n      var out = '';\n      var byes = ['Goodbye', 'goodbye', 'GOODBYE'];\n      for (var i = 0, j = byes.length; i < j; i++) {\n        out += byes[i] + ' ' + options.fn(this) + '! ';\n      }\n      return out;\n    }"
+            }
+        }
+    },
+    "helpers-helper for nested raw block gets raw content-00": {
+        "helpers": {
+            "a": {
+                "phpstub": "function (options) {\n          return options.fn();\n      }"
+            }
+        }
+    },
+    "helpers-helper for raw block gets parameters-00": {
+        "helpers": {
+            "raw": {
+                "phpstub": "function (a, b, c, options) {\n        return options.fn() + a + b + c;\n    }"
+            }
+        }
+    },
+    "helpers-helper for raw block gets raw content-00": {
+        "helpers": {
+            "raw": {
+                "phpstub": "function (options) {\n        return options.fn();\n    }"
+            }
+        }
+    },
+    "helpers-helper returning undefined value-00": {
+        "helpers": {
+            "nothere": {
+                "phpstub": "function () {}"
+            }
+        }
+    },
+    "helpers-helper returning undefined value-01": {
+        "helpers": {
+            "nothere": {
+                "phpstub": "function () {}"
+            }
+        }
+    },
+    "helpers-helper with complex lookup and nested template in vm+compiler-00": {
+        "helpers": {
+            "link": {
+                "phpstub": "function (prefix, options) {\n        return '<a href=\"' + prefix + '\/' + this.url + '\">' + options.fn(this) + '<\/a>';\n    }"
+            }
+        }
+    },
+    "helpers-helper with complex lookup and nested template-00": {
+        "helpers": {
+            "link": {
+                "phpstub": "function (prefix, options) {\n        return '<a href=\"' + prefix + '\/' + this.url + '\">' + options.fn(this) + '<\/a>';\n    }"
+            }
+        }
+    },
+    "helpers-helper with complex lookup$-00": {
+        "helpers": {
+            "link": {
+                "phpstub": "function (prefix) {\n      return '<a href=\"' + prefix + '\/' + this.url + '\">' + this.text + '<\/a>';\n    }"
+            }
+        }
+    },
+    "helpers-nested block helpers-00": {
+        "helpers": {
+            "link": {
+                "phpstub": "function (options) { return '<a href=\"' + this.name + '\">' + options.fn(this) + '<\/a>'; }"
+            },
+            "form": {
+                "phpstub": "function (context, options) { return '<form>' + options.fn(context) + '<\/form>'; }"
+            }
+        }
+    },
+    "helpers-pathed lambas with parameters-00": {
+        "data": {
+            "helper": {
+                "phpstub": "function () {\n        return 'winning';\n      }"
+            }
+        },
+        "helpers": {
+            "": {
+                "\/helper": {
+                    "phpstub": null
+                }
+            }
+        }
+    },
+    "helpers-pathed lambas with parameters-01": {
+        "data": {
+            "helper": {
+                "phpstub": "function () {\n        return 'winning';\n      }"
+            }
+        },
+        "helpers": {
+            "": {
+                "\/helper": {
+                    "phpstub": null
+                }
+            }
+        }
+    },
+    "knownhelpers-functions are bound to the context in knownhelpers only mode-00": {
+        "data": {
+            "foo": {
+                "phpstub": "function () { return this.bar; }"
+            }
+        }
+    },
+    "knownhelpers-known helper should render helper-00": {
+        "helpers": {
+            "hello": {
+                "phpstub": "function () { return 'foo'; }"
+            }
+        }
+    },
+    "knownhelpers-unknown helper in knownhelpers only mode should be passed as undefined-00": {
+        "helpers": {
+            "typeof": {
+                "phpstub": "function (arg) { return typeof arg; }"
+            },
+            "hello": {
+                "phpstub": "function () { return 'foo'; }"
+            }
+        }
+    },
+    "multiple parameters-block multi-params work-00": {
+        "helpers": {
+            "goodbye": {
+                "phpstub": "function (cruel, world, options) {\n        return options.fn({greeting: 'Goodbye', adj: cruel, noun: world});\n      }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "multiple parameters-simple multi-params work-00": {
+        "helpers": {
+            "goodbye": {
+                "phpstub": "function (cruel, world) { return 'Goodbye ' + cruel + ' ' + world; }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "name conflicts-helpers take precedence over same-named context properties$-00": {
+        "helpers": {
+            "goodbye": {
+                "phpstub": "function (options) {\n          return this.goodbye.toUpperCase() + options.fn(this);\n        }"
+            },
+            "cruel": {
+                "phpstub": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }"
+            }
+        }
+    },
+    "name conflicts-helpers take precedence over same-named context properties-00": {
+        "helpers": {
+            "goodbye": {
+                "phpstub": "function () {\n          return this.goodbye.toUpperCase();\n        }"
+            },
+            "cruel": {
+                "phpstub": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }"
+            }
+        }
+    },
+    "name conflicts-scoped names take precedence over block helpers-00": {
+        "helpers": {
+            "goodbye": {
+                "phpstub": "function (options) {\n          return this.goodbye.toUpperCase() + options.fn(this);\n        }"
+            },
+            "cruel": {
+                "phpstub": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }"
+            }
+        }
+    },
+    "name conflicts-scoped names take precedence over helpers-00": {
+        "helpers": {
+            "goodbye": {
+                "phpstub": "function () {\n          return this.goodbye.toUpperCase();\n        }"
+            },
+            "cruel": {
+                "phpstub": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }"
+            }
+        }
+    },
+    "name field-should include full id if a hash is passed-00": {
+        "helpers": {
+            "blockHelperMissing": {
+                "phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helperMissing": {
+                "phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helper": {
+                "phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "name field-should include full id-00": {
+        "helpers": {
+            "blockHelperMissing": {
+                "phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helperMissing": {
+                "phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helper": {
+                "phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "name field-should include in ambiguous block calls-00": {
+        "helpers": {
+            "blockHelperMissing": {
+                "phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helperMissing": {
+                "phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helper": {
+                "phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "name field-should include in ambiguous mustache calls-00": {
+        "helpers": {
+            "blockHelperMissing": {
+                "phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helperMissing": {
+                "phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helper": {
+                "phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "name field-should include in helper block calls-00": {
+        "helpers": {
+            "blockHelperMissing": {
+                "phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helperMissing": {
+                "phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helper": {
+                "phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "name field-should include in helper mustache calls-00": {
+        "helpers": {
+            "blockHelperMissing": {
+                "phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helperMissing": {
+                "phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helper": {
+                "phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "name field-should include in known helper calls-00": {
+        "helpers": {
+            "blockHelperMissing": {
+                "phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helperMissing": {
+                "phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helper": {
+                "phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+            }
+        }
+    },
+    "name field-should include in simple block calls-00": {
+        "helpers": {
+            "blockHelperMissing": {
+                "phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helperMissing": {
+                "phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+            },
+            "helper": {
+                "phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "negative number literals work-negative number literals work-00": {
+        "helpers": {
+            "hello": {
+                "phpstub": "function (times) {\n      if (typeof times !== 'number') { times = 'NaN'; }\n      return 'Hello ' + times + ' times';\n    }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "negative number literals work-negative number literals work-01": {
+        "helpers": {
+            "hello": {
+                "phpstub": "function (times) {\n      if (typeof times !== 'number') { times = 'NaN'; }\n      return 'Hello ' + times + ' times';\n    }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "registration-allows multiple globals-00": {
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "string literal parameters-escaping a string is possible-00": {
+        "helpers": {
+            "hello": {
+                "phpstub": "function (param) { return 'Hello ' + param; }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "string literal parameters-it works with ' marks-00": {
+        "helpers": {
+            "hello": {
+                "phpstub": "function (param) { return 'Hello ' + param; }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    },
+    "string literal parameters-simple literals work-00": {
+        "helpers": {
+            "hello": {
+                "phpstub": "function (param, times, bool1, bool2) {\n        if (typeof times !== 'number') { times = 'NaN'; }\n        if (typeof bool1 !== 'boolean') { bool1 = 'NaB'; }\n        if (typeof bool2 !== 'boolean') { bool2 = 'NaB'; }\n        return 'Hello ' + param + ' ' + times + ' times: ' + bool1 + ' ' + bool2;\n      }"
+            }
+        },
+        "globalHelpers": {
+            "world": {
+                "phpstub": "function () { return 'world!'; }"
+            },
+            "testHelper": {
+                "phpstub": "function () { return 'found it!'; }"
+            }
+        }
+    }
+}

@@ -1,0 +1,91 @@
+{
+    "decorators-should access parent variables-00": {
+        "helpers": {
+            "helper": {
+                "phpstub": "function (options) {\n          return options.fn.run;\n        }"
+            }
+        },
+        "decorators": {
+            "decorator": {
+                "phpstub": "function (fn, props, container, options) {\n          fn.run = options.args;\n          return fn;\n        }"
+            }
+        }
+    },
+    "decorators-should apply allow undefined return-00": {
+        "helpers": {
+            "helper": {
+                "phpstub": "function (options) {\n          return options.fn() + options.fn.run;\n        }"
+            }
+        },
+        "decorators": {
+            "decorator": {
+                "phpstub": "function (fn) {\n          fn.run = 'cess';\n        }"
+            }
+        }
+    },
+    "decorators-should apply block decorators-00": {
+        "helpers": {
+            "helper": {
+                "phpstub": "function (options) {\n          return options.fn.run;\n        }"
+            }
+        },
+        "decorators": {
+            "decorator": {
+                "phpstub": "function (fn, props, container, options) {\n          fn.run = options.fn();\n          return fn;\n        }"
+            }
+        }
+    },
+    "decorators-should apply multiple decorators-00": {
+        "helpers": {
+            "helper": {
+                "phpstub": "function (options) {\n          return options.fn.run;\n        }"
+            }
+        },
+        "decorators": {
+            "decorator": {
+                "phpstub": "function (fn, props, container, options) {\n          fn.run = (fn.run || '') + options.fn();\n          return fn;\n        }"
+            }
+        }
+    },
+    "decorators-should apply mustache decorators-00": {
+        "helpers": {
+            "helper": {
+                "phpstub": "function (options) {\n          return options.fn.run;\n        }"
+            }
+        },
+        "decorators": {
+            "decorator": {
+                "phpstub": "function (fn) {\n          fn.run = 'success';\n          return fn;\n        }"
+            }
+        }
+    },
+    "decorators-should fail when accessing variables from root-00": {
+        "decorators": {
+            "decorator": {
+                "phpstub": "function (fn, props, container, options) {\n          equals(options.args[0], undefined);\n          run = true;\n          return fn;\n        }"
+            }
+        }
+    },
+    "decorators-should support nested decorators-00": {
+        "helpers": {
+            "helper": {
+                "phpstub": "function (options) {\n          return options.fn.run;\n        }"
+            }
+        },
+        "decorators": {
+            "decorator": {
+                "phpstub": "function (fn, props, container, options) {\n          fn.run = options.fn.nested + options.fn();\n          return fn;\n        }"
+            },
+            "nested": {
+                "phpstub": "function (fn, props, container, options) {\n          props.nested = options.fn();\n        }"
+            }
+        }
+    },
+    "decorators-should work with root program-00": {
+        "decorators": {
+            "decorator": {
+                "phpstub": "function (fn, props, container, options) {\n          equals(options.args[0], 'success');\n          run = true;\n          return fn;\n        }"
+            }
+        }
+    }
+}

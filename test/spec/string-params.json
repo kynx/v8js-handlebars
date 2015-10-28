@@ -1,0 +1,327 @@
+[
+	{
+		"description": "string params mode",
+		"it": "arguments to helpers can be retrieved from options hash in string form",
+		"template": "{{wycats is.a slave.driver}}",
+		"data": {},
+		"expected": "HELP ME MY BOSS is.a slave.driver",
+		"message": "String parameters output",
+		"compileOptions": {
+			"stringParams": true
+		},
+		"helpers": {
+			"wycats": {
+				"!code": true,
+				"javascript": "function (passiveVoice, noun) {\n        return 'HELP ME MY BOSS ' + passiveVoice + ' ' + noun;\n      }"
+			}
+		}
+	},
+	{
+		"description": "string params mode",
+		"it": "when using block form, arguments to helpers can be retrieved from options hash in string form",
+		"template": "{{#wycats is.a slave.driver}}help :({{/wycats}}",
+		"data": {},
+		"expected": "HELP ME MY BOSS is.a slave.driver: help :(",
+		"message": "String parameters output",
+		"compileOptions": {
+			"stringParams": true
+		},
+		"helpers": {
+			"wycats": {
+				"!code": true,
+				"javascript": "function (passiveVoice, noun, options) {\n        return 'HELP ME MY BOSS ' + passiveVoice + ' ' +\n                noun + ': ' + options.fn(this);\n      }"
+			}
+		}
+	},
+	{
+		"description": "string params mode",
+		"it": "when inside a block in String mode, .. passes the appropriate context in the options hash",
+		"template": "{{#with dale}}{{tomdale ../need dad.joke}}{{/with}}",
+		"data": {
+			"dale": {},
+			"need": "need-a"
+		},
+		"expected": "STOP ME FROM READING HACKER NEWS I need-a dad.joke",
+		"message": "Proper context variable output",
+		"compileOptions": {
+			"stringParams": true
+		},
+		"helpers": {
+			"tomdale": {
+				"!code": true,
+				"javascript": "function (desire, noun, options) {\n        return 'STOP ME FROM READING HACKER NEWS I ' +\n                options.contexts[0][desire] + ' ' + noun;\n      }"
+			},
+			"with": {
+				"!code": true,
+				"javascript": "function (context, options) {\n        return options.fn(options.contexts[0][context]);\n      }"
+			}
+		}
+	},
+	{
+		"description": "string params mode",
+		"it": "information about the types is passed along",
+		"template": "{{tomdale 'need' dad.joke true false}}",
+		"data": {},
+		"expected": "StringLiteral",
+		"message": "the string type is passed",
+		"compileOptions": {
+			"stringParams": true
+		},
+		"helpers": {
+			"tomdale": {
+				"!code": true,
+				"javascript": "function (desire, noun, trueBool, falseBool, options) {\n        equal(options.types[0], 'StringLiteral', 'the string type is passed');\n        equal(options.types[1], 'PathExpression', 'the expression type is passed');\n        equal(options.types[2], 'BooleanLiteral', 'the expression type is passed');\n        equal(desire, 'need', 'the string form is passed for strings');\n        equal(noun, 'dad.joke', 'the string form is passed for expressions');\n        equal(trueBool, true, 'raw booleans are passed through');\n        equal(falseBool, false, 'raw booleans are passed through');\n        return 'Helper called';\n      }"
+			}
+		}
+	},
+	{
+		"description": "string params mode",
+		"it": "information about the types is passed along",
+		"template": "{{tomdale 'need' dad.joke true false}}",
+		"expected": "PathExpression",
+		"message": "the expression type is passed"
+	},
+	{
+		"description": "string params mode",
+		"it": "information about the types is passed along",
+		"template": "{{tomdale 'need' dad.joke true false}}",
+		"expected": "BooleanLiteral",
+		"message": "the expression type is passed"
+	},
+	{
+		"description": "string params mode",
+		"it": "information about the types is passed along",
+		"template": "{{tomdale 'need' dad.joke true false}}",
+		"expected": "need",
+		"message": "the string form is passed for strings"
+	},
+	{
+		"description": "string params mode",
+		"it": "information about the types is passed along",
+		"template": "{{tomdale 'need' dad.joke true false}}",
+		"expected": "dad.joke",
+		"message": "the string form is passed for expressions"
+	},
+	{
+		"description": "string params mode",
+		"it": "information about the types is passed along",
+		"template": "{{tomdale 'need' dad.joke true false}}",
+		"expected": true,
+		"message": "raw booleans are passed through"
+	},
+	{
+		"description": "string params mode",
+		"it": "information about the types is passed along",
+		"template": "{{tomdale 'need' dad.joke true false}}",
+		"expected": false,
+		"message": "raw booleans are passed through"
+	},
+	{
+		"description": "string params mode",
+		"it": "information about the types is passed along",
+		"template": "{{tomdale 'need' dad.joke true false}}",
+		"expected": "Helper called"
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get type information",
+		"template": "{{tomdale he.says desire='need' noun=dad.joke bool=true}}",
+		"data": {},
+		"expected": "he.says",
+		"compileOptions": {
+			"stringParams": true
+		},
+		"helpers": {
+			"tomdale": {
+				"!code": true,
+				"javascript": "function (exclamation, options) {\n        equal(exclamation, 'he.says');\n        equal(options.types[0], 'PathExpression');\n\n        equal(options.hashTypes.desire, 'StringLiteral');\n        equal(options.hashTypes.noun, 'PathExpression');\n        equal(options.hashTypes.bool, 'BooleanLiteral');\n        equal(options.hash.desire, 'need');\n        equal(options.hash.noun, 'dad.joke');\n        equal(options.hash.bool, true);\n        return 'Helper called';\n      }"
+			}
+		}
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get type information",
+		"template": "{{tomdale he.says desire='need' noun=dad.joke bool=true}}",
+		"expected": "PathExpression"
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get type information",
+		"template": "{{tomdale he.says desire='need' noun=dad.joke bool=true}}",
+		"expected": "StringLiteral"
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get type information",
+		"template": "{{tomdale he.says desire='need' noun=dad.joke bool=true}}",
+		"expected": "PathExpression"
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get type information",
+		"template": "{{tomdale he.says desire='need' noun=dad.joke bool=true}}",
+		"expected": "BooleanLiteral"
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get type information",
+		"template": "{{tomdale he.says desire='need' noun=dad.joke bool=true}}",
+		"expected": "need"
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get type information",
+		"template": "{{tomdale he.says desire='need' noun=dad.joke bool=true}}",
+		"expected": "dad.joke"
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get type information",
+		"template": "{{tomdale he.says desire='need' noun=dad.joke bool=true}}",
+		"expected": true
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get type information",
+		"template": "{{tomdale he.says desire='need' noun=dad.joke bool=true}}",
+		"expected": "Helper called"
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get context information",
+		"template": "{{#with dale}}{{tomdale he.says desire='need' noun=../dad/joke bool=true}}{{/with}}",
+		"data": {
+			"dale": {}
+		},
+		"expected": "he.says",
+		"compileOptions": {
+			"stringParams": true
+		},
+		"helpers": {
+			"tomdale": {
+				"!code": true,
+				"javascript": "function (exclamation, options) {\n        equal(exclamation, 'he.says');\n        equal(options.types[0], 'PathExpression');\n\n        equal(options.contexts.length, 1);\n        equal(options.hashContexts.noun, context);\n        equal(options.hash.desire, 'need');\n        equal(options.hash.noun, 'dad.joke');\n        equal(options.hash.bool, true);\n        return 'Helper called';\n      }"
+			},
+			"with": {
+				"!code": true,
+				"javascript": "function (withContext, options) {\n        return options.fn(options.contexts[0][withContext]);\n      }"
+			}
+		}
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get context information",
+		"template": "{{#with dale}}{{tomdale he.says desire='need' noun=../dad/joke bool=true}}{{/with}}",
+		"expected": "PathExpression"
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get context information",
+		"template": "{{#with dale}}{{tomdale he.says desire='need' noun=../dad/joke bool=true}}{{/with}}",
+		"expected": 1
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get context information",
+		"template": "{{#with dale}}{{tomdale he.says desire='need' noun=../dad/joke bool=true}}{{/with}}",
+		"expected": {
+			"dale": {}
+		}
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get context information",
+		"template": "{{#with dale}}{{tomdale he.says desire='need' noun=../dad/joke bool=true}}{{/with}}",
+		"expected": "need"
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get context information",
+		"template": "{{#with dale}}{{tomdale he.says desire='need' noun=../dad/joke bool=true}}{{/with}}",
+		"expected": "dad.joke"
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get context information",
+		"template": "{{#with dale}}{{tomdale he.says desire='need' noun=../dad/joke bool=true}}{{/with}}",
+		"expected": true
+	},
+	{
+		"description": "string params mode",
+		"it": "hash parameters get context information",
+		"template": "{{#with dale}}{{tomdale he.says desire='need' noun=../dad/joke bool=true}}{{/with}}",
+		"expected": "Helper called"
+	},
+	{
+		"description": "string params mode",
+		"it": "when inside a block in String mode, .. passes the appropriate context in the options hash to a block helper",
+		"template": "{{#with dale}}{{#tomdale ../need dad.joke}}wot{{/tomdale}}{{/with}}",
+		"data": {
+			"dale": {},
+			"need": "need-a"
+		},
+		"expected": "STOP ME FROM READING HACKER NEWS I need-a dad.joke wot",
+		"message": "Proper context variable output",
+		"compileOptions": {
+			"stringParams": true
+		},
+		"helpers": {
+			"tomdale": {
+				"!code": true,
+				"javascript": "function (desire, noun, options) {\n        return 'STOP ME FROM READING HACKER NEWS I ' +\n                options.contexts[0][desire] + ' ' + noun + ' ' +\n                options.fn(this);\n      }"
+			},
+			"with": {
+				"!code": true,
+				"javascript": "function (context, options) {\n        return options.fn(options.contexts[0][context]);\n      }"
+			}
+		}
+	},
+	{
+		"description": "string params mode",
+		"it": "with nested block ambiguous",
+		"template": "{{#with content}}{{#view}}{{firstName}} {{lastName}}{{/view}}{{/with}}",
+		"data": {},
+		"expected": "WITH",
+		"compileOptions": {
+			"stringParams": true
+		},
+		"helpers": {
+			"with": {
+				"!code": true,
+				"javascript": "function () {\n        return 'WITH';\n      }"
+			},
+			"view": {
+				"!code": true,
+				"javascript": "function () {\n        return 'VIEW';\n      }"
+			}
+		}
+	},
+	{
+		"description": "string params mode",
+		"it": "should handle DATA",
+		"template": "{{foo @bar}}",
+		"data": {},
+		"expected": "@bar",
+		"compileOptions": {
+			"stringParams": true
+		},
+		"helpers": {
+			"foo": {
+				"!code": true,
+				"javascript": "function (bar, options) {\n        equal(bar, '@bar');\n        equal(options.types[0], 'PathExpression');\n        return 'Foo!';\n      }"
+			}
+		}
+	},
+	{
+		"description": "string params mode",
+		"it": "should handle DATA",
+		"template": "{{foo @bar}}",
+		"expected": "PathExpression"
+	},
+	{
+		"description": "string params mode",
+		"it": "should handle DATA",
+		"template": "{{foo @bar}}",
+		"expected": "Foo!"
+	}
+]

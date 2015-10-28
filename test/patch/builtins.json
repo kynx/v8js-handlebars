@@ -1,0 +1,168 @@
+{
+    "#each-each with an object and @key-02": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#each-each with function argument-00": {
+        "data": {
+            "goodbyes": {
+                "phpstub": "function () { return [{text: 'goodbye'}, {text: 'Goodbye'}, {text: 'GOODBYE'}]; }"
+            }
+        },
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#each-each with function argument-01": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#each-each without context-00": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#each-each without data-00": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#each-each without data-01": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#each-each-00": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#each-each-01": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#if-if with function argument-00": {
+        "data": {
+            "goodbye": {
+                "phpstub": "function () {return true; }"
+            }
+        }
+    },
+    "#if-if with function argument-01": {
+        "data": {
+            "goodbye": {
+                "phpstub": "function () {return this.world; }"
+            }
+        }
+    },
+    "#if-if with function argument-02": {
+        "data": {
+            "goodbye": {
+                "phpstub": "function () {return false; }"
+            }
+        }
+    },
+    "#if-if with function argument-03": {
+        "data": {
+            "goodbye": {
+                "phpstub": "function () {return this.foo; }"
+            }
+        }
+    },
+    "#log-should call logger at data level-00": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#log-should call logger at default level-00": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#log-should handle hash log levels-00": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#log-should handle hash log levels-02": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#log-should handle missing logger-00": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#log-should handle string log levels-00": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#log-should handle string log levels-02": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#log-should log at data level-00": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#log-should output to info-00": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#log-should pass multiple log arguments-00": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        }
+    },
+    "#with-with with function argument-00": {
+        "data": {
+            "person": {
+                "phpstub": "function () { return {first: 'Alan', last: 'Johnson'}; }"
+            }
+        }
+    }
+}
