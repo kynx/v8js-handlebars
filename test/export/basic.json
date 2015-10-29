@@ -7571,7 +7571,8 @@
 		"data": {
 			"awesome": {
 				"!code": true,
-				"javascript": "function (_undefined, _null, options) {\n            return (_undefined === undefined) + ' ' + (_null === null) + ' ' + (typeof options);\n          }"
+				"javascript": "function (_undefined, _null, options) {\n            return (_undefined === undefined) + ' ' + (_null === null) + ' ' + (typeof options);\n          }",
+				"phpstub": "function (_undefined, _null, options) {\n            return (_undefined === undefined) + ' ' + (_null === null) + ' ' + (typeof options);\n          }"
 			}
 		},
 		"expected": "true true object",
@@ -7851,7 +7852,8 @@
 		"data": {
 			"undefined": {
 				"!code": true,
-				"javascript": "function () {\n            return 'undefined!';\n          }"
+				"javascript": "function () {\n            return 'undefined!';\n          }",
+				"phpstub": "function () {\n            return 'undefined!';\n          }"
 			}
 		},
 		"expected": "undefined!",
@@ -8063,7 +8065,8 @@
 		"data": {
 			"null": {
 				"!code": true,
-				"javascript": "function () {\n            return 'null!';\n          }"
+				"javascript": "function () {\n            return 'null!';\n          }",
+				"phpstub": "function () {\n            return 'null!';\n          }"
 			}
 		},
 		"expected": "null!",
@@ -9923,7 +9926,8 @@
 		"data": {
 			"awesome": {
 				"!code": true,
-				"javascript": "function () { return new Handlebars.SafeString('&\\'\\\\<>'); }"
+				"javascript": "function () { return new Handlebars.SafeString('&\\'\\\\<>'); }",
+				"phpstub": "function () { return new Handlebars.SafeString('&\\'\\\\<>'); }"
 			}
 		},
 		"expected": "&'\\<>",
@@ -10141,7 +10145,8 @@
 		"data": {
 			"awesome": {
 				"!code": true,
-				"javascript": "function () { return 'Awesome'; }"
+				"javascript": "function () { return 'Awesome'; }",
+				"phpstub": "function () { return 'Awesome'; }"
 			}
 		},
 		"expected": "Awesome",
@@ -10359,7 +10364,8 @@
 		"data": {
 			"awesome": {
 				"!code": true,
-				"javascript": "function () { return this.more; }"
+				"javascript": "function () { return this.more; }",
+				"phpstub": "function () { return this.more; }"
 			},
 			"more": "More awesome"
 		},
@@ -10578,7 +10584,8 @@
 		"data": {
 			"awesome": {
 				"!code": true,
-				"javascript": "function (context) { return context; }"
+				"javascript": "function (context) { return context; }",
+				"phpstub": "function (context) { return context; }"
 			},
 			"frank": "Frank"
 		},
@@ -10856,7 +10863,8 @@
 			"bar": {
 				"awesome": {
 					"!code": true,
-					"javascript": "function (context) { return context; }"
+					"javascript": "function (context) { return context; }",
+					"phpstub": "function (context) { return context; }"
 				}
 			},
 			"frank": "Frank"
@@ -11136,7 +11144,8 @@
 		"data": {
 			"awesome": {
 				"!code": true,
-				"javascript": "function (context) { return context; }"
+				"javascript": "function (context) { return context; }",
+				"phpstub": "function (context) { return context; }"
 			},
 			"frank": "Frank"
 		},
@@ -11623,7 +11632,8 @@
 		"data": {
 			"awesome": {
 				"!code": true,
-				"javascript": "function (context, options) { return options.fn(context); }"
+				"javascript": "function (context, options) { return options.fn(context); }",
+				"phpstub": "function (context, options) { return options.fn(context); }"
 			}
 		},
 		"expected": "inner 1",
@@ -12043,7 +12053,8 @@
 			"value": true,
 			"awesome": {
 				"!code": true,
-				"javascript": "function (context, options) { return options.fn(context); }"
+				"javascript": "function (context, options) { return options.fn(context); }",
+				"phpstub": "function (context, options) { return options.fn(context); }"
 			}
 		},
 		"expected": "inner 1",
@@ -12681,7 +12692,8 @@
 		"data": {
 			"awesome": {
 				"!code": true,
-				"javascript": "function (options) { return options.fn(this); }"
+				"javascript": "function (options) { return options.fn(this); }",
+				"phpstub": "function (options) { return options.fn(this); }"
 			}
 		},
 		"expected": "inner",
@@ -13034,7 +13046,8 @@
 			"foo": {
 				"awesome": {
 					"!code": true,
-					"javascript": "function () { return this; }"
+					"javascript": "function () { return this; }",
+					"phpstub": "function () { return this; }"
 				}
 			}
 		},
@@ -13341,7 +13354,8 @@
 			"value": true,
 			"awesome": {
 				"!code": true,
-				"javascript": "function () { return this; }"
+				"javascript": "function () { return this; }",
+				"phpstub": "function () { return this; }"
 			}
 		},
 		"expected": "inner",
@@ -18681,7 +18695,8 @@
 		"helpers": {
 			"foo": {
 				"!code": true,
-				"javascript": "function (value) {\n        return 'bar ' + value;\n    }"
+				"javascript": "function (value) {\n        return 'bar ' + value;\n    }",
+				"phpstub": "function (value) {\n        return 'bar ' + value;\n    }"
 			}
 		},
 		"compileOptions": {
@@ -19218,7 +19233,8 @@
 		"helpers": {
 			"foo": {
 				"!code": true,
-				"javascript": "function (value) {\n        return 'bar ' + value;\n    }"
+				"javascript": "function (value) {\n        return 'bar ' + value;\n    }",
+				"phpstub": "function (value) {\n        return 'bar ' + value;\n    }"
 			}
 		},
 		"compileOptions": {
@@ -19750,7 +19766,8 @@
 		"data": {
 			"foo": {
 				"!code": true,
-				"javascript": "function (value) { return value; }"
+				"javascript": "function (value) { return value; }",
+				"phpstub": "function (value) { return value; }"
 			},
 			"this": "bar"
 		},
@@ -20027,7 +20044,8 @@
 		"data": {
 			"foo": {
 				"!code": true,
-				"javascript": "function (value) { return value; }"
+				"javascript": "function (value) { return value; }",
+				"phpstub": "function (value) { return value; }"
 			},
 			"text": {
 				"this": "bar"
@@ -21977,6 +21995,9 @@
 		"it": "pass number literals",
 		"template": "{{12.34 1}}",
 		"data": {
+			"12": {
+				"34": {}
+			},
 			"12.34": {
 				"!code": true,
 				"javascript": "function (arg) { return 'bar' + arg; }"
@@ -22857,14 +22878,16 @@
 		"data": {
 			"false": {
 				"!code": true,
-				"javascript": "function () { return 'bar'; }"
+				"javascript": "function () { return 'bar'; }",
+				"phpstub": "function () { return 'bar'; }"
 			}
 		},
 		"expected": "bar",
 		"helpers": {
 			"foo": {
 				"!code": true,
-				"javascript": "function (arg) {\n        return arg;\n      }"
+				"javascript": "function (arg) {\n        return arg;\n      }",
+				"phpstub": "function (arg) {\n        return arg;\n      }"
 			}
 		},
 		"compileOptions": {

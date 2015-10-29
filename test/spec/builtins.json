@@ -95,7 +95,8 @@
 		"data": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function () {return true; }"
+				"javascript": "function () {return true; }",
+				"phpstub": "function () {return true; }"
 			},
 			"world": "world"
 		},
@@ -109,7 +110,8 @@
 		"data": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function () {return this.world; }"
+				"javascript": "function () {return this.world; }",
+				"phpstub": "function () {return this.world; }"
 			},
 			"world": "world"
 		},
@@ -123,7 +125,8 @@
 		"data": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function () {return false; }"
+				"javascript": "function () {return false; }",
+				"phpstub": "function () {return false; }"
 			},
 			"world": "world"
 		},
@@ -137,7 +140,8 @@
 		"data": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function () {return this.foo; }"
+				"javascript": "function () {return this.foo; }",
+				"phpstub": "function () {return this.foo; }"
 			},
 			"world": "world"
 		},
@@ -177,7 +181,8 @@
 		"data": {
 			"person": {
 				"!code": true,
-				"javascript": "function () { return {first: 'Alan', last: 'Johnson'}; }"
+				"javascript": "function () { return {first: 'Alan', last: 'Johnson'}; }",
+				"phpstub": "function () { return {first: 'Alan', last: 'Johnson'}; }"
 			}
 		},
 		"expected": "Alan Johnson",
@@ -242,7 +247,8 @@
 		"globalHelpers": {
 			"detectDataInsideEach": {
 				"!code": true,
-				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }",
+				"phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
 		}
 	},
@@ -259,7 +265,8 @@
 		"globalHelpers": {
 			"detectDataInsideEach": {
 				"!code": true,
-				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }",
+				"phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
 		}
 	},
@@ -286,7 +293,8 @@
 		"globalHelpers": {
 			"detectDataInsideEach": {
 				"!code": true,
-				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }",
+				"phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
 		}
 	},
@@ -303,7 +311,8 @@
 		"globalHelpers": {
 			"detectDataInsideEach": {
 				"!code": true,
-				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }",
+				"phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
 		}
 	},
@@ -316,7 +325,8 @@
 		"globalHelpers": {
 			"detectDataInsideEach": {
 				"!code": true,
-				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }",
+				"phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
 		}
 	},
@@ -357,7 +367,8 @@
 		"globalHelpers": {
 			"detectDataInsideEach": {
 				"!code": true,
-				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }",
+				"phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
 		}
 	},
@@ -568,7 +579,8 @@
 		"data": {
 			"goodbyes": {
 				"!code": true,
-				"javascript": "function () { return [{text: 'goodbye'}, {text: 'Goodbye'}, {text: 'GOODBYE'}]; }"
+				"javascript": "function () { return [{text: 'goodbye'}, {text: 'Goodbye'}, {text: 'GOODBYE'}]; }",
+				"phpstub": "function () { return [{text: 'goodbye'}, {text: 'Goodbye'}, {text: 'GOODBYE'}]; }"
 			},
 			"world": "world"
 		},
@@ -577,7 +589,8 @@
 		"globalHelpers": {
 			"detectDataInsideEach": {
 				"!code": true,
-				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }",
+				"phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
 		}
 	},
@@ -594,7 +607,8 @@
 		"globalHelpers": {
 			"detectDataInsideEach": {
 				"!code": true,
-				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }",
+				"phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
 		}
 	},
@@ -659,19 +673,11 @@
 				"!code": true,
 				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
+		},
+		"log": {
+			"level": "info",
+			"message": "whee"
 		}
-	},
-	{
-		"description": "#log",
-		"it": "should call logger at default level",
-		"template": "{{#each}}{{text}}! {{/each}}cruel world!",
-		"message": "should call log with 1"
-	},
-	{
-		"description": "#log",
-		"it": "should call logger at default level",
-		"template": "{{#each}}{{text}}! {{/each}}cruel world!",
-		"message": "should call log with 'whee'"
 	},
 	{
 		"description": "#log",
@@ -687,17 +693,14 @@
 				"!code": true,
 				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
+		},
+		"log": {
+			"level": "warn",
+			"message": "whee"
+		},
+		"config": {
+			"level": "03"
 		}
-	},
-	{
-		"description": "#log",
-		"it": "should call logger at data level",
-		"template": "{{#each}}{{text}}! {{/each}}cruel world!"
-	},
-	{
-		"description": "#log",
-		"it": "should call logger at data level",
-		"template": "{{#each}}{{text}}! {{/each}}cruel world!"
 	},
 	{
 		"description": "#log",
@@ -713,12 +716,11 @@
 				"!code": true,
 				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
+		},
+		"log": {
+			"level": "info",
+			"message": "whee"
 		}
-	},
-	{
-		"description": "#log",
-		"it": "should output to info",
-		"template": "{{#each}}{{text}}! {{/each}}cruel world!"
 	},
 	{
 		"description": "#log",
@@ -734,12 +736,14 @@
 				"!code": true,
 				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
+		},
+		"log": {
+			"level": "warn",
+			"message": "whee"
+		},
+		"config": {
+			"level": "03"
 		}
-	},
-	{
-		"description": "#log",
-		"it": "should log at data level",
-		"template": "{{#each}}{{text}}! {{/each}}cruel world!"
 	},
 	{
 		"description": "#log",
@@ -755,13 +759,14 @@
 				"!code": true,
 				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
+		},
+		"log": {
+			"level": "warn",
+			"message": "whee"
+		},
+		"config": {
+			"level": "03"
 		}
-	},
-	{
-		"description": "#log",
-		"it": "should handle missing logger",
-		"template": "{{#each}}{{text}}! {{/each}}cruel world!",
-		"expected": false
 	},
 	{
 		"description": "#log",
@@ -777,12 +782,14 @@
 				"!code": true,
 				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
+		},
+		"log": {
+			"level": "error",
+			"message": "whee"
+		},
+		"config": {
+			"level": "error"
 		}
-	},
-	{
-		"description": "#log",
-		"it": "should handle string log levels",
-		"template": "{{#each}}{{text}}! {{/each}}cruel world!"
 	},
 	{
 		"description": "#log",
@@ -792,19 +799,13 @@
 			"blah": "whee"
 		},
 		"expected": "",
-		"compileOptions": {},
-		"globalHelpers": {
-			"detectDataInsideEach": {
-				"!code": true,
-				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
-			}
+		"log": {
+			"level": "error",
+			"message": "whee"
+		},
+		"config": {
+			"level": "ERROR"
 		}
-	},
-	{
-		"description": "#log",
-		"it": "should handle string log levels",
-		"template": "{{#each}}{{text}}! {{/each}}cruel world!",
-		"expected": false
 	},
 	{
 		"description": "#log",
@@ -820,34 +821,11 @@
 				"!code": true,
 				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
-		}
-	},
-	{
-		"description": "#log",
-		"it": "should handle hash log levels",
-		"template": "{{#each}}{{text}}! {{/each}}cruel world!"
-	},
-	{
-		"description": "#log",
-		"it": "should handle hash log levels",
-		"template": "{{log blah level=\"debug\"}}",
-		"data": {
-			"blah": "whee"
 		},
-		"expected": "",
-		"compileOptions": {},
-		"globalHelpers": {
-			"detectDataInsideEach": {
-				"!code": true,
-				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
-			}
+		"log": {
+			"level": "error",
+			"message": "whee"
 		}
-	},
-	{
-		"description": "#log",
-		"it": "should handle hash log levels",
-		"template": "{{#each}}{{text}}! {{/each}}cruel world!",
-		"expected": false
 	},
 	{
 		"description": "#log",
@@ -863,12 +841,11 @@
 				"!code": true,
 				"javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
 			}
+		},
+		"log": {
+			"level": "info",
+			"message": "whee\nfoo\n1"
 		}
-	},
-	{
-		"description": "#log",
-		"it": "should pass multiple log arguments",
-		"template": "{{#each}}{{text}}! {{/each}}cruel world!"
 	},
 	{
 		"description": "#lookup",

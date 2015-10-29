@@ -89,75 +89,122 @@
         }
     },
     "#log-should call logger at data level-00": {
-        "globalHelpers": {
-            "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
-            }
-        }
+        "template" : "{{log blah}}",
+        "data": {
+          "blah": "whee"
+        },
+        "expected": "",
+        "log": {
+          "level": "warning",
+          "message": "whee"
+        },
+        "config" : { "level" : "03"}
     },
+    "#log-should call logger at data level-01": null,
+    "#log-should call logger at data level-02": null,
     "#log-should call logger at default level-00": {
-        "globalHelpers": {
-            "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
-            }
+        "template" : "{{log blah}}",
+        "data": {
+          "blah": "whee"
+        },
+        "expected": "",
+        "log": {
+            "level": "info",
+            "message": "whee"
         }
     },
+    "#log-should call logger at default level-01": null,
+    "#log-should call logger at default level-02": null,
     "#log-should handle hash log levels-00": {
-        "globalHelpers": {
-            "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
-            }
+        "template" : "{{log blah level=\"error\"}}",
+        "data": {
+            "blah": "whee"
+        },
+        "expected": "",
+        "log": {
+            "level": "error",
+            "message": "whee"
         }
     },
-    "#log-should handle hash log levels-02": {
-        "globalHelpers": {
-            "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
-            }
-        }
-    },
+    "#log-should handle hash log levels-01": null,
+    "#log-should handle hash log levels-02": null,
+    "#log-should handle hash log levels-03": null,
     "#log-should handle missing logger-00": {
-        "globalHelpers": {
-            "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
-            }
-        }
+        "template" : "{{log blah}}",
+        "data": {
+           "blah": "whee"
+        },
+        "expected": "",
+        "log": {
+            "level": "warning",
+            "message": "whee"
+        },
+        "config" : { "level" : "03"}
     },
+    "#log-should handle missing logger-01": null,
     "#log-should handle string log levels-00": {
-        "globalHelpers": {
-            "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
-            }
-        }
+        "template" : "{{log blah}}",
+        "data": {
+            "blah": "whee"
+        },
+        "expected": "",
+        "log": {
+            "level": "error",
+            "message": "whee"
+        },
+        "config": {"level" : "error"}
     },
-    "#log-should handle string log levels-02": {
-        "globalHelpers": {
-            "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
-            }
-        }
+    "#log-should handle string log levels-01": {
+        "template" : "{{log blah}}",
+        "data": {
+            "blah": "whee"
+        },
+        "expected": "",
+        "log": {
+            "level": "error",
+            "message": "whee"
+        },
+        "config": {"level" : "ERROR"}
     },
-    "#log-should log at data level-00": {
-        "globalHelpers": {
-            "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
-            }
-        }
-    },
+    "#log-should handle string log levels-02": null,
+    "#log-should handle string log levels-03": null,
     "#log-should output to info-00": {
-        "globalHelpers": {
-            "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
-            }
+        "template" : "{{log blah}}",
+        "data": {
+            "blah": "whee"
+        },
+        "expected": "",
+        "log": {
+            "level": "info",
+            "message": "whee"
         }
     },
+    "#log-should output to info-01": null,
+    "#log-should log at data level-00": {
+      "template" : "{{log blah}}",
+      "data": {
+          "blah": "whee"
+      },
+      "expected": "",
+      "log": {
+          "level": "warning",
+          "message": "whee"
+      },
+      "config" : { "level" : "03"}
+    },
+    "#log-should log at data level-01": null,
     "#log-should pass multiple log arguments-00": {
-        "globalHelpers": {
-            "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
-            }
+        "template" : "{{log blah \"foo\" 1}}",
+        "data": {
+            "blah": "whee"
+        },
+        "expected": "",
+        "log": {
+            "level": "info",
+            "message": "whee\nfoo\n1"
         }
     },
+    "#log-should pass multiple log arguments-01": null,
     "#with-with with function argument-00": {
         "data": {
             "person": {

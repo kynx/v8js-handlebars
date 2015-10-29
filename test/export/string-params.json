@@ -24,7 +24,8 @@
 		"helpers": {
 			"wycats": {
 				"!code": true,
-				"javascript": "function (passiveVoice, noun) {\n        return 'HELP ME MY BOSS ' + passiveVoice + ' ' + noun;\n      }"
+				"javascript": "function (passiveVoice, noun) {\n        return 'HELP ME MY BOSS ' + passiveVoice + ' ' + noun;\n      }",
+				"phpstub": "function (passiveVoice, noun) {\n        return 'HELP ME MY BOSS ' + passiveVoice + ' ' + noun;\n      }"
 			}
 		},
 		"ast": {
@@ -355,7 +356,8 @@
 		"helpers": {
 			"wycats": {
 				"!code": true,
-				"javascript": "function (passiveVoice, noun, options) {\n        return 'HELP ME MY BOSS ' + passiveVoice + ' ' +\n                noun + ': ' + options.fn(this);\n      }"
+				"javascript": "function (passiveVoice, noun, options) {\n        return 'HELP ME MY BOSS ' + passiveVoice + ' ' +\n                noun + ': ' + options.fn(this);\n      }",
+				"phpstub": "function (passiveVoice, noun, options) {\n        return 'HELP ME MY BOSS ' + passiveVoice + ' ' +\n                noun + ': ' + options.fn(this);\n      }"
 			}
 		},
 		"ast": {
@@ -765,11 +767,13 @@
 		"helpers": {
 			"tomdale": {
 				"!code": true,
-				"javascript": "function (desire, noun, options) {\n        return 'STOP ME FROM READING HACKER NEWS I ' +\n                options.contexts[0][desire] + ' ' + noun;\n      }"
+				"javascript": "function (desire, noun, options) {\n        return 'STOP ME FROM READING HACKER NEWS I ' +\n                options.contexts[0][desire] + ' ' + noun;\n      }",
+				"phpstub": "function (desire, noun, options) {\n        return 'STOP ME FROM READING HACKER NEWS I ' +\n                options.contexts[0][desire] + ' ' + noun;\n      }"
 			},
 			"with": {
 				"!code": true,
-				"javascript": "function (context, options) {\n        return options.fn(options.contexts[0][context]);\n      }"
+				"javascript": "function (context, options) {\n        return options.fn(options.contexts[0][context]);\n      }",
+				"phpstub": "function (context, options) {\n        return options.fn(options.contexts[0][context]);\n      }"
 			}
 		},
 		"ast": {
@@ -1316,7 +1320,8 @@
 		"helpers": {
 			"tomdale": {
 				"!code": true,
-				"javascript": "function (desire, noun, trueBool, falseBool, options) {\n        equal(options.types[0], 'StringLiteral', 'the string type is passed');\n        equal(options.types[1], 'PathExpression', 'the expression type is passed');\n        equal(options.types[2], 'BooleanLiteral', 'the expression type is passed');\n        equal(desire, 'need', 'the string form is passed for strings');\n        equal(noun, 'dad.joke', 'the string form is passed for expressions');\n        equal(trueBool, true, 'raw booleans are passed through');\n        equal(falseBool, false, 'raw booleans are passed through');\n        return 'Helper called';\n      }"
+				"javascript": "function (desire, noun, trueBool, falseBool, options) {\n        equal(options.types[0], 'StringLiteral', 'the string type is passed');\n        equal(options.types[1], 'PathExpression', 'the expression type is passed');\n        equal(options.types[2], 'BooleanLiteral', 'the expression type is passed');\n        equal(desire, 'need', 'the string form is passed for strings');\n        equal(noun, 'dad.joke', 'the string form is passed for expressions');\n        equal(trueBool, true, 'raw booleans are passed through');\n        equal(falseBool, false, 'raw booleans are passed through');\n        return 'Helper called';\n      }",
+				"phpstub": "function (desire, noun, trueBool, falseBool, options) {\n        equal(options.types[0], 'StringLiteral', 'the string type is passed');\n        equal(options.types[1], 'PathExpression', 'the expression type is passed');\n        equal(options.types[2], 'BooleanLiteral', 'the expression type is passed');\n        equal(desire, 'need', 'the string form is passed for strings');\n        equal(noun, 'dad.joke', 'the string form is passed for expressions');\n        equal(trueBool, true, 'raw booleans are passed through');\n        equal(falseBool, false, 'raw booleans are passed through');\n        return 'Helper called';\n      }"
 			}
 		},
 		"ast": {
@@ -4200,7 +4205,8 @@
 		"helpers": {
 			"tomdale": {
 				"!code": true,
-				"javascript": "function (exclamation, options) {\n        equal(exclamation, 'he.says');\n        equal(options.types[0], 'PathExpression');\n\n        equal(options.hashTypes.desire, 'StringLiteral');\n        equal(options.hashTypes.noun, 'PathExpression');\n        equal(options.hashTypes.bool, 'BooleanLiteral');\n        equal(options.hash.desire, 'need');\n        equal(options.hash.noun, 'dad.joke');\n        equal(options.hash.bool, true);\n        return 'Helper called';\n      }"
+				"javascript": "function (exclamation, options) {\n        equal(exclamation, 'he.says');\n        equal(options.types[0], 'PathExpression');\n\n        equal(options.hashTypes.desire, 'StringLiteral');\n        equal(options.hashTypes.noun, 'PathExpression');\n        equal(options.hashTypes.bool, 'BooleanLiteral');\n        equal(options.hash.desire, 'need');\n        equal(options.hash.noun, 'dad.joke');\n        equal(options.hash.bool, true);\n        return 'Helper called';\n      }",
+				"phpstub": "function (exclamation, options) {\n        equal(exclamation, 'he.says');\n        equal(options.types[0], 'PathExpression');\n\n        equal(options.hashTypes.desire, 'StringLiteral');\n        equal(options.hashTypes.noun, 'PathExpression');\n        equal(options.hashTypes.bool, 'BooleanLiteral');\n        equal(options.hash.desire, 'need');\n        equal(options.hash.noun, 'dad.joke');\n        equal(options.hash.bool, true);\n        return 'Helper called';\n      }"
 			}
 		},
 		"ast": {
@@ -8705,11 +8711,13 @@
 		"helpers": {
 			"tomdale": {
 				"!code": true,
-				"javascript": "function (exclamation, options) {\n        equal(exclamation, 'he.says');\n        equal(options.types[0], 'PathExpression');\n\n        equal(options.contexts.length, 1);\n        equal(options.hashContexts.noun, context);\n        equal(options.hash.desire, 'need');\n        equal(options.hash.noun, 'dad.joke');\n        equal(options.hash.bool, true);\n        return 'Helper called';\n      }"
+				"javascript": "function (exclamation, options) {\n        equal(exclamation, 'he.says');\n        equal(options.types[0], 'PathExpression');\n\n        equal(options.contexts.length, 1);\n        equal(options.hashContexts.noun, context);\n        equal(options.hash.desire, 'need');\n        equal(options.hash.noun, 'dad.joke');\n        equal(options.hash.bool, true);\n        return 'Helper called';\n      }",
+				"phpstub": "function (exclamation, options) {\n        equal(exclamation, 'he.says');\n        equal(options.types[0], 'PathExpression');\n\n        equal(options.contexts.length, 1);\n        equal(options.hashContexts.noun, context);\n        equal(options.hash.desire, 'need');\n        equal(options.hash.noun, 'dad.joke');\n        equal(options.hash.bool, true);\n        return 'Helper called';\n      }"
 			},
 			"with": {
 				"!code": true,
-				"javascript": "function (withContext, options) {\n        return options.fn(options.contexts[0][withContext]);\n      }"
+				"javascript": "function (withContext, options) {\n        return options.fn(options.contexts[0][withContext]);\n      }",
+				"phpstub": "function (withContext, options) {\n        return options.fn(options.contexts[0][withContext]);\n      }"
 			}
 		},
 		"ast": {
@@ -14473,11 +14481,13 @@
 		"helpers": {
 			"tomdale": {
 				"!code": true,
-				"javascript": "function (desire, noun, options) {\n        return 'STOP ME FROM READING HACKER NEWS I ' +\n                options.contexts[0][desire] + ' ' + noun + ' ' +\n                options.fn(this);\n      }"
+				"javascript": "function (desire, noun, options) {\n        return 'STOP ME FROM READING HACKER NEWS I ' +\n                options.contexts[0][desire] + ' ' + noun + ' ' +\n                options.fn(this);\n      }",
+				"phpstub": "function (desire, noun, options) {\n        return 'STOP ME FROM READING HACKER NEWS I ' +\n                options.contexts[0][desire] + ' ' + noun + ' ' +\n                options.fn(this);\n      }"
 			},
 			"with": {
 				"!code": true,
-				"javascript": "function (context, options) {\n        return options.fn(options.contexts[0][context]);\n      }"
+				"javascript": "function (context, options) {\n        return options.fn(options.contexts[0][context]);\n      }",
+				"phpstub": "function (context, options) {\n        return options.fn(options.contexts[0][context]);\n      }"
 			}
 		},
 		"ast": {
@@ -15099,11 +15109,13 @@
 		"helpers": {
 			"with": {
 				"!code": true,
-				"javascript": "function () {\n        return 'WITH';\n      }"
+				"javascript": "function () {\n        return 'WITH';\n      }",
+				"phpstub": "function () {\n        return 'WITH';\n      }"
 			},
 			"view": {
 				"!code": true,
-				"javascript": "function () {\n        return 'VIEW';\n      }"
+				"javascript": "function () {\n        return 'VIEW';\n      }",
+				"phpstub": "function () {\n        return 'VIEW';\n      }"
 			}
 		},
 		"ast": {
@@ -15984,7 +15996,8 @@
 		"helpers": {
 			"foo": {
 				"!code": true,
-				"javascript": "function (bar, options) {\n        equal(bar, '@bar');\n        equal(options.types[0], 'PathExpression');\n        return 'Foo!';\n      }"
+				"javascript": "function (bar, options) {\n        equal(bar, '@bar');\n        equal(options.types[0], 'PathExpression');\n        return 'Foo!';\n      }",
+				"phpstub": "function (bar, options) {\n        equal(bar, '@bar');\n        equal(options.types[0], 'PathExpression');\n        return 'Foo!';\n      }"
 			}
 		},
 		"ast": {

@@ -16,7 +16,8 @@
 		"helpers": {
 			"link": {
 				"!code": true,
-				"javascript": "function (prefix) {\n      return '<a href=\"' + prefix + '/' + this.url + '\">' + this.text + '</a>';\n    }"
+				"javascript": "function (prefix) {\n      return '<a href=\"' + prefix + '/' + this.url + '\">' + this.text + '</a>';\n    }",
+				"phpstub": "function (prefix) {\n      return '<a href=\"' + prefix + '/' + this.url + '\">' + this.text + '</a>';\n    }"
 			}
 		},
 		"compileOptions": {
@@ -554,7 +555,8 @@
 		"helpers": {
 			"raw": {
 				"!code": true,
-				"javascript": "function (options) {\n        return options.fn();\n    }"
+				"javascript": "function (options) {\n        return options.fn();\n    }",
+				"phpstub": "function (options) {\n        return options.fn();\n    }"
 			}
 		},
 		"compileOptions": {
@@ -904,7 +906,8 @@
 		"helpers": {
 			"raw": {
 				"!code": true,
-				"javascript": "function (a, b, c, options) {\n        return options.fn() + a + b + c;\n    }"
+				"javascript": "function (a, b, c, options) {\n        return options.fn() + a + b + c;\n    }",
+				"phpstub": "function (a, b, c, options) {\n        return options.fn() + a + b + c;\n    }"
 			}
 		},
 		"compileOptions": {
@@ -1287,7 +1290,8 @@
 		"helpers": {
 			"a": {
 				"!code": true,
-				"javascript": "function (options) {\n          return options.fn();\n      }"
+				"javascript": "function (options) {\n          return options.fn();\n      }",
+				"phpstub": "function (options) {\n          return options.fn();\n      }"
 			}
 		},
 		"compileOptions": {
@@ -1761,7 +1765,8 @@
 		"helpers": {
 			"goodbyes": {
 				"!code": true,
-				"javascript": "function (options) {\n      var out = '';\n      var byes = ['Goodbye', 'goodbye', 'GOODBYE'];\n      for (var i = 0, j = byes.length; i < j; i++) {\n        out += byes[i] + ' ' + options.fn(this) + '! ';\n      }\n      return out;\n    }"
+				"javascript": "function (options) {\n      var out = '';\n      var byes = ['Goodbye', 'goodbye', 'GOODBYE'];\n      for (var i = 0, j = byes.length; i < j; i++) {\n        out += byes[i] + ' ' + options.fn(this) + '! ';\n      }\n      return out;\n    }",
+				"phpstub": "function (options) {\n      var out = '';\n      var byes = ['Goodbye', 'goodbye', 'GOODBYE'];\n      for (var i = 0, j = byes.length; i < j; i++) {\n        out += byes[i] + ' ' + options.fn(this) + '! ';\n      }\n      return out;\n    }"
 			}
 		},
 		"compileOptions": {
@@ -2239,7 +2244,8 @@
 		"helpers": {
 			"goodbyes": {
 				"!code": true,
-				"javascript": "function (options) {\n      var out = '';\n      var byes = ['Goodbye', 'goodbye', 'GOODBYE'];\n      for (var i = 0, j = byes.length; i < j; i++) {\n        out += byes[i] + ' ' + options.fn({}) + '! ';\n      }\n      return out;\n    }"
+				"javascript": "function (options) {\n      var out = '';\n      var byes = ['Goodbye', 'goodbye', 'GOODBYE'];\n      for (var i = 0, j = byes.length; i < j; i++) {\n        out += byes[i] + ' ' + options.fn({}) + '! ';\n      }\n      return out;\n    }",
+				"phpstub": "function (options) {\n      var out = '';\n      var byes = ['Goodbye', 'goodbye', 'GOODBYE'];\n      for (var i = 0, j = byes.length; i < j; i++) {\n        out += byes[i] + ' ' + options.fn({}) + '! ';\n      }\n      return out;\n    }"
 			}
 		},
 		"compileOptions": {
@@ -2674,7 +2680,8 @@
 		"helpers": {
 			"link": {
 				"!code": true,
-				"javascript": "function (prefix, options) {\n        return '<a href=\"' + prefix + '/' + this.url + '\">' + options.fn(this) + '</a>';\n    }"
+				"javascript": "function (prefix, options) {\n        return '<a href=\"' + prefix + '/' + this.url + '\">' + options.fn(this) + '</a>';\n    }",
+				"phpstub": "function (prefix, options) {\n        return '<a href=\"' + prefix + '/' + this.url + '\">' + options.fn(this) + '</a>';\n    }"
 			}
 		},
 		"compileOptions": {
@@ -3415,7 +3422,8 @@
 		"helpers": {
 			"link": {
 				"!code": true,
-				"javascript": "function (prefix, options) {\n        return '<a href=\"' + prefix + '/' + this.url + '\">' + options.fn(this) + '</a>';\n    }"
+				"javascript": "function (prefix, options) {\n        return '<a href=\"' + prefix + '/' + this.url + '\">' + options.fn(this) + '</a>';\n    }",
+				"phpstub": "function (prefix, options) {\n        return '<a href=\"' + prefix + '/' + this.url + '\">' + options.fn(this) + '</a>';\n    }"
 			}
 		},
 		"compileOptions": {
@@ -4148,7 +4156,8 @@
 		"helpers": {
 			"nothere": {
 				"!code": true,
-				"javascript": "function () {}"
+				"javascript": "function () {}",
+				"phpstub": "function () {}"
 			}
 		},
 		"compileOptions": {
@@ -4398,7 +4407,8 @@
 		"helpers": {
 			"nothere": {
 				"!code": true,
-				"javascript": "function () {}"
+				"javascript": "function () {}",
+				"phpstub": "function () {}"
 			}
 		},
 		"compileOptions": {
@@ -4742,7 +4752,8 @@
 		"helpers": {
 			"goodbyes": {
 				"!code": true,
-				"javascript": "function (options) { return options.fn({text: 'GOODBYE'}); }"
+				"javascript": "function (options) { return options.fn({text: 'GOODBYE'}); }",
+				"phpstub": "function (options) { return options.fn({text: 'GOODBYE'}); }"
 			}
 		},
 		"ast": {
@@ -5454,7 +5465,8 @@
 		"helpers": {
 			"form": {
 				"!code": true,
-				"javascript": "function (options) { return '<form>' + options.fn(this) + '</form>'; }"
+				"javascript": "function (options) { return '<form>' + options.fn(this) + '</form>'; }",
+				"phpstub": "function (options) { return '<form>' + options.fn(this) + '</form>'; }"
 			}
 		},
 		"ast": {
@@ -5989,7 +6001,8 @@
 		"helpers": {
 			"link": {
 				"!code": true,
-				"javascript": "function link(options) {\n      return '<a href=\"/people/' + this.id + '\">' + options.fn(this) + '</a>';\n    }"
+				"javascript": "function link(options) {\n      return '<a href=\"/people/' + this.id + '\">' + options.fn(this) + '</a>';\n    }",
+				"phpstub": "function link(options) {\n      return '<a href=\"/people/' + this.id + '\">' + options.fn(this) + '</a>';\n    }"
 			}
 		},
 		"compileOptions": {
@@ -7198,7 +7211,8 @@
 		"helpers": {
 			"form": {
 				"!code": true,
-				"javascript": "function (context, options) { return '<form>' + options.fn(context) + '</form>'; }"
+				"javascript": "function (context, options) { return '<form>' + options.fn(context) + '</form>'; }",
+				"phpstub": "function (context, options) { return '<form>' + options.fn(context) + '</form>'; }"
 			}
 		},
 		"ast": {
@@ -7728,7 +7742,8 @@
 		"helpers": {
 			"form": {
 				"!code": true,
-				"javascript": "function (context, options) { return '<form>' + options.fn(context) + '</form>'; }"
+				"javascript": "function (context, options) { return '<form>' + options.fn(context) + '</form>'; }",
+				"phpstub": "function (context, options) { return '<form>' + options.fn(context) + '</form>'; }"
 			}
 		},
 		"ast": {
@@ -8257,11 +8272,13 @@
 		"helpers": {
 			"link": {
 				"!code": true,
-				"javascript": "function (options) { return '<a href=\"' + this.name + '\">' + options.fn(this) + '</a>'; }"
+				"javascript": "function (options) { return '<a href=\"' + this.name + '\">' + options.fn(this) + '</a>'; }",
+				"phpstub": "function (options) { return '<a href=\"' + this.name + '\">' + options.fn(this) + '</a>'; }"
 			},
 			"form": {
 				"!code": true,
-				"javascript": "function (context, options) { return '<form>' + options.fn(context) + '</form>'; }"
+				"javascript": "function (context, options) { return '<form>' + options.fn(context) + '</form>'; }",
+				"phpstub": "function (context, options) { return '<form>' + options.fn(context) + '</form>'; }"
 			}
 		},
 		"ast": {
@@ -9080,7 +9097,8 @@
 		"helpers": {
 			"list": {
 				"!code": true,
-				"javascript": "function list(context, options) {\n      if (context.length > 0) {\n        var out = '<ul>';\n        for (var i = 0, j = context.length; i < j; i++) {\n          out += '<li>';\n          out += options.fn(context[i]);\n          out += '</li>';\n        }\n        out += '</ul>';\n        return out;\n      } else {\n        return '<p>' + options.inverse(this) + '</p>';\n      }\n    }"
+				"javascript": "function list(context, options) {\n      if (context.length > 0) {\n        var out = '<ul>';\n        for (var i = 0, j = context.length; i < j; i++) {\n          out += '<li>';\n          out += options.fn(context[i]);\n          out += '</li>';\n        }\n        out += '</ul>';\n        return out;\n      } else {\n        return '<p>' + options.inverse(this) + '</p>';\n      }\n    }",
+				"phpstub": "function list(context, options) {\n      if (context.length > 0) {\n        var out = '<ul>';\n        for (var i = 0, j = context.length; i < j; i++) {\n          out += '<li>';\n          out += options.fn(context[i]);\n          out += '</li>';\n        }\n        out += '</ul>';\n        return out;\n      } else {\n        return '<p>' + options.inverse(this) + '</p>';\n      }\n    }"
 			}
 		},
 		"compileOptions": {
@@ -9629,7 +9647,8 @@
 		"helpers": {
 			"list": {
 				"!code": true,
-				"javascript": "function list(context, options) {\n      if (context.length > 0) {\n        var out = '<ul>';\n        for (var i = 0, j = context.length; i < j; i++) {\n          out += '<li>';\n          out += options.fn(context[i]);\n          out += '</li>';\n        }\n        out += '</ul>';\n        return out;\n      } else {\n        return '<p>' + options.inverse(this) + '</p>';\n      }\n    }"
+				"javascript": "function list(context, options) {\n      if (context.length > 0) {\n        var out = '<ul>';\n        for (var i = 0, j = context.length; i < j; i++) {\n          out += '<li>';\n          out += options.fn(context[i]);\n          out += '</li>';\n        }\n        out += '</ul>';\n        return out;\n      } else {\n        return '<p>' + options.inverse(this) + '</p>';\n      }\n    }",
+				"phpstub": "function list(context, options) {\n      if (context.length > 0) {\n        var out = '<ul>';\n        for (var i = 0, j = context.length; i < j; i++) {\n          out += '<li>';\n          out += options.fn(context[i]);\n          out += '</li>';\n        }\n        out += '</ul>';\n        return out;\n      } else {\n        return '<p>' + options.inverse(this) + '</p>';\n      }\n    }"
 			}
 		},
 		"compileOptions": {
@@ -10179,7 +10198,8 @@
 		"helpers": {
 			"list": {
 				"!code": true,
-				"javascript": "function list(context, options) {\n      if (context.length > 0) {\n        var out = '<ul>';\n        for (var i = 0, j = context.length; i < j; i++) {\n          out += '<li>';\n          out += options.fn(context[i]);\n          out += '</li>';\n        }\n        out += '</ul>';\n        return out;\n      } else {\n        return '<p>' + options.inverse(this) + '</p>';\n      }\n    }"
+				"javascript": "function list(context, options) {\n      if (context.length > 0) {\n        var out = '<ul>';\n        for (var i = 0, j = context.length; i < j; i++) {\n          out += '<li>';\n          out += options.fn(context[i]);\n          out += '</li>';\n        }\n        out += '</ul>';\n        return out;\n      } else {\n        return '<p>' + options.inverse(this) + '</p>';\n      }\n    }",
+				"phpstub": "function list(context, options) {\n      if (context.length > 0) {\n        var out = '<ul>';\n        for (var i = 0, j = context.length; i < j; i++) {\n          out += '<li>';\n          out += options.fn(context[i]);\n          out += '</li>';\n        }\n        out += '</ul>';\n        return out;\n      } else {\n        return '<p>' + options.inverse(this) + '</p>';\n      }\n    }"
 			}
 		},
 		"compileOptions": {
@@ -10724,7 +10744,8 @@
 		"data": {
 			"helper": {
 				"!code": true,
-				"javascript": "function () {\n        return 'winning';\n      }"
+				"javascript": "function () {\n        return 'winning';\n      }",
+				"phpstub": "function () {\n        return 'winning';\n      }"
 			}
 		},
 		"expected": "winning",
@@ -10732,6 +10753,9 @@
 			"./helper": {
 				"!code": true,
 				"javascript": "function () {\n        return 'fail';\n      }"
+			},
+			"": {
+				"/helper": {}
 			}
 		},
 		"compileOptions": {
@@ -10981,7 +11005,8 @@
 		"data": {
 			"helper": {
 				"!code": true,
-				"javascript": "function () {\n        return 'winning';\n      }"
+				"javascript": "function () {\n        return 'winning';\n      }",
+				"phpstub": "function () {\n        return 'winning';\n      }"
 			}
 		},
 		"expected": "winning",
@@ -10989,6 +11014,9 @@
 			"./helper": {
 				"!code": true,
 				"javascript": "function () {\n        return 'fail';\n      }"
+			},
+			"": {
+				"/helper": {}
 			}
 		},
 		"compileOptions": {
@@ -11244,7 +11272,8 @@
 		"helpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world'; }"
+				"javascript": "function () { return 'world'; }",
+				"phpstub": "function () { return 'world'; }"
 			}
 		},
 		"compileOptions": {
@@ -11716,7 +11745,8 @@
 		"helpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world'; }"
+				"javascript": "function () { return 'world'; }",
+				"phpstub": "function () { return 'world'; }"
 			}
 		},
 		"compileOptions": {
@@ -12441,7 +12471,8 @@
 		"helpers": {
 			"lookup": {
 				"!code": true,
-				"javascript": "function () { return 'helpers'; }"
+				"javascript": "function () { return 'helpers'; }",
+				"phpstub": "function () { return 'helpers'; }"
 			}
 		},
 		"compileOptions": {
@@ -12625,7 +12656,8 @@
 		"helpers": {
 			"lookup": {
 				"!code": true,
-				"javascript": "function () { return 'helpers'; }"
+				"javascript": "function () { return 'helpers'; }",
+				"phpstub": "function () { return 'helpers'; }"
 			}
 		},
 		"compileOptions": {
@@ -12813,7 +12845,8 @@
 		"helpers": {
 			"helper": {
 				"!code": true,
-				"javascript": "function () { return 'helper'; }"
+				"javascript": "function () { return 'helper'; }",
+				"phpstub": "function () { return 'helper'; }"
 			}
 		},
 		"compileOptions": {
@@ -13548,7 +13581,8 @@
 		"helpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			}
 		},
 		"compileOptions": {
@@ -13568,7 +13602,8 @@
 		"globalHelpers": {
 			"test_helper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -15240,11 +15275,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -16902,7 +16939,8 @@
 		"helpers": {
 			"hello": {
 				"!code": true,
-				"javascript": "function (times, times2) {\n      if (typeof times !== 'number') { times = 'NaN'; }\n      if (typeof times2 !== 'number') { times2 = 'NaN'; }\n      return 'Hello ' + times + ' ' + times2 + ' times';\n    }"
+				"javascript": "function (times, times2) {\n      if (typeof times !== 'number') { times = 'NaN'; }\n      if (typeof times2 !== 'number') { times2 = 'NaN'; }\n      return 'Hello ' + times + ' ' + times2 + ' times';\n    }",
+				"phpstub": "function (times, times2) {\n      if (typeof times !== 'number') { times = 'NaN'; }\n      if (typeof times2 !== 'number') { times2 = 'NaN'; }\n      return 'Hello ' + times + ' ' + times2 + ' times';\n    }"
 			}
 		},
 		"compileOptions": {
@@ -16922,11 +16960,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -17226,7 +17266,8 @@
 		"helpers": {
 			"hello": {
 				"!code": true,
-				"javascript": "function (times) {\n      if (typeof times !== 'number') { times = 'NaN'; }\n      return 'Hello ' + times + ' times';\n    }"
+				"javascript": "function (times) {\n      if (typeof times !== 'number') { times = 'NaN'; }\n      return 'Hello ' + times + ' times';\n    }",
+				"phpstub": "function (times) {\n      if (typeof times !== 'number') { times = 'NaN'; }\n      return 'Hello ' + times + ' times';\n    }"
 			}
 		},
 		"compileOptions": {
@@ -17246,11 +17287,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -17519,7 +17562,8 @@
 		"helpers": {
 			"hello": {
 				"!code": true,
-				"javascript": "function (param, times, bool1, bool2) {\n        if (typeof times !== 'number') { times = 'NaN'; }\n        if (typeof bool1 !== 'boolean') { bool1 = 'NaB'; }\n        if (typeof bool2 !== 'boolean') { bool2 = 'NaB'; }\n        return 'Hello ' + param + ' ' + times + ' times: ' + bool1 + ' ' + bool2;\n      }"
+				"javascript": "function (param, times, bool1, bool2) {\n        if (typeof times !== 'number') { times = 'NaN'; }\n        if (typeof bool1 !== 'boolean') { bool1 = 'NaB'; }\n        if (typeof bool2 !== 'boolean') { bool2 = 'NaB'; }\n        return 'Hello ' + param + ' ' + times + ' times: ' + bool1 + ' ' + bool2;\n      }",
+				"phpstub": "function (param, times, bool1, bool2) {\n        if (typeof times !== 'number') { times = 'NaN'; }\n        if (typeof bool1 !== 'boolean') { bool1 = 'NaB'; }\n        if (typeof bool2 !== 'boolean') { bool2 = 'NaB'; }\n        return 'Hello ' + param + ' ' + times + ' times: ' + bool1 + ' ' + bool2;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -17539,11 +17583,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -17905,7 +17951,8 @@
 		"helpers": {
 			"hello": {
 				"!code": true,
-				"javascript": "function (param) { return 'Hello ' + param; }"
+				"javascript": "function (param) { return 'Hello ' + param; }",
+				"phpstub": "function (param) { return 'Hello ' + param; }"
 			}
 		},
 		"compileOptions": {
@@ -17925,11 +17972,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -18198,7 +18247,8 @@
 		"helpers": {
 			"hello": {
 				"!code": true,
-				"javascript": "function (param) { return 'Hello ' + param; }"
+				"javascript": "function (param) { return 'Hello ' + param; }",
+				"phpstub": "function (param) { return 'Hello ' + param; }"
 			}
 		},
 		"compileOptions": {
@@ -18218,11 +18268,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -18491,7 +18543,8 @@
 		"helpers": {
 			"hello": {
 				"!code": true,
-				"javascript": "function (times) {\n      if (typeof times !== 'number') { times = 'NaN'; }\n      return 'Hello ' + times + ' times';\n    }"
+				"javascript": "function (times) {\n      if (typeof times !== 'number') { times = 'NaN'; }\n      return 'Hello ' + times + ' times';\n    }",
+				"phpstub": "function (times) {\n      if (typeof times !== 'number') { times = 'NaN'; }\n      return 'Hello ' + times + ' times';\n    }"
 			}
 		},
 		"compileOptions": {
@@ -18511,11 +18564,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -18787,7 +18842,8 @@
 		"helpers": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function (cruel, world) { return 'Goodbye ' + cruel + ' ' + world; }"
+				"javascript": "function (cruel, world) { return 'Goodbye ' + cruel + ' ' + world; }",
+				"phpstub": "function (cruel, world) { return 'Goodbye ' + cruel + ' ' + world; }"
 			}
 		},
 		"compileOptions": {
@@ -18807,11 +18863,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -19164,7 +19222,8 @@
 		"helpers": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function (cruel, world, options) {\n        return options.fn({greeting: 'Goodbye', adj: cruel, noun: world});\n      }"
+				"javascript": "function (cruel, world, options) {\n        return options.fn({greeting: 'Goodbye', adj: cruel, noun: world});\n      }",
+				"phpstub": "function (cruel, world, options) {\n        return options.fn({greeting: 'Goodbye', adj: cruel, noun: world});\n      }"
 			}
 		},
 		"compileOptions": {
@@ -19184,11 +19243,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -20106,7 +20167,8 @@
 		"helpers": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function (options) {\n          return 'GOODBYE ' + options.hash.cruel + ' ' + options.hash.world + ' ' + options.hash.times + ' TIMES';\n        }"
+				"javascript": "function (options) {\n          return 'GOODBYE ' + options.hash.cruel + ' ' + options.hash.world + ' ' + options.hash.times + ' TIMES';\n        }",
+				"phpstub": "function (options) {\n          return 'GOODBYE ' + options.hash.cruel + ' ' + options.hash.world + ' ' + options.hash.times + ' TIMES';\n        }"
 			}
 		},
 		"ast": {
@@ -20523,7 +20585,8 @@
 		"helpers": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.hash.world;\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }"
+				"javascript": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.hash.world;\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }",
+				"phpstub": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.hash.world;\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }"
 			}
 		},
 		"ast": {
@@ -20940,7 +21003,8 @@
 		"helpers": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.hash.world;\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }"
+				"javascript": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.hash.world;\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }",
+				"phpstub": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.hash.world;\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }"
 			}
 		},
 		"ast": {
@@ -21357,7 +21421,8 @@
 		"helpers": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function (options) {\n          return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this) + ' ' + options.hash.times + ' TIMES';\n        }"
+				"javascript": "function (options) {\n          return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this) + ' ' + options.hash.times + ' TIMES';\n        }",
+				"phpstub": "function (options) {\n          return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this) + ' ' + options.hash.times + ' TIMES';\n        }"
 			}
 		},
 		"ast": {
@@ -21787,7 +21852,8 @@
 		"helpers": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function (options) {\n          return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this) + ' ' + options.hash.times + ' TIMES';\n        }"
+				"javascript": "function (options) {\n          return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this) + ' ' + options.hash.times + ' TIMES';\n        }",
+				"phpstub": "function (options) {\n          return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this) + ' ' + options.hash.times + ' TIMES';\n        }"
 			}
 		},
 		"ast": {
@@ -22217,7 +22283,8 @@
 		"helpers": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this);\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }"
+				"javascript": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this);\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }",
+				"phpstub": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this);\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }"
 			}
 		},
 		"ast": {
@@ -22647,7 +22714,8 @@
 		"helpers": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this);\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }"
+				"javascript": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this);\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }",
+				"phpstub": "function (options) {\n          if (options.hash.print === true) {\n            return 'GOODBYE ' + options.hash.cruel + ' ' + options.fn(this);\n          } else if (options.hash.print === false) {\n            return 'NOT PRINTING';\n          } else {\n            return 'THIS SHOULD NOT HAPPEN';\n          }\n        }"
 			}
 		},
 		"ast": {
@@ -23521,7 +23589,8 @@
 		"helpers": {
 			"helperMissing": {
 				"!code": true,
-				"javascript": "function (mesg, options) {\n          if (options.name === 'link_to') {\n            return new Handlebars.SafeString('<a>' + mesg + '</a>');\n          }\n        }"
+				"javascript": "function (mesg, options) {\n          if (options.name === 'link_to') {\n            return new Handlebars.SafeString('<a>' + mesg + '</a>');\n          }\n        }",
+				"phpstub": "function (mesg, options) {\n          if (options.name === 'link_to') {\n            return new Handlebars.SafeString('<a>' + mesg + '</a>');\n          }\n        }"
 			}
 		},
 		"compileOptions": {
@@ -23541,11 +23610,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -23996,7 +24067,8 @@
 		"helpers": {
 			"helperMissing": {
 				"!code": true,
-				"javascript": "function (options) {\n          if (options.name === 'link_to') {\n            return new Handlebars.SafeString('<a>winning</a>');\n          }\n        }"
+				"javascript": "function (options) {\n          if (options.name === 'link_to') {\n            return new Handlebars.SafeString('<a>winning</a>');\n          }\n        }",
+				"phpstub": "function (options) {\n          if (options.name === 'link_to') {\n            return new Handlebars.SafeString('<a>winning</a>');\n          }\n        }"
 			}
 		},
 		"compileOptions": {
@@ -24016,11 +24088,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -24426,7 +24500,8 @@
 		"helpers": {
 			"hello": {
 				"!code": true,
-				"javascript": "function () { return 'foo'; }"
+				"javascript": "function () { return 'foo'; }",
+				"phpstub": "function () { return 'foo'; }"
 			}
 		},
 		"ast": {
@@ -24612,11 +24687,13 @@
 		"helpers": {
 			"typeof": {
 				"!code": true,
-				"javascript": "function (arg) { return typeof arg; }"
+				"javascript": "function (arg) { return typeof arg; }",
+				"phpstub": "function (arg) { return typeof arg; }"
 			},
 			"hello": {
 				"!code": true,
-				"javascript": "function () { return 'foo'; }"
+				"javascript": "function () { return 'foo'; }",
+				"phpstub": "function () { return 'foo'; }"
 			}
 		},
 		"ast": {
@@ -25927,7 +26004,8 @@
 		"data": {
 			"foo": {
 				"!code": true,
-				"javascript": "function () { return this.bar; }"
+				"javascript": "function () { return this.bar; }",
+				"phpstub": "function () { return this.bar; }"
 			},
 			"bar": "bar"
 		},
@@ -26354,7 +26432,8 @@
 		"data": {
 			"truthy": {
 				"!code": true,
-				"javascript": "function () { return true; }"
+				"javascript": "function () { return true; }",
+				"phpstub": "function () { return true; }"
 			}
 		},
 		"expected": "yep",
@@ -26375,11 +26454,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -26716,11 +26797,13 @@
 		"data": {
 			"truthy": {
 				"!code": true,
-				"javascript": "function () { return this.truthiness(); }"
+				"javascript": "function () { return this.truthiness(); }",
+				"phpstub": "function () { return this.truthiness(); }"
 			},
 			"truthiness": {
 				"!code": true,
-				"javascript": "function () { return false; }"
+				"javascript": "function () { return false; }",
+				"phpstub": "function () { return false; }"
 			}
 		},
 		"expected": "",
@@ -26741,11 +26824,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -27084,15 +27169,18 @@
 		"helpers": {
 			"blockHelperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helper": {
 				"!code": true,
-				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -27112,11 +27200,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -27321,15 +27411,18 @@
 		"helpers": {
 			"blockHelperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helper": {
 				"!code": true,
-				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -27349,11 +27442,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -27591,15 +27686,18 @@
 		"helpers": {
 			"blockHelperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helper": {
 				"!code": true,
-				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -27619,11 +27717,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -27919,15 +28019,18 @@
 		"helpers": {
 			"blockHelperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helper": {
 				"!code": true,
-				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -27947,11 +28050,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -28198,15 +28303,18 @@
 		"helpers": {
 			"blockHelperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helper": {
 				"!code": true,
-				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -28226,11 +28334,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -28515,15 +28625,18 @@
 		"helpers": {
 			"blockHelperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helper": {
 				"!code": true,
-				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
 			}
 		},
 		"ast": {
@@ -28695,15 +28808,18 @@
 		"helpers": {
 			"blockHelperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helper": {
 				"!code": true,
-				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -28723,11 +28839,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -28978,15 +29096,18 @@
 		"helpers": {
 			"blockHelperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helperMissing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'helper missing: ' + arguments[arguments.length - 1].name;\n      }"
 			},
 			"helper": {
 				"!code": true,
-				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
+				"javascript": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }",
+				"phpstub": "function () {\n        return 'ran: ' + arguments[arguments.length - 1].name;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -29006,11 +29127,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -29366,11 +29489,13 @@
 		"helpers": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function () {\n          return this.goodbye.toUpperCase();\n        }"
+				"javascript": "function () {\n          return this.goodbye.toUpperCase();\n        }",
+				"phpstub": "function () {\n          return this.goodbye.toUpperCase();\n        }"
 			},
 			"cruel": {
 				"!code": true,
-				"javascript": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }"
+				"javascript": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }",
+				"phpstub": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }"
 			}
 		},
 		"ast": {
@@ -29822,11 +29947,13 @@
 		"helpers": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function (options) {\n          return this.goodbye.toUpperCase() + options.fn(this);\n        }"
+				"javascript": "function (options) {\n          return this.goodbye.toUpperCase() + options.fn(this);\n        }",
+				"phpstub": "function (options) {\n          return this.goodbye.toUpperCase() + options.fn(this);\n        }"
 			},
 			"cruel": {
 				"!code": true,
-				"javascript": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }"
+				"javascript": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }",
+				"phpstub": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }"
 			}
 		},
 		"ast": {
@@ -30381,11 +30508,13 @@
 		"helpers": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function () {\n          return this.goodbye.toUpperCase();\n        }"
+				"javascript": "function () {\n          return this.goodbye.toUpperCase();\n        }",
+				"phpstub": "function () {\n          return this.goodbye.toUpperCase();\n        }"
 			},
 			"cruel": {
 				"!code": true,
-				"javascript": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }"
+				"javascript": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }",
+				"phpstub": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }"
 			}
 		},
 		"ast": {
@@ -31029,11 +31158,13 @@
 		"helpers": {
 			"goodbye": {
 				"!code": true,
-				"javascript": "function (options) {\n          return this.goodbye.toUpperCase() + options.fn(this);\n        }"
+				"javascript": "function (options) {\n          return this.goodbye.toUpperCase() + options.fn(this);\n        }",
+				"phpstub": "function (options) {\n          return this.goodbye.toUpperCase() + options.fn(this);\n        }"
 			},
 			"cruel": {
 				"!code": true,
-				"javascript": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }"
+				"javascript": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }",
+				"phpstub": "function (world) {\n          return 'cruel ' + world.toUpperCase();\n        }"
 			}
 		},
 		"ast": {
@@ -31720,7 +31851,8 @@
 		"helpers": {
 			"goodbyes": {
 				"!code": true,
-				"javascript": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn({value: 'bar'}, {blockParams: [1, 2]});\n        }"
+				"javascript": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn({value: 'bar'}, {blockParams: [1, 2]});\n        }",
+				"phpstub": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn({value: 'bar'}, {blockParams: [1, 2]});\n        }"
 			}
 		},
 		"compileOptions": {
@@ -31740,11 +31872,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -32313,11 +32447,13 @@
 		"helpers": {
 			"value": {
 				"!code": true,
-				"javascript": "function () {\n          return 'foo';\n        }"
+				"javascript": "function () {\n          return 'foo';\n        }",
+				"phpstub": "function () {\n          return 'foo';\n        }"
 			},
 			"goodbyes": {
 				"!code": true,
-				"javascript": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn({}, {blockParams: [1, 2]});\n        }"
+				"javascript": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn({}, {blockParams: [1, 2]});\n        }",
+				"phpstub": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn({}, {blockParams: [1, 2]});\n        }"
 			}
 		},
 		"compileOptions": {
@@ -32337,11 +32473,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -32912,11 +33050,13 @@
 		"helpers": {
 			"value": {
 				"!code": true,
-				"javascript": "function () {\n          return 'foo';\n        }"
+				"javascript": "function () {\n          return 'foo';\n        }",
+				"phpstub": "function () {\n          return 'foo';\n        }"
 			},
 			"goodbyes": {
 				"!code": true,
-				"javascript": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn(this, {blockParams: [1, 2]});\n        }"
+				"javascript": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn(this, {blockParams: [1, 2]});\n        }",
+				"phpstub": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn(this, {blockParams: [1, 2]});\n        }"
 			}
 		},
 		"compileOptions": {
@@ -32936,11 +33076,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -33510,7 +33652,8 @@
 		"helpers": {
 			"goodbyes": {
 				"!code": true,
-				"javascript": "function (options) {\n          return options.fn({value: 'bar'}, {blockParams: options.fn.blockParams === 1 ? [value++, value++] : undefined});\n        }"
+				"javascript": "function (options) {\n          return options.fn({value: 'bar'}, {blockParams: options.fn.blockParams === 1 ? [value++, value++] : undefined});\n        }",
+				"phpstub": "function (options) {\n          return options.fn({value: 'bar'}, {blockParams: options.fn.blockParams === 1 ? [value++, value++] : undefined});\n        }"
 			}
 		},
 		"compileOptions": {
@@ -33530,11 +33673,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {
@@ -34726,7 +34871,8 @@
 		"helpers": {
 			"goodbyes": {
 				"!code": true,
-				"javascript": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn({value: 'bar'}, {blockParams: [1, 2]});\n        }"
+				"javascript": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn({value: 'bar'}, {blockParams: [1, 2]});\n        }",
+				"phpstub": "function (options) {\n          equals(options.fn.blockParams, 1);\n          return options.fn({value: 'bar'}, {blockParams: [1, 2]});\n        }"
 			}
 		},
 		"compileOptions": {
@@ -34746,11 +34892,13 @@
 		"globalHelpers": {
 			"world": {
 				"!code": true,
-				"javascript": "function () { return 'world!'; }"
+				"javascript": "function () { return 'world!'; }",
+				"phpstub": "function () { return 'world!'; }"
 			},
 			"testHelper": {
 				"!code": true,
-				"javascript": "function () { return 'found it!'; }"
+				"javascript": "function () { return 'found it!'; }",
+				"phpstub": "function () { return 'found it!'; }"
 			}
 		},
 		"ast": {

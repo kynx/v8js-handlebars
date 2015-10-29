@@ -9,6 +9,8 @@ namespace KynxTest\V8js;
 
 use Kynx\V8js\Handlebars;
 use PHPUnit_Framework_TestCase as TestCase;
+use Prophecy\Argument;
+use Psr\Log\LoggerInterface;
 use V8Js;
 use V8JsScriptException;
 
@@ -48,8 +50,19 @@ class SpecTest extends TestCase
         self::$counters[$name]++;
 
         $spec = $this->prepareSpec($case);
+
         if (!$spec) {
             $this->markTestSkipped("Couldn't evaluate test '" . $name . "'");
+        }
+
+        if (isset($spec['log'])) {
+            // @todo the real spec tests are checking correct log levels and messages - add 'log' config to patches
+            $logger = $this->prophesize(LoggerInterface::class);
+            $level = isset($spec['log']['level']) ? $spec['log']['level'] : 'info';
+            $message = isset($spec['log']['message']) ? $spec['log']['message'] : '';
+            $logger->log($level, $message)
+                ->shouldBeCalledTimes(1);
+            $this->hb->setLogger($logger->reveal());
         }
 
         if (!empty($spec['globalPartials'])) {

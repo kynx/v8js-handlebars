@@ -1828,7 +1828,8 @@
 		"helpers": {
 			"partial": {
 				"!code": true,
-				"javascript": "function () {\n        return 'dude';\n      }"
+				"javascript": "function () {\n        return 'dude';\n      }",
+				"phpstub": "function () {\n        return 'dude';\n      }"
 			}
 		},
 		"compileOptions": {
@@ -2854,7 +2855,8 @@
 		"helpers": {
 			"partial": {
 				"!code": true,
-				"javascript": "function () {\n        return 'dude';\n      }"
+				"javascript": "function () {\n        return 'dude';\n      }",
+				"phpstub": "function () {\n        return 'dude';\n      }"
 			}
 		},
 		"compileOptions": {
@@ -3881,7 +3883,8 @@
 		"helpers": {
 			"partial": {
 				"!code": true,
-				"javascript": "function () {\n        return 'missing';\n      }"
+				"javascript": "function () {\n        return 'missing';\n      }",
+				"phpstub": "function () {\n        return 'missing';\n      }"
 			}
 		},
 		"compileOptions": {
@@ -11180,7 +11183,7 @@
 		"it": "registering undefined partial throws an exception",
 		"template": "{{> whatever}}",
 		"exception": true,
-		"message": "Attempting to register a partial as undefined",
+		"message": "Attempting to register a partial called \"undefined_test\" as undefined",
 		"ast": {
 			"type": "Program",
 			"body": [

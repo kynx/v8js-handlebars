@@ -461,13 +461,15 @@
 		"helpers": {
 			"helper": {
 				"!code": true,
-				"javascript": "function (options) {\n          return options.fn.run;\n        }"
+				"javascript": "function (options) {\n          return options.fn.run;\n        }",
+				"phpstub": "function (options) {\n          return options.fn.run;\n        }"
 			}
 		},
 		"decorators": {
 			"decorator": {
 				"!code": true,
-				"javascript": "function (fn) {\n          fn.run = 'success';\n          return fn;\n        }"
+				"javascript": "function (fn) {\n          fn.run = 'success';\n          return fn;\n        }",
+				"phpstub": "function (fn) {\n          fn.run = 'success';\n          return fn;\n        }"
 			}
 		},
 		"compileOptions": {}
@@ -481,13 +483,15 @@
 		"helpers": {
 			"helper": {
 				"!code": true,
-				"javascript": "function (options) {\n          return options.fn() + options.fn.run;\n        }"
+				"javascript": "function (options) {\n          return options.fn() + options.fn.run;\n        }",
+				"phpstub": "function (options) {\n          return options.fn() + options.fn.run;\n        }"
 			}
 		},
 		"decorators": {
 			"decorator": {
 				"!code": true,
-				"javascript": "function (fn) {\n          fn.run = 'cess';\n        }"
+				"javascript": "function (fn) {\n          fn.run = 'cess';\n        }",
+				"phpstub": "function (fn) {\n          fn.run = 'cess';\n        }"
 			}
 		},
 		"compileOptions": {}
@@ -501,13 +505,15 @@
 		"helpers": {
 			"helper": {
 				"!code": true,
-				"javascript": "function (options) {\n          return options.fn.run;\n        }"
+				"javascript": "function (options) {\n          return options.fn.run;\n        }",
+				"phpstub": "function (options) {\n          return options.fn.run;\n        }"
 			}
 		},
 		"decorators": {
 			"decorator": {
 				"!code": true,
-				"javascript": "function (fn, props, container, options) {\n          fn.run = options.fn();\n          return fn;\n        }"
+				"javascript": "function (fn, props, container, options) {\n          fn.run = options.fn();\n          return fn;\n        }",
+				"phpstub": "function (fn, props, container, options) {\n          fn.run = options.fn();\n          return fn;\n        }"
 			}
 		},
 		"compileOptions": {}
@@ -521,17 +527,20 @@
 		"helpers": {
 			"helper": {
 				"!code": true,
-				"javascript": "function (options) {\n          return options.fn.run;\n        }"
+				"javascript": "function (options) {\n          return options.fn.run;\n        }",
+				"phpstub": "function (options) {\n          return options.fn.run;\n        }"
 			}
 		},
 		"decorators": {
 			"decorator": {
 				"!code": true,
-				"javascript": "function (fn, props, container, options) {\n          fn.run = options.fn.nested + options.fn();\n          return fn;\n        }"
+				"javascript": "function (fn, props, container, options) {\n          fn.run = options.fn.nested + options.fn();\n          return fn;\n        }",
+				"phpstub": "function (fn, props, container, options) {\n          fn.run = options.fn.nested + options.fn();\n          return fn;\n        }"
 			},
 			"nested": {
 				"!code": true,
-				"javascript": "function (fn, props, container, options) {\n          props.nested = options.fn();\n        }"
+				"javascript": "function (fn, props, container, options) {\n          props.nested = options.fn();\n        }",
+				"phpstub": "function (fn, props, container, options) {\n          props.nested = options.fn();\n        }"
 			}
 		},
 		"compileOptions": {}
@@ -545,13 +554,15 @@
 		"helpers": {
 			"helper": {
 				"!code": true,
-				"javascript": "function (options) {\n          return options.fn.run;\n        }"
+				"javascript": "function (options) {\n          return options.fn.run;\n        }",
+				"phpstub": "function (options) {\n          return options.fn.run;\n        }"
 			}
 		},
 		"decorators": {
 			"decorator": {
 				"!code": true,
-				"javascript": "function (fn, props, container, options) {\n          fn.run = (fn.run || '') + options.fn();\n          return fn;\n        }"
+				"javascript": "function (fn, props, container, options) {\n          fn.run = (fn.run || '') + options.fn();\n          return fn;\n        }",
+				"phpstub": "function (fn, props, container, options) {\n          fn.run = (fn.run || '') + options.fn();\n          return fn;\n        }"
 			}
 		},
 		"compileOptions": {}
@@ -567,13 +578,15 @@
 		"helpers": {
 			"helper": {
 				"!code": true,
-				"javascript": "function (options) {\n          return options.fn.run;\n        }"
+				"javascript": "function (options) {\n          return options.fn.run;\n        }",
+				"phpstub": "function (options) {\n          return options.fn.run;\n        }"
 			}
 		},
 		"decorators": {
 			"decorator": {
 				"!code": true,
-				"javascript": "function (fn, props, container, options) {\n          fn.run = options.args;\n          return fn;\n        }"
+				"javascript": "function (fn, props, container, options) {\n          fn.run = options.args;\n          return fn;\n        }",
+				"phpstub": "function (fn, props, container, options) {\n          fn.run = options.args;\n          return fn;\n        }"
 			}
 		},
 		"compileOptions": {}
@@ -589,7 +602,8 @@
 		"decorators": {
 			"decorator": {
 				"!code": true,
-				"javascript": "function (fn, props, container, options) {\n          equals(options.args[0], 'success');\n          run = true;\n          return fn;\n        }"
+				"javascript": "function (fn, props, container, options) {\n          equals(options.args[0], 'success');\n          run = true;\n          return fn;\n        }",
+				"phpstub": "function (fn, props, container, options) {\n          equals(options.args[0], 'success');\n          run = true;\n          return fn;\n        }"
 			}
 		},
 		"compileOptions": {}
@@ -611,7 +625,8 @@
 		"decorators": {
 			"decorator": {
 				"!code": true,
-				"javascript": "function (fn, props, container, options) {\n          equals(options.args[0], undefined);\n          run = true;\n          return fn;\n        }"
+				"javascript": "function (fn, props, container, options) {\n          equals(options.args[0], undefined);\n          run = true;\n          return fn;\n        }",
+				"phpstub": "function (fn, props, container, options) {\n          equals(options.args[0], undefined);\n          run = true;\n          return fn;\n        }"
 			}
 		},
 		"compileOptions": {}

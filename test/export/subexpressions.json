@@ -8,11 +8,13 @@
 		"helpers": {
 			"foo": {
 				"!code": true,
-				"javascript": "function (val) {\n        return val + val;\n      }"
+				"javascript": "function (val) {\n        return val + val;\n      }",
+				"phpstub": "function (val) {\n        return val + val;\n      }"
 			},
 			"bar": {
 				"!code": true,
-				"javascript": "function () {\n        return 'LOL';\n      }"
+				"javascript": "function () {\n        return 'LOL';\n      }",
+				"phpstub": "function () {\n        return 'LOL';\n      }"
 			}
 		},
 		"compileOptions": {
@@ -402,11 +404,13 @@
 		"helpers": {
 			"blog": {
 				"!code": true,
-				"javascript": "function (val) {\n        return 'val is ' + val;\n      }"
+				"javascript": "function (val) {\n        return 'val is ' + val;\n      }",
+				"phpstub": "function (val) {\n        return 'val is ' + val;\n      }"
 			},
 			"equal": {
 				"!code": true,
-				"javascript": "function (x, y) {\n        return x === y;\n      }"
+				"javascript": "function (x, y) {\n        return x === y;\n      }",
+				"phpstub": "function (x, y) {\n        return x === y;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -882,11 +886,13 @@
 		"helpers": {
 			"blog": {
 				"!code": true,
-				"javascript": "function (val, that, theOther) {\n        return 'val is ' + val + ', ' + that + ' and ' + theOther;\n      }"
+				"javascript": "function (val, that, theOther) {\n        return 'val is ' + val + ', ' + that + ' and ' + theOther;\n      }",
+				"phpstub": "function (val, that, theOther) {\n        return 'val is ' + val + ', ' + that + ' and ' + theOther;\n      }"
 			},
 			"equal": {
 				"!code": true,
-				"javascript": "function (x, y) {\n        return x === y;\n      }"
+				"javascript": "function (x, y) {\n        return x === y;\n      }",
+				"phpstub": "function (x, y) {\n        return x === y;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -1474,11 +1480,13 @@
 		"helpers": {
 			"blog": {
 				"!code": true,
-				"javascript": "function (val) {\n        return 'val is ' + val;\n      }"
+				"javascript": "function (val) {\n        return 'val is ' + val;\n      }",
+				"phpstub": "function (val) {\n        return 'val is ' + val;\n      }"
 			},
 			"equal": {
 				"!code": true,
-				"javascript": "function (x, y) {\n        return x === y;\n      }"
+				"javascript": "function (x, y) {\n        return x === y;\n      }",
+				"phpstub": "function (x, y) {\n        return x === y;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -2076,11 +2084,13 @@
 		"helpers": {
 			"dash": {
 				"!code": true,
-				"javascript": "function (a, b) {\n        return a + '-' + b;\n      }"
+				"javascript": "function (a, b) {\n        return a + '-' + b;\n      }",
+				"phpstub": "function (a, b) {\n        return a + '-' + b;\n      }"
 			},
 			"concat": {
 				"!code": true,
-				"javascript": "function (a, b) {\n        return a + b;\n      }"
+				"javascript": "function (a, b) {\n        return a + b;\n      }",
+				"phpstub": "function (a, b) {\n        return a + b;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -2591,11 +2601,13 @@
 		"helpers": {
 			"dash": {
 				"!code": true,
-				"javascript": "function (a, b) {\n        return a + '-' + b;\n      }"
+				"javascript": "function (a, b) {\n        return a + '-' + b;\n      }",
+				"phpstub": "function (a, b) {\n        return a + '-' + b;\n      }"
 			},
 			"concat": {
 				"!code": true,
-				"javascript": "function (a, b) {\n        return a + b;\n      }"
+				"javascript": "function (a, b) {\n        return a + b;\n      }",
+				"phpstub": "function (a, b) {\n        return a + b;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -3131,11 +3143,13 @@
 		"helpers": {
 			"dash": {
 				"!code": true,
-				"javascript": "function (a, b) {\n        return a + '-' + b;\n      }"
+				"javascript": "function (a, b) {\n        return a + '-' + b;\n      }",
+				"phpstub": "function (a, b) {\n        return a + '-' + b;\n      }"
 			},
 			"concat": {
 				"!code": true,
-				"javascript": "function (a, b) {\n        return a + b;\n      }"
+				"javascript": "function (a, b) {\n        return a + b;\n      }",
+				"phpstub": "function (a, b) {\n        return a + b;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -3673,11 +3687,13 @@
 		"helpers": {
 			"dash": {
 				"!code": true,
-				"javascript": "function (a, b) {\n        return a + '-' + b;\n      }"
+				"javascript": "function (a, b) {\n        return a + '-' + b;\n      }",
+				"phpstub": "function (a, b) {\n        return a + '-' + b;\n      }"
 			},
 			"concat": {
 				"!code": true,
-				"javascript": "function (a, b) {\n        return a + b;\n      }"
+				"javascript": "function (a, b) {\n        return a + b;\n      }",
+				"phpstub": "function (a, b) {\n        return a + b;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -4215,11 +4231,13 @@
 		"helpers": {
 			"dash": {
 				"!code": true,
-				"javascript": "function (a, b) {\n        return a + '-' + b;\n      }"
+				"javascript": "function (a, b) {\n        return a + '-' + b;\n      }",
+				"phpstub": "function (a, b) {\n        return a + '-' + b;\n      }"
 			},
 			"concat": {
 				"!code": true,
-				"javascript": "function (a, b) {\n        return a + b;\n      }"
+				"javascript": "function (a, b) {\n        return a + b;\n      }",
+				"phpstub": "function (a, b) {\n        return a + b;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -4749,7 +4767,8 @@
 		"helpers": {
 			"equal": {
 				"!code": true,
-				"javascript": "function (x, y, options) {\n        if (!options || options === lastOptions) {\n          throw new Error('options hash was reused');\n        }\n        lastOptions = options;\n        return x === y;\n      }"
+				"javascript": "function (x, y, options) {\n        if (!options || options === lastOptions) {\n          throw new Error('options hash was reused');\n        }\n        lastOptions = options;\n        return x === y;\n      }",
+				"phpstub": "function (x, y, options) {\n        if (!options || options === lastOptions) {\n          throw new Error('options hash was reused');\n        }\n        lastOptions = options;\n        return x === y;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -5202,11 +5221,13 @@
 		"helpers": {
 			"blog": {
 				"!code": true,
-				"javascript": "function (val) {\n        return 'val is ' + val;\n      }"
+				"javascript": "function (val) {\n        return 'val is ' + val;\n      }",
+				"phpstub": "function (val) {\n        return 'val is ' + val;\n      }"
 			},
 			"equal": {
 				"!code": true,
-				"javascript": "function (x, y) {\n        return x === y;\n      }"
+				"javascript": "function (x, y) {\n        return x === y;\n      }",
+				"phpstub": "function (x, y) {\n        return x === y;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -5882,11 +5903,13 @@
 		"helpers": {
 			"blog": {
 				"!code": true,
-				"javascript": "function (options) {\n        return 'val is ' + options.hash.fun;\n      }"
+				"javascript": "function (options) {\n        return 'val is ' + options.hash.fun;\n      }",
+				"phpstub": "function (options) {\n        return 'val is ' + options.hash.fun;\n      }"
 			},
 			"equal": {
 				"!code": true,
-				"javascript": "function (x, y) {\n        return x === y;\n      }"
+				"javascript": "function (x, y) {\n        return x === y;\n      }",
+				"phpstub": "function (x, y) {\n        return x === y;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -6555,11 +6578,13 @@
 		"helpers": {
 			"input": {
 				"!code": true,
-				"javascript": "function (options) {\n        var hash = options.hash;\n        var ariaLabel = Handlebars.Utils.escapeExpression(hash['aria-label']);\n        var placeholder = Handlebars.Utils.escapeExpression(hash.placeholder);\n        return new Handlebars.SafeString('<input aria-label=\"' + ariaLabel + '\" placeholder=\"' + placeholder + '\" />');\n      }"
+				"javascript": "function (options) {\n        var hash = options.hash;\n        var ariaLabel = Handlebars.Utils.escapeExpression(hash['aria-label']);\n        var placeholder = Handlebars.Utils.escapeExpression(hash.placeholder);\n        return new Handlebars.SafeString('<input aria-label=\"' + ariaLabel + '\" placeholder=\"' + placeholder + '\" />');\n      }",
+				"phpstub": "function (options) {\n        var hash = options.hash;\n        var ariaLabel = Handlebars.Utils.escapeExpression(hash['aria-label']);\n        var placeholder = Handlebars.Utils.escapeExpression(hash.placeholder);\n        return new Handlebars.SafeString('<input aria-label=\"' + ariaLabel + '\" placeholder=\"' + placeholder + '\" />');\n      }"
 			},
 			"t": {
 				"!code": true,
-				"javascript": "function (defaultString) {\n        return new Handlebars.SafeString(defaultString);\n      }"
+				"javascript": "function (defaultString) {\n        return new Handlebars.SafeString(defaultString);\n      }",
+				"phpstub": "function (defaultString) {\n        return new Handlebars.SafeString(defaultString);\n      }"
 			}
 		},
 		"compileOptions": {
@@ -7207,11 +7232,13 @@
 		"helpers": {
 			"input": {
 				"!code": true,
-				"javascript": "function (options) {\n        var hash = options.hash;\n        var ariaLabel = Handlebars.Utils.escapeExpression(hash['aria-label']);\n        var placeholder = Handlebars.Utils.escapeExpression(hash.placeholder);\n        return new Handlebars.SafeString('<input aria-label=\"' + ariaLabel + '\" placeholder=\"' + placeholder + '\" />');\n      }"
+				"javascript": "function (options) {\n        var hash = options.hash;\n        var ariaLabel = Handlebars.Utils.escapeExpression(hash['aria-label']);\n        var placeholder = Handlebars.Utils.escapeExpression(hash.placeholder);\n        return new Handlebars.SafeString('<input aria-label=\"' + ariaLabel + '\" placeholder=\"' + placeholder + '\" />');\n      }",
+				"phpstub": "function (options) {\n        var hash = options.hash;\n        var ariaLabel = Handlebars.Utils.escapeExpression(hash['aria-label']);\n        var placeholder = Handlebars.Utils.escapeExpression(hash.placeholder);\n        return new Handlebars.SafeString('<input aria-label=\"' + ariaLabel + '\" placeholder=\"' + placeholder + '\" />');\n      }"
 			},
 			"t": {
 				"!code": true,
-				"javascript": "function (defaultString) {\n        return new Handlebars.SafeString(defaultString);\n      }"
+				"javascript": "function (defaultString) {\n        return new Handlebars.SafeString(defaultString);\n      }",
+				"phpstub": "function (defaultString) {\n        return new Handlebars.SafeString(defaultString);\n      }"
 			}
 		},
 		"compileOptions": {
@@ -7927,11 +7954,13 @@
 		"helpers": {
 			"snog": {
 				"!code": true,
-				"javascript": "function (a, b, options) {\n        equals(a, 'foo');\n        equals(options.types.length, 2, 'string params for outer helper processed correctly');\n        equals(options.types[0], 'SubExpression', 'string params for outer helper processed correctly');\n        equals(options.types[1], 'PathExpression', 'string params for outer helper processed correctly');\n        return a + b;\n      }"
+				"javascript": "function (a, b, options) {\n        equals(a, 'foo');\n        equals(options.types.length, 2, 'string params for outer helper processed correctly');\n        equals(options.types[0], 'SubExpression', 'string params for outer helper processed correctly');\n        equals(options.types[1], 'PathExpression', 'string params for outer helper processed correctly');\n        return a + b;\n      }",
+				"phpstub": "function (a, b, options) {\n        equals(a, 'foo');\n        equals(options.types.length, 2, 'string params for outer helper processed correctly');\n        equals(options.types[0], 'SubExpression', 'string params for outer helper processed correctly');\n        equals(options.types[1], 'PathExpression', 'string params for outer helper processed correctly');\n        return a + b;\n      }"
 			},
 			"blorg": {
 				"!code": true,
-				"javascript": "function (a, options) {\n        equals(options.types.length, 1, 'string params for inner helper processed correctly');\n        equals(options.types[0], 'PathExpression', 'string params for inner helper processed correctly');\n        return a;\n      }"
+				"javascript": "function (a, options) {\n        equals(options.types.length, 1, 'string params for inner helper processed correctly');\n        equals(options.types[0], 'PathExpression', 'string params for inner helper processed correctly');\n        return a;\n      }",
+				"phpstub": "function (a, options) {\n        equals(options.types.length, 1, 'string params for inner helper processed correctly');\n        equals(options.types[0], 'PathExpression', 'string params for inner helper processed correctly');\n        return a;\n      }"
 			}
 		},
 		"ast": {
@@ -12701,11 +12730,13 @@
 		"helpers": {
 			"blog": {
 				"!code": true,
-				"javascript": "function (options) {\n        equals(options.hashTypes.fun, 'SubExpression');\n        return 'val is ' + options.hash.fun;\n      }"
+				"javascript": "function (options) {\n        equals(options.hashTypes.fun, 'SubExpression');\n        return 'val is ' + options.hash.fun;\n      }",
+				"phpstub": "function (options) {\n        equals(options.hashTypes.fun, 'SubExpression');\n        return 'val is ' + options.hash.fun;\n      }"
 			},
 			"bork": {
 				"!code": true,
-				"javascript": "function () {\n        return 'BORK';\n      }"
+				"javascript": "function () {\n        return 'BORK';\n      }",
+				"phpstub": "function () {\n        return 'BORK';\n      }"
 			}
 		},
 		"ast": {
@@ -13529,14 +13560,16 @@
 		"data": {
 			"bar": {
 				"!code": true,
-				"javascript": "function () {\n        return 'LOL';\n      }"
+				"javascript": "function () {\n        return 'LOL';\n      }",
+				"phpstub": "function () {\n        return 'LOL';\n      }"
 			}
 		},
 		"expected": "LOLLOL!",
 		"helpers": {
 			"foo": {
 				"!code": true,
-				"javascript": "function (val) {\n        return val + val;\n      }"
+				"javascript": "function (val) {\n        return val + val;\n      }",
+				"phpstub": "function (val) {\n        return val + val;\n      }"
 			}
 		},
 		"compileOptions": {
@@ -13927,7 +13960,8 @@
 		"helpers": {
 			"foo": {
 				"!code": true,
-				"javascript": "function (val) {\n        return val + val;\n      }"
+				"javascript": "function (val) {\n        return val + val;\n      }",
+				"phpstub": "function (val) {\n        return val + val;\n      }"
 			}
 		},
 		"compileOptions": {

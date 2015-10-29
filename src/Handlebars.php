@@ -255,6 +255,17 @@ final class Handlebars implements LoggerAwareInterface
         $this->v8->logger = $logger;
         $this->v8->executeString(
             'kynx.Handlebars.log = function(level, message) {
+                var levels = ["debug", "info", "warn", "error"];
+                if (levels[parseInt(level, 10)]) {
+                    level = levels[parseInt(level, 10)];
+                } else if (typeof level == "string") {
+                    level = level.toLowerCase();
+                } else {
+                    return;
+                }
+                if (level == "warn") {
+                    level = "warning";
+                }
                 kynx.logger.log(level, message)
             }',
             __CLASS__ . '::' . __METHOD__ . '()'

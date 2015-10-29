@@ -66,7 +66,8 @@
 		"helpers": {
 			"partial": {
 				"!code": true,
-				"javascript": "function () {\n        return 'dude';\n      }"
+				"javascript": "function () {\n        return 'dude';\n      }",
+				"phpstub": "function () {\n        return 'dude';\n      }"
 			}
 		},
 		"compileOptions": {}
@@ -94,7 +95,8 @@
 		"helpers": {
 			"partial": {
 				"!code": true,
-				"javascript": "function () {\n        return 'dude';\n      }"
+				"javascript": "function () {\n        return 'dude';\n      }",
+				"phpstub": "function () {\n        return 'dude';\n      }"
 			}
 		},
 		"compileOptions": {}
@@ -123,7 +125,8 @@
 		"helpers": {
 			"partial": {
 				"!code": true,
-				"javascript": "function () {\n        return 'missing';\n      }"
+				"javascript": "function () {\n        return 'missing';\n      }",
+				"phpstub": "function () {\n        return 'missing';\n      }"
 			}
 		},
 		"compileOptions": {}
@@ -288,7 +291,7 @@
 		"it": "registering undefined partial throws an exception",
 		"template": "{{> whatever}}",
 		"exception": true,
-		"message": "Attempting to register a partial as undefined"
+		"message": "Attempting to register a partial called \"undefined_test\" as undefined"
 	},
 	{
 		"description": "partials",
@@ -317,7 +320,8 @@
 		"partials": {
 			"dude": {
 				"!code": true,
-				"javascript": "function partial(context) {\n      return context.name + ' (' + context.url + ') ';\n    }"
+				"javascript": "function partial(context) {\n      return context.name + ' (' + context.url + ') ';\n    }",
+				"phpstub": "function partial(context) {\n      return context.name + ' (' + context.url + ') ';\n    }"
 			}
 		},
 		"compileOptions": {}
@@ -730,7 +734,8 @@
 		"partials": {
 			"myPartial": {
 				"!code": true,
-				"javascript": "function () { return 'fail'; }"
+				"javascript": "function () { return 'fail'; }",
+				"phpstub": "function () { return 'fail'; }"
 			}
 		},
 		"compileOptions": {},

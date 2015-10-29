@@ -3558,7 +3558,8 @@
 		"data": {
 			"thing": {
 				"!code": true,
-				"javascript": "function () {\n        return 'blah';\n      }"
+				"javascript": "function () {\n        return 'blah';\n      }",
+				"phpstub": "function () {\n        return 'blah';\n      }"
 			},
 			"things": [
 				{
@@ -3576,7 +3577,8 @@
 			],
 			"hasThings": {
 				"!code": true,
-				"javascript": "function () {\n        return true;\n      }"
+				"javascript": "function () {\n        return true;\n      }",
+				"phpstub": "function () {\n        return true;\n      }"
 			}
 		},
 		"expected": "<strong>This is a slightly more complicated blah.</strong>.\nCheck this out:\n<ul>\n<li class=one>@fat</li>\n<li class=two>@dhg</li>\n<li class=three>@sayrer</li>\n</ul>.\n",
@@ -6310,11 +6312,13 @@
 		"helpers": {
 			"blk": {
 				"!code": true,
-				"javascript": "function (block) { return block.fn(''); }"
+				"javascript": "function (block) { return block.fn(''); }",
+				"phpstub": "function (block) { return block.fn(''); }"
 			},
 			"inverse": {
 				"!code": true,
-				"javascript": "function (block) { return block.inverse(''); }"
+				"javascript": "function (block) { return block.inverse(''); }",
+				"phpstub": "function (block) { return block.inverse(''); }"
 			}
 		},
 		"compileOptions": {
@@ -7378,11 +7382,13 @@
 		"helpers": {
 			"blk": {
 				"!code": true,
-				"javascript": "function (block) { return block.fn(''); }"
+				"javascript": "function (block) { return block.fn(''); }",
+				"phpstub": "function (block) { return block.fn(''); }"
 			},
 			"inverse": {
 				"!code": true,
-				"javascript": "function (block) { return block.inverse(''); }"
+				"javascript": "function (block) { return block.inverse(''); }",
+				"phpstub": "function (block) { return block.inverse(''); }"
 			}
 		},
 		"compileOptions": {
@@ -10772,7 +10778,8 @@
 		"helpers": {
 			"str": {
 				"!code": true,
-				"javascript": "function (value) { return value + ''; }"
+				"javascript": "function (value) { return value + ''; }",
+				"phpstub": "function (value) { return value + ''; }"
 			}
 		},
 		"compileOptions": {
@@ -12509,7 +12516,8 @@
 		"helpers": {
 			"wrap": {
 				"!code": true,
-				"javascript": "function (options) {\n        return new Handlebars.SafeString(options.fn());\n      }"
+				"javascript": "function (options) {\n        return new Handlebars.SafeString(options.fn());\n      }",
+				"phpstub": "function (options) {\n        return new Handlebars.SafeString(options.fn());\n      }"
 			}
 		},
 		"compileOptions": {
@@ -13825,7 +13833,8 @@
 		"helpers": {
 			"helper": {
 				"!code": true,
-				"javascript": "function () {\n        // It's valid to execute a block against an undefined context, but\n        // helpers can not do so, so we expect to have an empty object here;\n        for (var name in this) {\n          if (this.hasOwnProperty(name)) {\n            return 'found';\n          }\n        }\n        // And to make IE happy, check for the known string as length is not enumerated.\n        return (this == 'bat' ? 'found' : 'not');\n      }"
+				"javascript": "function () {\n        // It's valid to execute a block against an undefined context, but\n        // helpers can not do so, so we expect to have an empty object here;\n        for (var name in this) {\n          if (this.hasOwnProperty(name)) {\n            return 'found';\n          }\n        }\n        // And to make IE happy, check for the known string as length is not enumerated.\n        return (this == 'bat' ? 'found' : 'not');\n      }",
+				"phpstub": "function () {\n        // It's valid to execute a block against an undefined context, but\n        // helpers can not do so, so we expect to have an empty object here;\n        for (var name in this) {\n          if (this.hasOwnProperty(name)) {\n            return 'found';\n          }\n        }\n        // And to make IE happy, check for the known string as length is not enumerated.\n        return (this == 'bat' ? 'found' : 'not');\n      }"
 			}
 		},
 		"compileOptions": {

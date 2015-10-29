@@ -24,7 +24,8 @@
 		"helpers": {
 			"foo": {
 				"!code": true,
-				"javascript": "function () {\n      return '';\n    }"
+				"javascript": "function () {\n      return '';\n    }",
+				"php": "function() {\n      return '';\n    }"
 			}
 		},
 		"ast": {
@@ -1604,7 +1605,8 @@
 		"data": {
 			"header": {
 				"!code": true,
-				"javascript": "function () {\n      return 'Colors';\n    }"
+				"javascript": "function () {\n      return 'Colors';\n    }",
+				"php": "function () {\n      return \"Colors\";\n    }"
 			},
 			"hasItems": true,
 			"items": [
@@ -8919,11 +8921,13 @@
 		"data": {
 			"echo": {
 				"!code": true,
-				"javascript": "function (value) {\n      return 'foo ' + value;\n    }"
+				"javascript": "function (value) {\n      return 'foo ' + value;\n    }",
+				"php": "function($value) {\n      return 'foo ' . $value;\n    }"
 			},
 			"header": {
 				"!code": true,
-				"javascript": "function () {\n      return 'Colors';\n    }"
+				"javascript": "function () {\n      return 'Colors';\n    }",
+				"php": "function() {\n      return \"Colors\";\n    }"
 			}
 		},
 		"expected": "foo Colors",
