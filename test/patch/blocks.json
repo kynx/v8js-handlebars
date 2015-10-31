@@ -87,5 +87,6 @@
                 "phpstub": "function (fn, props, container, options) {\n          equals(options.args[0], 'success');\n          run = true;\n          return fn;\n        }"
             }
         }
-    }
+    },
+    "decorators-should work with root program-01": null
 }

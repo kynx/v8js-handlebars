@@ -48,6 +48,7 @@ class SpecTest extends TestCase
         }
         self::$counter++;
         self::$counters[$name]++;
+        $testId = $name . ' #' . self::$counters[$name];
 
         $spec = $this->prepareSpec($case);
 
@@ -55,12 +56,13 @@ class SpecTest extends TestCase
             $this->markTestSkipped("Couldn't evaluate test '" . $name . "'");
         }
 
+        $level = $message = null;
         if (isset($spec['log'])) {
-            // @todo the real spec tests are checking correct log levels and messages - add 'log' config to patches
             $logger = $this->prophesize(LoggerInterface::class);
-            $level = isset($spec['log']['level']) ? $spec['log']['level'] : 'info';
-            $message = isset($spec['log']['message']) ? $spec['log']['message'] : '';
-            $logger->log($level, $message)
+            $logger->log(Argument::any(), Argument::any())->will(function ($args) use (&$level, &$message) {
+                    $level = $args[0];
+                    $message = $args[1];
+                })
                 ->shouldBeCalledTimes(1);
             $this->hb->setLogger($logger->reveal());
         }
@@ -80,7 +82,13 @@ class SpecTest extends TestCase
         }
         $actual = $template($spec['data'], $spec['options']);
         if (!$spec['exception']) {
-            $this->assertEquals($spec['expected'], $actual, $name . ' #' . self::$counters[$name]);
+            $this->assertEquals($spec['expected'], $actual, $testId . ': Output does not match');
+        }
+        if (isset($spec['log'])) {
+            $eLevel = isset($spec['log']['level']) ? $spec['log']['level'] : 'info';
+            $eMessage = isset($spec['log']['message']) ? $spec['log']['message'] : '';
+            $this->assertEquals($eLevel, $level, $testId . ': Log level does not match');
+            $this->assertEquals($eMessage, $message, $testId . ': Log message does not match');
         }
     }
 
