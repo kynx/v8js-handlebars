@@ -33,5 +33,6 @@
                 "phpstub": "function partial(context) {\n      return context.name + ' (' + context.url + ') ';\n    }"
             }
         }
-    }
+    },
+    "partials-global partials-01": null
 }

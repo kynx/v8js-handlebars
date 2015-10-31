@@ -97,8 +97,15 @@
             "blorg": {
                 "phpstub": "function (a, options) {\n        equals(options.types.length, 1, 'string params for inner helper processed correctly');\n        equals(options.types[0], 'PathExpression', 'string params for inner helper processed correctly');\n        return a;\n      }"
             }
-        }
+        },
+        "expected": "fooyeah"
     },
+    "subexpressions-in string params mode,-01": null,
+    "subexpressions-in string params mode,-02": null,
+    "subexpressions-in string params mode,-03": null,
+    "subexpressions-in string params mode,-04": null,
+    "subexpressions-in string params mode,-05": null,
+    "subexpressions-in string params mode,-06": null,
     "subexpressions-mixed paths and helpers-00": {
         "helpers": {
             "blog": {
@@ -132,7 +139,8 @@
     "subexpressions-provides each nested helper invocation its own options hash-00": {
         "helpers": {
             "equal": {
-                "phpstub": "function (x, y, options) {\n        if (!options || options === lastOptions) {\n          throw new Error('options hash was reused');\n        }\n        lastOptions = options;\n        return x === y;\n      }"
+                "javascript": "function (x, y, options) {\n   if (typeof lastOptions == 'undefined') { lastOptions = null; }\n     if (!options || options === lastOptions) {\n          throw new Error('options hash was reused');\n        }\n        lastOptions = options;\n        return x === y;\n      }",
+                "phpstub": "function (x, y, options) {\n   if (typeof lastOptions == 'undefined') { lastOptions = null; }\n     if (!options || options === lastOptions) {\n          throw new Error('options hash was reused');\n        }\n        lastOptions = options;\n        return x === y;\n      }"
             }
         }
     },

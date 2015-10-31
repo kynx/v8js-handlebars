@@ -3,15 +3,11 @@ BASIC_SPECS := basic blocks builtins data helpers partials regressions \
 		 string-params subexpressions track-ids whitespace-control
 SPECS := $(BASIC_SPECS)
 
-all: spec export
+all: spec
 
 spec: node_modules
 	node ../vendor/jbboehr/handlebars-spec/bin/index handlebars.js/bench/templates/index.js -o spec/bench.json
 	$(foreach var, $(SPECS), node ../vendor/jbboehr/handlebars-spec/bin/index handlebars.js/spec/$(var).js -o spec/$(var).json;)
-
-export: node_modules
-	node ../vendor/jbboehr/handlebars-spec/bin/export spec/bench.json -o export/bench.json
-	$(foreach var, $(BASIC_SPECS), node ../vendor/jbboehr/handlebars-spec/bin/export spec/$(var).json -o export/$(var).json;)
 
 check_changes:
 	@git status --porcelain | grep 'spec/' && return 1 || return 0

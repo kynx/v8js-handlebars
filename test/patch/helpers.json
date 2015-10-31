@@ -68,7 +68,8 @@
     "block params-should take presednece over parent block params-00": {
         "helpers": {
             "goodbyes": {
-                "phpstub": "function (options) {\n          return options.fn({value: 'bar'}, {blockParams: options.fn.blockParams === 1 ? [value++, value++] : undefined});\n        }"
+                "javascript": "function (options) {\n          if( typeof value === 'undefined' ) { value = 1; } return options.fn({value: 'bar'}, {blockParams: options.fn.blockParams === 1 ? [value++, value++] : undefined});\n        }",
+                "php": "function($options) {\n          static $value;\n          if( $value === null ) { $value = 1; } return $options->fn(array('value' => 'bar'), array('blockParams' => array($value++, $value++)));\n        }"
             }
         },
         "globalHelpers": {
@@ -393,28 +394,46 @@
     "helpers-pathed lambas with parameters-00": {
         "data": {
             "helper": {
-                "phpstub": "function () {\n        return 'winning';\n      }"
+                "!code": true,
+                "javascript": "function() {\n        return 'winning';\n      }",
+                "phpstub": "function() {\n        return 'winning';\n      }"
+            },
+            "hash": {
+                "helper": {
+                    "!code": true,
+                    "javascript": "function() {\n        return 'winning';\n      }",
+                    "phpstub": "function() {\n        return 'winning';\n      }"
+                }
             }
         },
         "helpers": {
-            "": {
-                "\/helper": {
-                    "phpstub": null
-                }
+            ".\/helper": {
+                "!code": true,
+                "javascript": "function() {\n        return 'fail';\n      }",
+                "phpstub": "function() {\n        return 'fail';\n      }"
             }
         }
     },
     "helpers-pathed lambas with parameters-01": {
         "data": {
             "helper": {
-                "phpstub": "function () {\n        return 'winning';\n      }"
+                "!code": true,
+                "javascript": "function() {\n        return 'winning';\n      }",
+                "phpstub": "function() {\n        return 'winning';\n      }"
+            },
+            "hash": {
+                "helper": {
+                    "!code": true,
+                    "javascript": "function() {\n        return 'winning';\n      }",
+                    "phpstub": "function() {\n        return 'winning';\n      }"
+                }
             }
         },
         "helpers": {
-            "": {
-                "\/helper": {
-                    "phpstub": null
-                }
+            ".\/helper": {
+                "!code": true,
+                "javascript": "function() {\n        return 'fail';\n      }",
+                "phpstub": "function() {\n        return 'fail';\n      }"
             }
         }
     },
@@ -756,5 +775,6 @@
                 "phpstub": "function () { return 'found it!'; }"
             }
         }
-    }
+    },
+    "registration-unregisters-00" : null
 }
