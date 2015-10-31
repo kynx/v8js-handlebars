@@ -280,6 +280,21 @@ final class Handlebars implements LoggerAwareInterface
         );
     }
 
+    /**
+     * @param \PHPUnit_Framework_TestCase $testCase
+     */
+    public function setTestCase($testCase)
+    {
+        $this->v8->testCase = $testCase;
+        $this->v8->executeString(
+            'function equals(expected, actual, message) {
+                kynx.testCase.assertEquals(expected, actual, message);
+            }
+            equal = equals',
+            __CLASS__ . '::' . __METHOD__ . '()'
+        );
+    }
+
     private function wrapHelperCallable($name, $helper)
     {
         $this->v8->helpers->{$name} = $helper;

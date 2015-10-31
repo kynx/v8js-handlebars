@@ -28,6 +28,7 @@ class SpecTest extends TestCase
         $handlebarsSource = __DIR__ . '/handlebars.js/lib/handlebars.js';
         Handlebars::registerHandlebarsExtension($handlebarsSource);
         $this->hb = new Handlebars();
+        $this->hb->setTestCase($this);
     }
 
     /**

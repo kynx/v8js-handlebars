@@ -53,12 +53,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/handlebars.js.git",
-                "reference": "ce1aa4b5bd15eb17a2a2da3d102a81053110538b"
+                "reference": "64ae626a4dc42eaf7e657e093428da32f90075e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/handlebars.js/zipball/ce1aa4b5bd15eb17a2a2da3d102a81053110538b",
-                "reference": "ce1aa4b5bd15eb17a2a2da3d102a81053110538b",
+                "url": "https://api.github.com/repos/components/handlebars.js/zipball/64ae626a4dc42eaf7e657e093428da32f90075e4",
+                "reference": "64ae626a4dc42eaf7e657e093428da32f90075e4",
                 "shasum": ""
             },
             "require": {
@@ -96,7 +96,7 @@
                 "html",
                 "mustache"
             ],
-            "time": "2015-09-24 03:42:14"
+            "time": "2015-10-29 06:59:36"
         },
         {
             "name": "doctrine/instantiator",
@@ -158,12 +158,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jbboehr/handlebars-spec.git",
-                "reference": "735662c3e47e32d1d4ec65c53119cb68be19cac4"
+                "reference": "d2127330254e6f0ec11aa46836227794427925d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jbboehr/handlebars-spec/zipball/735662c3e47e32d1d4ec65c53119cb68be19cac4",
-                "reference": "735662c3e47e32d1d4ec65c53119cb68be19cac4",
+                "url": "https://api.github.com/repos/jbboehr/handlebars-spec/zipball/d2127330254e6f0ec11aa46836227794427925d6",
+                "reference": "d2127330254e6f0ec11aa46836227794427925d6",
                 "shasum": ""
             },
             "type": "library",
@@ -183,7 +183,7 @@
                 "handlebars",
                 "mustache"
             ],
-            "time": "2015-10-27 07:15:31"
+            "time": "2015-10-31 08:30:18"
         },
         {
             "name": "kriswallsmith/assetic",
