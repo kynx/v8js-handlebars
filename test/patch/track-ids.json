@@ -107,8 +107,11 @@
             "wycats": {
                 "phpstub": "function (options) {\n        equal(options.hashIds.bat, 'is.a');\n        equal(options.hashIds.baz, 'slave.driver');\n\n        return 'HELP ME MY BOSS ' + options.hashIds.bat + ':' + options.hash.bat + ' ' + options.hashIds.baz + ':' + options.hash.baz;\n      }"
             }
-        }
+        },
+        "expected": "HELP ME MY BOSS is.a:foo slave.driver:bar"
     },
+    "track ids-should include hash ids-01": null,
+    "track ids-should include hash ids-02": null,
     "track ids-should not include anything without the flag-00": {
         "helpers": {
             "wycats": {
@@ -172,6 +175,10 @@
             "wycats": {
                 "phpstub": "function (passiveVoice, noun, blah, options) {\n        equal(options.ids[0], 'zomg.a');\n        equal(options.ids[1], 'slave.driver');\n        equal(options.ids[2], 'zomg');\n\n        return 'HELP ME MY BOSS ' + options.ids[0] + ':' + passiveVoice + ' ' + options.ids[1] + ':' + noun;\n      }"
             }
-        }
-    }
+        },
+        "expected": "HELP ME MY BOSS zomg.a:foo slave.driver:bar"
+    },
+    "track ids-should use block param paths-01": null,
+    "track ids-should use block param paths-02": null,
+    "track ids-should use block param paths-03": null
 }

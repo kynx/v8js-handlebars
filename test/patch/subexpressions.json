@@ -17,8 +17,10 @@
             "bork": {
                 "phpstub": "function () {\n        return 'BORK';\n      }"
             }
-        }
+        },
+        "expected": "val is BORK"
     },
+    "subexpressions-as hashes in string params mode-01": null,
     "subexpressions-as hashes-00": {
         "helpers": {
             "blog": {
@@ -163,6 +165,7 @@
             }
         }
     },
+    "subexpressions-subexpressions can't just be property lookups-01": null,
     "subexpressions-supports much nesting-00": {
         "helpers": {
             "blog": {

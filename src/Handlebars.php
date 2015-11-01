@@ -48,6 +48,7 @@ final class Handlebars implements LoggerAwareInterface
             // Handlebars does a lot of checking against obj.toString() == "[object Object]", which does not work
             // with V8Js objects ("[object stdClass]" / "[object Array]"). This helper works around that.
             kynx.jsObject = function(obj) {
+              if (typeof obj == "object") {
                 var k, o = {};
                 for (k in obj) {
                   if (obj.hasOwnProperty(k)) {
@@ -55,6 +56,9 @@ final class Handlebars implements LoggerAwareInterface
                   }
                 }
                 return o;
+              } else {
+                return obj;
+              }
             }
         ');
 
@@ -113,7 +117,16 @@ final class Handlebars implements LoggerAwareInterface
         $this->v8->template = $template;
         $this->v8->options = $options ?: [];
         return $this->v8->executeString(
-            'kynx.Handlebars.compile(kynx.template, kynx.options)',
+            '(function(template, options) {
+                var compiled = kynx.Handlebars.compile(template, options);
+                return function(context, execOptions) {
+                    // force zero-length arrays into objects
+                    if (context && context.length === 0) {
+                        context = {};
+                    }
+                    return compiled(context, execOptions);
+                }
+             })(kynx.template, kynx.options)',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
     }
@@ -146,7 +159,16 @@ final class Handlebars implements LoggerAwareInterface
     public function template($templateSpec)
     {
         return $this->v8->executeString(
-            'kynx.Handlebars.template(' . $templateSpec . ')',
+            '(function(templateSpec) {
+                var template = kynx.Handlebars.template(templateSpec);
+                return function(context, execOptions) {
+                    // force zero-length arrays into objects
+                    if (context && context.length === 0) {
+                        context = {};
+                    }
+                    return template(context, execOptions);
+                }
+             })(' . $templateSpec . ')',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
     }
@@ -254,20 +276,26 @@ final class Handlebars implements LoggerAwareInterface
     {
         $this->v8->logger = $logger;
         $this->v8->executeString(
-            'kynx.Handlebars.log = function(level, message) {
-                var levels = ["debug", "info", "warn", "error"];
-                if (levels[parseInt(level, 10)]) {
-                    level = levels[parseInt(level, 10)];
-                } else if (typeof level == "string") {
-                    level = level.toLowerCase();
-                } else {
-                    return;
-                }
-                if (level == "warn") {
-                    level = "warning";
-                }
-                kynx.logger.log(level, message)
-            }',
+            'kynx.lookupLogLevel = function(level) {
+               if (level == "warning") {
+                 level = "warn";
+               }
+               return kynx.Handlebars.logger.lookupLevel(level);
+             }
+             kynx.lookupLogMethod = function(level) {
+               var method = kynx.Handlebars.logger.methodMap[level];
+               if (method == "warn") {
+                 method = "warning";
+               }
+               return method || level;
+             }
+             kynx.Handlebars.log = function(level, message) {
+               level = kynx.lookupLogLevel(level);
+               var i, args = [];
+               for (i=1; i<arguments.length; i++) {
+                 kynx.logger.log(kynx.lookupLogMethod(level), arguments[i]);
+               }
+             }',
             __CLASS__ . '::' . __METHOD__ . '()'
         );
     }

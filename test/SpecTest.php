@@ -25,7 +25,7 @@ class SpecTest extends TestCase
 
     public function setUp()
     {
-        $handlebarsSource = __DIR__ . '/handlebars.js/lib/handlebars.js';
+        $handlebarsSource = file_get_contents(dirname(__DIR__) . '/components/handlebars/handlebars.js');
         Handlebars::registerHandlebarsExtension($handlebarsSource);
         $this->hb = new Handlebars();
         $this->hb->setTestCase($this);
@@ -53,18 +53,29 @@ class SpecTest extends TestCase
 
         $spec = $this->prepareSpec($case);
 
+        /*
+        if ($testId == 'inline partials - should define inline partials for block #1') {
+            var_dump($case);
+            var_dump($spec);
+            die();
+        }
+        */
+
         if (!$spec) {
             $this->markTestSkipped("Couldn't evaluate test '" . $name . "'");
         }
 
-        $level = $message = null;
+        $level = null;
+        $messages = [];
+        $expectedMessages = [];
         if (isset($spec['log'])) {
+            $expectedMessages = is_array($spec['log']['message']) ? $spec['log']['message'] : [$spec['log']['message']];
             $logger = $this->prophesize(LoggerInterface::class);
-            $logger->log(Argument::any(), Argument::any())->will(function ($args) use (&$level, &$message) {
+            $logger->log(Argument::any(), Argument::any())->will(function ($args) use (&$level, &$messages) {
                     $level = $args[0];
-                    $message = $args[1];
+                    $messages[] = $args[1];
                 })
-                ->shouldBeCalledTimes(1);
+                ->shouldBeCalledTimes(count($expectedMessages));
             $this->hb->setLogger($logger->reveal());
         }
 
@@ -83,13 +94,16 @@ class SpecTest extends TestCase
         }
         $actual = $template($spec['data'], $spec['options']);
         if (!$spec['exception']) {
-            $this->assertEquals($spec['expected'], $actual, $testId . ': Output does not match');
+            if (is_array($spec['expected'])) {
+                $this->assertContains($actual, $spec['expected'], $testId . ': Output does not match');
+            } else {
+                $this->assertEquals($spec['expected'], $actual, $testId . ': Output does not match');
+            }
         }
         if (isset($spec['log'])) {
             $eLevel = isset($spec['log']['level']) ? $spec['log']['level'] : 'info';
-            $eMessage = isset($spec['log']['message']) ? $spec['log']['message'] : '';
             $this->assertEquals($eLevel, $level, $testId . ': Log level does not match');
-            $this->assertEquals($eMessage, $message, $testId . ': Log message does not match');
+            $this->assertEquals($expectedMessages, $messages, $testId . ': Log message does not match');
         }
     }
 
@@ -119,17 +133,6 @@ class SpecTest extends TestCase
         if (!empty($spec['decorators'])) {
             $spec['options']['decorators'] = $spec['decorators'];
         }
-        /*
-        $spec['options'] = array_merge($spec['compileOptions'], $spec['options']);
-        foreach (['partials', 'helpers', 'decorators'] as $sec) {
-            $global = 'global' . ucfirst($sec);
-            if (!is_array($spec[$sec])) {
-                $spec[$sec] = [];
-            }
-            $spec[$sec] = array_merge($spec[$global], $spec[$sec]);
-            unset($spec[$global]);
-        }
-        */
         return $this->evalCode($spec, $spec['type']);
     }
 

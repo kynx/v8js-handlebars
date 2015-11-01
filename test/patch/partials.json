@@ -34,5 +34,24 @@
             }
         }
     },
-    "partials-global partials-01": null
+    "partials-global partials-01": null,
+    "partials-throw on missing partial-00": {
+        "template": "{{> nonexistent}}",
+        "message": "/The partial nonexistent could not be compiled/",
+        "note": "spec actually unsets dude partial then tries to use it"
+    },
+    "partials-throw on missing partial-01": null,
+    "should pass compiler flags-should pass compiler flags-00": {
+        "template": "{{foo}} {{> partial}}",
+        "globalPartials" : {
+            "partial" : "{{foo}}"
+        },
+        "data" : {
+            "foo": "<"
+        },
+        "compileOptions": {
+            "noEscape": true
+        },
+        "note": "no idea why these aren't picked up"
+    }
 }

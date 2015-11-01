@@ -61,7 +61,6 @@ class HandlebarsTest extends TestCase
     {
         $hb = Handlebars::create(true);
         $template = $hb->compile('<h1>{{ test }}</h1>');
-        $this->fail("This test should fail");
     }
 
     /**
@@ -73,7 +72,6 @@ class HandlebarsTest extends TestCase
         $hb = Handlebars::create();
         $template = $hb->compile('<h1>{{ test ');
         $result = $template(['test' => '**context variable**']);
-        $this->fail("This test should fail");
     }
 
     public function testCompileNoContext()
@@ -100,7 +98,6 @@ class HandlebarsTest extends TestCase
         $hb = Handlebars::create();
         $template = $hb->compile('<h1>{{ test }}</h1>', ['strict' => true]);
         $result = $template([]);
-        $this->fail("This test should fail");
     }
 
     public function testPrecompile()
@@ -118,7 +115,6 @@ class HandlebarsTest extends TestCase
     {
         $hb = Handlebars::create(true);
         $compiled = $hb->precompile('<h1>{{ test }}</h1>');
-        $this->fail("This test should fail");
     }
 
     /**
@@ -128,7 +124,6 @@ class HandlebarsTest extends TestCase
     {
         $hb = Handlebars::create();
         $compiled = $hb->precompile('<h1>{{ test ');
-        $this->fail("This test should fail");
     }
 
     public function testTemplate()
@@ -177,7 +172,6 @@ class HandlebarsTest extends TestCase
         $compiled = $hb->precompile('<h1>{{ test }}</h1>', ['strict' => true]);
         $template = $hb->template($compiled);
         $result = $template([]);
-        $this->fail("This test should fail");
     }
 
     public function testRegisterPartial()
@@ -270,7 +264,6 @@ class HandlebarsTest extends TestCase
         $hb->registerPartial('partial', '<h1>{{ test }}</h1>');
         $template = $hb->template($precompiled);
         $result = $template(['test' => '**context variable**']);
-        $this->fail("This test should fail");
     }
 
     /**
@@ -284,7 +277,6 @@ class HandlebarsTest extends TestCase
         $hb->unregisterPartial('partial');
         $template = $hb->compile('{{> partial }}');
         $result = $template(['test' => '**context variable**']);
-        $this->fail("This test should fail");
     }
 
     public function testRegisterJsBasicBlockHelper()
@@ -337,7 +329,7 @@ class HandlebarsTest extends TestCase
 
     /**
      * @expectedException \V8JsScriptException
-     * @expectedExceptionMessage Error: "helper" not defined in [object Array]
+     * @expectedExceptionMessage Error: "helper" not defined
      */
     public function testUnregisterHelper()
     {
@@ -360,30 +352,80 @@ class HandlebarsTest extends TestCase
         $this->assertEquals('<h1>debug</h1>', $result);
     }
 
+    public function testLogError()
+    {
+        $hb = Handlebars::create();
+        $level = $message = null;
+        $logger = $this->getLogger($level, $message)->reveal();
+        $hb->setLogger($logger);
+        $template = $hb->compile('{{ log "Error!" level="error" }}');
+        $result = $template([]);
+        $this->assertEquals('error', $level);
+        $this->assertEquals("Error!", $message);
+        $this->assertEquals('', $result);
+    }
+
+    public function testLogWarn()
+    {
+        $hb = Handlebars::create();
+        $level = $message = null;
+        $logger = $this->getLogger($level, $message)->reveal();
+        $hb->setLogger($logger);
+        $template = $hb->compile('{{ log "Warning!" level="warn" }}');
+        $result = $template([]);
+        $this->assertEquals('warning', $level);
+        $this->assertEquals("Warning!", $message);
+        $this->assertEquals('', $result);
+    }
+
+    public function testLogWarning()
+    {
+        $hb = Handlebars::create();
+        $level = $message = null;
+        $logger = $this->getLogger($level, $message)->reveal();
+        $hb->setLogger($logger);
+        $template = $hb->compile('{{ log "Warning!" level="warning" }}');
+        $result = $template([]);
+        $this->assertEquals('warning', $level);
+        $this->assertEquals("Warning!", $message);
+        $this->assertEquals('', $result);
+    }
+
+    public function testLogInfo()
+    {
+        $hb = Handlebars::create();
+        $level = $message = null;
+        $logger = $this->getLogger($level, $message)->reveal();
+        $hb->setLogger($logger);
+        $template = $hb->compile('{{ log "Info!" level="info" }}');
+        $result = $template([]);
+        $this->assertEquals('info', $level);
+        $this->assertEquals("Info!", $message);
+        $this->assertEquals('', $result);
+    }
+
     public function testLogDebug()
     {
         $hb = Handlebars::create();
-        $logs = [];
-        $logger = $this->getLogger($logs)->reveal();
+        $level = $message = null;
+        $logger = $this->getLogger($level, $message)->reveal();
         $hb->setLogger($logger);
         $template = $hb->compile('{{ log "Debug!" level="debug" }}');
-        $result = $template([], ['data' => ['level' => LogLevel::DEBUG]]);
-        $this->assertContains("Debug!", $logs[LogLevel::DEBUG]);
+        $result = $template([]);
+        $this->assertEquals('debug', $level);
+        $this->assertEquals("Debug!", $message);
+        $this->assertEquals('', $result);
     }
 
     /**
      * @return \Prophecy\Prophecy\ObjectProphecy
      */
-    protected function getLogger(&$logs)
+    protected function getLogger(&$level, &$message)
     {
         $logger = $this->prophesize(LoggerInterface::class);
-        $logger->log(Argument::type('string'), Argument::type('string'))->will(function ($args) use (&$logs) {
+        $logger->log(Argument::any(), Argument::any())->will(function ($args) use (&$level, &$message) {
             $level = $args[0];
             $message = $args[1];
-            if (empty($logs[$level])) {
-                $logs[$level] = [];
-            }
-            $logs[$level][] = $message;
         });
         return $logger;
     }

@@ -7,7 +7,7 @@
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src</directory>
+            <file>src/Handlebars.php</file>
         </whitelist>
     </filter>
 

@@ -16,13 +16,7 @@
             }
         }
     },
-    "regressions-gh-1093: undefined helper context-00": {
-        "helpers": {
-            "helper": {
-                "phpstub": "function () {\n        \/\/ It's valid to execute a block against an undefined context, but\n        \/\/ helpers can not do so, so we expect to have an empty object here;\n        for (var name in this) {\n          if (this.hasOwnProperty(name)) {\n            return 'found';\n          }\n        }\n        \/\/ And to make IE happy, check for the known string as length is not enumerated.\n        return (this == 'bat' ? 'found' : 'not');\n      }"
-            }
-        }
-    },
+    "regressions-gh-1093: undefined helper context-00": null,
     "regressions-gh-837: undefined values for helpers-00": {
         "helpers": {
             "str": {
@@ -49,5 +43,6 @@
                 "phpstub": "function (block) { return block.inverse(''); }"
             }
         }
-    }
+    },
+    "regressions-gh-1065: sparse arrays-00": null
 }

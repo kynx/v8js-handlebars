@@ -1,10 +1,17 @@
 {
-    "#each-each with an object and @key-02": {
-        "globalHelpers": {
-            "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
-            }
-        }
+    "#each-each with an object and @key-00": {
+        "globalHelpers": null,
+        "expected": ["&lt;b&gt;#1&lt;/b&gt;. goodbye! 2. GOODBYE! cruel world!", "2. GOODBYE! &lt;b&gt;#1&lt;/b&gt;. goodbye! cruel world!"],
+        "note": "See comments in spec about property iteration order - both of these are valid"
+    },
+    "#each-each with an object and @key-01": {
+        "template": "{{#each goodbyes}}{{@key}}. {{text}}! {{/each}}cruel {{world}}!",
+        "globalHelpers": null,
+        "data": {
+            "goodbyes": {},
+            "world": "world"
+        },
+        "expected": "cruel world!"
     },
     "#each-each with function argument-00": {
         "data": {
@@ -24,6 +31,16 @@
                 "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
             }
         }
+    },
+    "#each-data passed to helpers-00": {
+        "globalHelpers": {
+            "detectDataInsideEach": {
+                "!code": true,
+                "javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }",
+                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+            }
+        },
+        "note": "Don't know why function isn't detected"
     },
     "#each-each without context-00": {
         "globalHelpers": {
@@ -95,10 +112,10 @@
         },
         "expected": "",
         "log": {
-          "level": "warning",
+          "level": "error",
           "message": "whee"
         },
-        "config" : { "level" : "03"}
+        "options" : { "data": {"level" : "03"}}
     },
     "#log-should call logger at data level-01": null,
     "#log-should call logger at data level-02": null,
@@ -136,10 +153,10 @@
         },
         "expected": "",
         "log": {
-            "level": "warning",
+            "level": "error",
             "message": "whee"
         },
-        "config" : { "level" : "03"}
+        "options" : { "data": {"level" : "03"}}
     },
     "#log-should handle missing logger-01": null,
     "#log-should handle string log levels-00": {
@@ -152,7 +169,7 @@
             "level": "error",
             "message": "whee"
         },
-        "config": {"level" : "error"}
+        "options": {"data": {"level" : "error"}}
     },
     "#log-should handle string log levels-01": {
         "template" : "{{log blah}}",
@@ -164,7 +181,7 @@
             "level": "error",
             "message": "whee"
         },
-        "config": {"level" : "ERROR"}
+        "options": {"data" : {"level" : "ERROR"}}
     },
     "#log-should handle string log levels-02": null,
     "#log-should handle string log levels-03": null,
@@ -187,10 +204,10 @@
       },
       "expected": "",
       "log": {
-          "level": "warning",
+          "level": "error",
           "message": "whee"
       },
-      "config" : { "level" : "03"}
+      "options" : {"data": {"level" : "03"}}
     },
     "#log-should log at data level-01": null,
     "#log-should pass multiple log arguments-00": {
@@ -201,7 +218,7 @@
         "expected": "",
         "log": {
             "level": "info",
-            "message": "whee\nfoo\n1"
+            "message": ["whee", "foo", "1"]
         }
     },
     "#log-should pass multiple log arguments-01": null,

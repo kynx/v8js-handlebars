@@ -64,8 +64,11 @@
             "decorator": {
                 "phpstub": "function (fn, props, container, options) {\n          equals(options.args[0], undefined);\n          run = true;\n          return fn;\n        }"
             }
-        }
+        },
+        "expected": "",
+        "note": "spec tests that decorator sets 'run' variable to true - we just test that decorator is called and doesn't return 'fail'"
     },
+    "decorators-should fail when accessing variables from root-01": null,
     "decorators-should support nested decorators-00": {
         "helpers": {
             "helper": {
@@ -91,5 +94,10 @@
     "decorators-should work with root program-01": null,
     "registration-unregisters-00": null,
     "registration-unregisters-01": null,
+    "registration-fails with multiple and args-00": null,
+    "registration-allows multiple globals-00": null,
+    "registration-allows multiple globals-01": null,
+    "registration-allows multiple globals-02": null,
+    "registration-allows multiple globals-03": null,
     "inverted sections-chained inverted sections with mismatch-01": null
 }
