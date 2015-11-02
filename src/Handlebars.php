@@ -1,6 +1,7 @@
 <?php
 /**
  * @license MIT
+ * @copyright 2015 Matt Kynaston
  */
 
 namespace Kynx\V8js;
@@ -13,7 +14,7 @@ use V8Js;
  * Thin wrapper around handlebars.js
  * @link http://handlebarsjs.com/reference.html
  */
-final class Handlebars implements LoggerAwareInterface
+class Handlebars implements LoggerAwareInterface
 {
     const EXTN_HANDLEBARS = 'handlebars';
     const EXTN_RUNTIME = 'handlebars-runtime';
@@ -21,7 +22,7 @@ final class Handlebars implements LoggerAwareInterface
     /**
      * @var V8Js
      */
-    private $v8;
+    protected $v8;
     private $isRuntime;
 
     /**
@@ -41,9 +42,35 @@ final class Handlebars implements LoggerAwareInterface
         $this->v8->helpers = new \stdClass();
         $this->v8->decorators = new \stdClass();
 
+        // function for calling PHP closures with a JS scope
+        $this->v8->scopedCall = function($newthis, $closure, $arguments) {
+            $cl = \Closure::bind($closure, $newthis);
+            return call_user_func_array($cl, get_object_vars($arguments));
+        };
+
         $this->v8->executeString('
             // Always work on private copy to avoid polluting extension (which may persist between requests)
-            kynx.Handlebars = Handlebars.create()
+            kynx.Handlebars = Handlebars.create();
+            kynx.wrapCallables = function(obj) {
+                var k, o = {};
+                if (!obj) {
+                    return obj;
+                }
+                if (obj.toString() == "[object Closure]") {
+                    return function() {
+                        return kynx.scopedCall(this, obj, arguments);
+                    }
+                }
+                if (typeof obj == "object" && !obj.hasOwnProperty("length")) {
+                    for (k in obj) {
+                        if (obj.hasOwnProperty(k)) {
+                            o[k] = kynx.wrapCallables(obj[k]);
+                        }
+                    }
+                    return o;
+                }
+                return obj;
+            }
 
             // Handlebars does a lot of checking against obj.toString() == "[object Object]", which does not work
             // with V8Js objects ("[object stdClass]" / "[object Array]"). This helper works around that.
@@ -124,7 +151,7 @@ final class Handlebars implements LoggerAwareInterface
                     if (context && context.length === 0) {
                         context = {};
                     }
-                    return compiled(context, execOptions);
+                    return compiled(kynx.wrapCallables(context), kynx.wrapCallables(execOptions));
                 }
              })(kynx.template, kynx.options)',
             __CLASS__ . '::' . __METHOD__ . '()'
@@ -166,7 +193,7 @@ final class Handlebars implements LoggerAwareInterface
                     if (context && context.length === 0) {
                         context = {};
                     }
-                    return template(context, execOptions);
+                    return template(kynx.wrapCallables(context), kynx.wrapCallables(execOptions));
                 }
              })(' . $templateSpec . ')',
             __CLASS__ . '::' . __METHOD__ . '()'
@@ -212,12 +239,13 @@ final class Handlebars implements LoggerAwareInterface
      */
     public function registerHelper($name, $helper = false)
     {
+        if (is_object($name)) {
+            throw new \BadMethodCallException("Can't call " . __METHOD__ . " with object argument");
+        }
         if (is_array($name)) {
             foreach ($name as $n => $helper) {
                 $this->registerHelper($n, $helper);
             }
-        } elseif (is_object($name)) {
-            $this->registerJavascriptObject('helper', $this->wrapHelperObject($name));
         } elseif ($helper === false) {
             $this->registerJavascriptObject('helper', $name);
         } elseif (is_callable($helper)) {
@@ -243,12 +271,13 @@ final class Handlebars implements LoggerAwareInterface
      */
     public function registerDecorator($name, $decorator = false)
     {
+        if (is_object($name)) {
+            throw new \BadMethodCallException("Can't call " . __METHOD__ . " with object argument");
+        }
         if (is_array($name)) {
             foreach ($name as $n => $decorator) {
                 $this->registerDecorator($n, $decorator);
             }
-        } elseif (is_object($name)) {
-            $this->registerJavascriptObject('decorator', $this->wrapDecoratorObject($name));
         } elseif ($decorator === false) {
             $this->registerJavascriptObject('decorator', $name);
         } elseif (is_callable($decorator)) {
@@ -300,73 +329,16 @@ final class Handlebars implements LoggerAwareInterface
         );
     }
 
-    public function evalJavascript($javascript)
-    {
-        return $this->v8->executeString(
-            '(' . $javascript . ')',
-            __CLASS__ . '::' . __METHOD__ . '()'
-        );
-    }
-
-    /**
-     * @param \PHPUnit_Framework_TestCase $testCase
-     */
-    public function setTestCase($testCase)
-    {
-        $this->v8->testCase = $testCase;
-        $this->v8->executeString(
-            'function equals(expected, actual, message) {
-                kynx.testCase.assertEquals(expected, actual, message);
-            }
-            equal = equals',
-            __CLASS__ . '::' . __METHOD__ . '()'
-        );
-    }
-
     private function wrapHelperCallable($name, $helper)
     {
         $this->v8->helpers->{$name} = $helper;
-        // in PHP7 we'll be able to .call(this, context, options) to mirror the HB helper signature exactly
-        return "function(context, options) {
-            return kynx.helpers['$name'](this, context, options)
-        }";
-    }
-
-    private function wrapHelperObject($helper)
-    {
-        $class = get_class($helper);
-        $name = str_replace('\\', '.', $class);
-        $this->v8->helpers->{$name} = $helper;
-        $helpers = [];
-        foreach (get_class_methods($class) as $method) {
-            $helpers[] = "$method : function(context, options) {
-                return kynx.helpers['$name'].__call('$method', [this, context, options]);
-            }";
-        }
-        return '{' . join(',', $helpers) . '}';
+        return "(kynx.wrapCallables(kynx.helpers['$name']))";
     }
 
     private function wrapDecoratorCallable($name, $decorator)
     {
         $this->v8->decorators->{$name} = $decorator;
-        return "function(program, props, container, context, data, blockParams, depths) {
-            return kynx.decorators['$name'](this, program, props, container, context, data, blockParams, depths)
-        }";
-
-    }
-
-    private function wrapDecoratorObject($decorator)
-    {
-        $class = get_class($decorator);
-        $name = str_replace('\\', '.', $class);
-        $this->v8->decorators->{$name} = $decorator;
-        $decorators = [];
-        foreach (get_class_methods($class) as $method) {
-            $decorators[] = "$method : function(program, props, container, context, data, blockParams, depths) {
-                return kynx.decorators['$name'](this, program, props, container, context, data, blockParams, depths)
-            }";
-        }
-        return '{' . join(',', $decorators) . '}';
+        return "(kynx.wrapCallables(kynx.decorators['$name'])";
 
     }
 
