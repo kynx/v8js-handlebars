@@ -3,7 +3,7 @@
         "options": {
             "data": {
                 "hello": {
-                    "phpstub": "function (arg) { return arg; }"
+                    "php": "function ($arg) { return $arg; }"
                 }
             }
         }
@@ -12,7 +12,7 @@
         "options": {
             "data": {
                 "hello": {
-                    "phpstub": "function () { return 'hello'; }"
+                    "php": "function () { return 'hello'; }"
                 }
             }
         }
@@ -43,128 +43,112 @@
     "data-hash values can be looked up via @foo-00": {
         "helpers": {
             "hello": {
-                "phpstub": "function (options) {\n        return 'Hello ' + options.hash.noun;\n      }"
+                "php": "function ($options) { return 'Hello ' . $options->hash->noun; }"
             }
         }
     },
     "data-nested parameter data can be looked up via @foo.bar-00": {
         "helpers": {
             "hello": {
-                "phpstub": "function (noun) {\n        return 'Hello ' + noun;\n      }"
+                "php": "function ($noun) { return 'Hello ' . $noun; }"
             }
         }
     },
     "data-nested parameter data does not fail with @world.bar-00": {
         "helpers": {
             "hello": {
-                "phpstub": "function (noun) {\n        return 'Hello ' + noun;\n      }"
+                "php": "function ($noun) { return 'Hello ' . (is_null($noun) ? 'undefined' : $noun); }"
             }
         }
     },
     "data-parameter data can be looked up via @foo-00": {
         "helpers": {
             "hello": {
-                "phpstub": "function (noun) {\n        return 'Hello ' + noun;\n      }"
+                "php": "function ($noun) { return 'Hello ' . $noun; }"
             }
         }
     },
     "data-passing in data to a compiled function that expects data - data is passed to with block helpers where children use ..-00": {
         "helpers": {
             "hello": {
-                "phpstub": "function (options) {\n        return options.data.accessData + ' ' + options.fn({exclaim: '?'});\n      }"
+                "php": "function ($options) { return $options->data->accessData . ' ' . $options->fn(['exclaim' => '?']); }"
             },
             "world": {
-                "phpstub": "function (thing, options) {\n        return options.data.adjective + ' ' + thing + (this.exclaim || '');\n      }"
+                "php": "function ($thing, $options) { return $options->data->adjective . ' ' . $thing . ($this->exclaim ?: ''); }"
             }
         }
     },
     "data-passing in data to a compiled function that expects data - works with block helpers that use ..-00": {
         "helpers": {
             "hello": {
-                "phpstub": "function (options) {\n        return options.fn({exclaim: '?'});\n      }"
+                "php": "function ($options) { return $options->fn(['exclaim' => '?']); }"
             },
             "world": {
-                "phpstub": "function (thing, options) {\n        return options.data.adjective + ' ' + thing + (this.exclaim || '');\n      }"
+                "php": "function ($thing, $options) { return $options->data->adjective . ' ' . $thing . ($this->exclaim ?: ''); }"
             }
         }
     },
     "data-passing in data to a compiled function that expects data - works with block helpers-00": {
         "helpers": {
             "hello": {
-                "phpstub": "function (options) {\n        return options.fn(this);\n      }"
+                "php": "function ($options) { return $options->fn($this); }"
             },
             "world": {
-                "phpstub": "function (options) {\n        return options.data.adjective + ' world' + (this.exclaim ? '!' : '');\n      }"
+                "php": "function ($options) { return $options->data->adjective . ' world' . ($this->exclaim ? '!' : ''); }"
             }
         }
     },
     "data-passing in data to a compiled function that expects data - works with helpers and parameters-00": {
         "helpers": {
             "hello": {
-                "phpstub": "function (noun, options) {\n        return options.data.adjective + ' ' + noun + (this.exclaim ? '!' : '');\n      }"
+                "php": "function ($noun, $options) { return $options->data->adjective . ' ' . $noun . ($this->exclaim ? '!' : ''); }"
             }
         }
     },
     "data-passing in data to a compiled function that expects data - works with helpers in partials-00": {
         "helpers": {
-            "blockHelperMissing": {
-                "phpstub": "function (context, options) {\n    var inverse = options.inverse,\n        fn = options.fn;\n\n    if (context === true) {\n      return fn(this);\n    } else if (context === false || context == null) {\n      return inverse(this);\n    } else if (_utils.isArray(context)) {\n      if (context.length > 0) {\n        if (options.ids) {\n          options.ids = [options.name];\n        }\n\n        return instance.helpers.each(context, options);\n      } else {\n        return inverse(this);\n      }\n    } else {\n      if (options.data && options.ids) {\n        var data = _utils.createFrame(options.data);\n        data.contextPath = _utils.appendContextPath(options.data.contextPath, options.name);\n        options = { data: data };\n      }\n\n      return fn(context, options);\n    }\n  }"
-            },
-            "each": {
-                "phpstub": "function (context, options) {\n    if (!options) {\n      throw new _exception2['default']('Must pass iterator to #each');\n    }\n\n    var fn = options.fn,\n        inverse = options.inverse,\n        i = 0,\n        ret = '',\n        data = undefined,\n        contextPath = undefined;\n\n    if (options.data && options.ids) {\n      contextPath = _utils.appendContextPath(options.data.contextPath, options.ids[0]) + '.';\n    }\n\n    if (_utils.isFunction(context)) {\n      context = context.call(this);\n    }\n\n    if (options.data) {\n      data = _utils.createFrame(options.data);\n    }\n\n    function execIteration(field, index, last) {\n      \/\/ Don't iterate over undefined values since we can't execute blocks against them\n      \/\/ in non-strict (js) mode.\n      if (context[field] == null) {\n        return;\n      }\n\n      if (data) {\n        data.key = field;\n        data.index = index;\n        data.first = index === 0;\n        data.last = !!last;\n\n        if (contextPath) {\n          data.contextPath = contextPath + field;\n        }\n      }\n\n      ret = ret + fn(context[field], {\n        data: data,\n        blockParams: _utils.blockParams([context[field], field], [contextPath + field, null])\n      });\n    }\n\n    if (context && typeof context === 'object') {\n      if (_utils.isArray(context)) {\n        for (var j = context.length; i < j; i++) {\n          execIteration(i, i, i === context.length - 1);\n        }\n      } else {\n        var priorKey = undefined;\n\n        for (var key in context) {\n          if (context.hasOwnProperty(key)) {\n            \/\/ We're running the iterations one step out of sync so we can detect\n            \/\/ the last iteration without have to scan the object twice and create\n            \/\/ an itermediate keys array.\n            if (priorKey !== undefined) {\n              execIteration(priorKey, i - 1);\n            }\n            priorKey = key;\n            i++;\n          }\n        }\n        if (priorKey !== undefined) {\n          execIteration(priorKey, i - 1, true);\n        }\n      }\n    }\n\n    if (i === 0) {\n      ret = inverse(this);\n    }\n\n    return ret;\n  }"
-            },
-            "helperMissing": {
-                "phpstub": "function () \/* [args, ]options *\/{\n    if (arguments.length === 1) {\n      \/\/ A missing field in a {{foo}} construct.\n      return undefined;\n    } else {\n      \/\/ Someone is actually trying to call something, blow up.\n      throw new _exception2['default']('Missing helper: \"' + arguments[arguments.length - 1].name + '\"');\n    }\n  }"
-            },
-            "if": {
-                "phpstub": "function (conditional, options) {\n    if (_utils.isFunction(conditional)) {\n      conditional = conditional.call(this);\n    }\n\n    \/\/ Default behavior is to render the positive path if the value is truthy and not empty.\n    \/\/ The `includeZero` option may be set to treat the condtional as purely not empty based on the\n    \/\/ behavior of isEmpty. Effectively this determines if 0 is handled by the positive path or negative.\n    if (!options.hash.includeZero && !conditional || _utils.isEmpty(conditional)) {\n      return options.inverse(this);\n    } else {\n      return options.fn(this);\n    }\n  }"
-            },
-            "unless": {
-                "phpstub": "function (conditional, options) {\n    return instance.helpers['if'].call(this, conditional, { fn: options.inverse, inverse: options.fn, hash: options.hash });\n  }"
-            },
-            "log": {
-                "phpstub": "function () \/* message, options *\/{\n    var args = [undefined],\n        options = arguments[arguments.length - 1];\n    for (var i = 0; i < arguments.length - 1; i++) {\n      args.push(arguments[i]);\n    }\n\n    var level = 1;\n    if (options.hash.level != null) {\n      level = options.hash.level;\n    } else if (options.data && options.data.level != null) {\n      level = options.data.level;\n    }\n    args[0] = level;\n\n    instance.log.apply(instance, args);\n  }"
-            },
-            "lookup": {
-                "phpstub": "function (obj, field) {\n    return obj && obj[field];\n  }"
-            },
-            "with": {
-                "phpstub": "function (context, options) {\n    if (_utils.isFunction(context)) {\n      context = context.call(this);\n    }\n\n    var fn = options.fn;\n\n    if (!_utils.isEmpty(context)) {\n      var data = options.data;\n      if (options.data && options.ids) {\n        data = _utils.createFrame(options.data);\n        data.contextPath = _utils.appendContextPath(options.data.contextPath, options.ids[0]);\n      }\n\n      return fn(context, {\n        data: data,\n        blockParams: _utils.blockParams([context], [data && data.contextPath])\n      });\n    } else {\n      return options.inverse(this);\n    }\n  }"
-            },
+            "blockHelperMissing": null,
+            "each": null,
+            "helperMissing": null,
+            "if": null,
+            "unless": null,
+            "log": null,
+            "lookup": null,
+            "with": null,
             "hello": {
-                "phpstub": "function (options) {\n        return options.data.adjective + ' ' + this.noun;\n      }"
+                "phpstub": "function ($options) { return $options->data->adjective . ' ' . $this->noun; }"
             }
         },
         "decorators": {
             "inline": {
-                "phpstub": "function (fn, props, container, options) {\n    var ret = fn;\n    if (!props.partials) {\n      props.partials = {};\n      ret = function (context, options) {\n        \/\/ Create a new partials stack frame prior to exec.\n        var original = container.partials;\n        container.partials = _utils.extend({}, original, props.partials);\n        var ret = fn(context, options);\n        container.partials = original;\n        return ret;\n      };\n    }\n\n    props.partials[options.args[0]] = options.fn;\n\n    return ret;\n  }"
+                "phpstub": "function ($fn, $props, $container, $options) { $ret = $fn; if (!$props->partials) { $props->partials = []; $ret = function ($context, $options) { /* Create a new partials stack frame prior to exec. */ $original = $container->partials; $container->partials = _utils.extend({}, original, props.partials);\n        var ret = fn(context, options);\n        container.partials = original;\n        return ret;\n      };\n    }\n\n    props.partials[options.args[0]] = options.fn;\n\n    return ret;\n  }"
             }
         }
     },
     "data-passing in data to a compiled function that expects data - works with helpers-00": {
         "helpers": {
             "hello": {
-                "phpstub": "function (options) {\n        return options.data.adjective + ' ' + this.noun;\n      }"
+                "php": "function ($options) { return $options->data->adjective . ' ' . $this->noun; }"
             }
         }
     },
     "data-you can override inherited data when invoking a helper with depth-00": {
         "helpers": {
             "hello": {
-                "phpstub": "function (options) {\n        return options.fn({exclaim: '?'}, { data: {adjective: 'sad'} });\n      }"
+                "php": "function ($options) { return $options->fn(['exclaim' => '?'], [ 'data' => ['adjective' => 'sad'] ]); }"
             },
             "world": {
-                "phpstub": "function (thing, options) {\n        return options.data.adjective + ' ' + thing + (this.exclaim || '');\n      }"
+                "php": "function ($thing, $options) { return $options->data->adjective . ' ' . $thing . ($this->exclaim ?: ''); }"
             }
         }
     },
     "data-you can override inherited data when invoking a helper-00": {
         "helpers": {
             "hello": {
-                "phpstub": "function (options) {\n        return options.fn({exclaim: '?', zomg: 'world'}, { data: {adjective: 'sad'} });\n      }"
+                "php": "function ($options) { return $options->fn(['exclaim' => '?', 'zomg' => 'world'], [ 'data' => ['adjective' => 'sad'] ]); }"
             },
             "world": {
-                "phpstub": "function (thing, options) {\n        return options.data.adjective + ' ' + thing + (this.exclaim || '');\n      }"
+                "php": "function ($thing, $options) { return $options->data->adjective . ' ' . $thing . ($this->exclaim ?: ''); }"
             }
         }
     },

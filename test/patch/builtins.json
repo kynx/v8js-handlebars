@@ -16,19 +16,19 @@
     "#each-each with function argument-00": {
         "data": {
             "goodbyes": {
-                "phpstub": "function () { return [{text: 'goodbye'}, {text: 'Goodbye'}, {text: 'GOODBYE'}]; }"
+                "php": "function () { return [['text' => 'goodbye'], ['text' => 'Goodbye'], ['text' => 'GOODBYE']]; }"
             }
         },
         "globalHelpers": {
             "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+                "php": "function ($options) { return isset($options->data) ? $options->data->exclaim : ''; }"
             }
         }
     },
     "#each-each with function argument-01": {
         "globalHelpers": {
             "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+                "php": "function ($options) { return isset($options->data) ? $options->data->exclaim : ''; }"
             }
         }
     },
@@ -37,7 +37,7 @@
             "detectDataInsideEach": {
                 "!code": true,
                 "javascript": "function (options) {\n        return options.data && options.data.exclaim;\n      }",
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+                "php": "function ($options) { return isset($options->data) ? $options->data->exclaim : ''; }"
             }
         },
         "note": "Don't know why function isn't detected"
@@ -45,63 +45,63 @@
     "#each-each without context-00": {
         "globalHelpers": {
             "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+                "php": "function ($options) { return isset($options->data) ? $options->data->exclaim : ''; }"
             }
         }
     },
     "#each-each without data-00": {
         "globalHelpers": {
             "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+                "php": "function ($options) { return isset($options->data) ? $options->data->exclaim : ''; }"
             }
         }
     },
     "#each-each without data-01": {
         "globalHelpers": {
             "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+                "php": "function ($options) { return isset($options->data) ? $options->data->exclaim : ''; }"
             }
         }
     },
     "#each-each-00": {
         "globalHelpers": {
             "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+                "php": "function ($options) { return isset($options->data) ? $options->data->exclaim : ''; }"
             }
         }
     },
     "#each-each-01": {
         "globalHelpers": {
             "detectDataInsideEach": {
-                "phpstub": "function (options) {\n        return options.data && options.data.exclaim;\n      }"
+                "php": "function ($options) { return isset($options->data) ? $options->data->exclaim : ''; }"
             }
         }
     },
     "#if-if with function argument-00": {
         "data": {
             "goodbye": {
-                "phpstub": "function () {return true; }"
+                "php": "function () {return true; }"
             }
         }
     },
     "#if-if with function argument-01": {
         "data": {
             "goodbye": {
-                "phpstub": "function () {return this.world; }"
+                "php": "function () {return $this->world; }"
             }
         }
     },
     "#if-if with function argument-02": {
         "data": {
             "goodbye": {
-                "phpstub": "function () {return false; }"
+                "php": "function () {return false; }"
             }
         }
     },
     "#if-if with function argument-03": {
         "data": {
             "goodbye": {
-                "phpstub": "function () {return this.foo; }"
+                "php": "function () {return $this->foo; }"
             }
         }
     },
@@ -225,7 +225,7 @@
     "#with-with with function argument-00": {
         "data": {
             "person": {
-                "phpstub": "function () { return {first: 'Alan', last: 'Johnson'}; }"
+                "php": "function () { return ['first' => 'Alan', 'last' => 'Johnson']; }"
             }
         }
     }

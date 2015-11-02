@@ -1,17 +1,15 @@
 <?php
 /**
- * @author: matt
- * @copyright: 2015 Claritum Limited
- * @license: Commercial
+ * @license MIT
+ * @copyright 2015 Matt Kynaston
  */
 
 namespace KynxTest\V8js;
 
-use Kynx\V8js\Handlebars;
+use KynxTest\V8js\Handlebars;
 use PHPUnit_Framework_TestCase as TestCase;
 use Prophecy\Argument;
 use Psr\Log\LoggerInterface;
-use V8Js;
 use V8JsScriptException;
 
 class SpecTest extends TestCase
@@ -36,9 +34,6 @@ class SpecTest extends TestCase
      */
     public function testSpec($case)
     {
-        if ($case['type'] == 'php') {
-            $this->markTestSkipped("Still working on php...");
-        }
         if (!isset($case['name'])) {
             var_dump($case); die();
         }
@@ -50,16 +45,8 @@ class SpecTest extends TestCase
         self::$counter++;
         self::$counters[$name]++;
         $testId = $name . ' #' . self::$counters[$name];
-
+        //echo "$testId\n";
         $spec = $this->prepareSpec($case);
-
-        /*
-        if ($testId == 'inline partials - should define inline partials for block #1') {
-            var_dump($case);
-            var_dump($spec);
-            die();
-        }
-        */
 
         if (!$spec) {
             $this->markTestSkipped("Couldn't evaluate test '" . $name . "'");
@@ -126,12 +113,15 @@ class SpecTest extends TestCase
         $spec = array_merge($default, $spec);
         if (!empty($spec['helpers'])) {
             $spec['options']['helpers'] = $spec['helpers'];
+            unset($spec['helpers']);
         }
         if (!empty($spec['partials'])) {
             $spec['options']['partials'] = $spec['partials'];
+            unset($spec['partials']);
         }
         if (!empty($spec['decorators'])) {
             $spec['options']['decorators'] = $spec['decorators'];
+            unset($spec['decorators']);
         }
         return $this->evalCode($spec, $spec['type']);
     }
@@ -143,9 +133,9 @@ class SpecTest extends TestCase
                 if (isset($node[$type])) {
                     if ($type == 'javascript') {
                         return $this->hb->evalJavascript('(' . $node[$type] . ')');
-                    } else {
-                        $php = preg_replace('/\[[\'"](.*)[\'"]\]/U', '->$1', $node[$type]);
-                        eval('$php = ' . $php . ';');
+                    } elseif ($type == 'php') {
+                        $testCase = $this;
+                        eval('$php = ' . $node[$type] . ';');
                         return $php;
                     }
                 }
@@ -166,7 +156,9 @@ class SpecTest extends TestCase
         $specDir = __DIR__ . '/spec';
         $tests = [];
         $ignore = ['parser.json', 'tokenizer.json'];
-        foreach (glob($specDir . '/*.json') as $specFile) {
+        $files = glob($specDir . '/*.json');
+        // $files = [$specDir . '/helpers.json'];
+        foreach ($files as $specFile) {
             if (!in_array(basename($specFile), $ignore)) {
                 foreach (json_decode(file_get_contents($specFile), true) as $case) {
                     $tests = array_merge($tests, $this->createTests($case));

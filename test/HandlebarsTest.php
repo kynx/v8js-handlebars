@@ -1,7 +1,7 @@
 <?php
 /**
- * @copyright 2015 Matt Kynaston <matt@kynx.org>
  * @license MIT
+ * @copyright 2015 Matt Kynaston
  */
 
 namespace KynxTest\V8js;
@@ -293,8 +293,8 @@ class HandlebarsTest extends TestCase
     public function testRegisterPhpBasicBlockHelper()
     {
         $hb = Handlebars::create();
-        $hb->registerHelper('helper', function ($self, $options) {
-            return '<h1>' . $options->fn($self) . '</h1>';
+        $hb->registerHelper('helper', function ($options) {
+            return '<h1>' . $options->fn($this) . '</h1>';
         });
         $template = $hb->compile('{{#helper}}{{ content }}{{/helper}}');
         $result = $template(['content' => '**content output**']);
@@ -304,7 +304,7 @@ class HandlebarsTest extends TestCase
     public function testRegisterPhpIteratorHelper()
     {
         $hb = Handlebars::create();
-        $hb->registerHelper('helper', function ($self, $context, $options) {
+        $hb->registerHelper('helper', function ($context, $options) {
             $ret = '';
             for ($i=0; $i<count($context); $i++) {
                 $ret .= '<h1>' . $options->fn($context[$i]) . '</h1>';
@@ -314,17 +314,6 @@ class HandlebarsTest extends TestCase
         $template = $hb->compile('{{#helper contents}}{{ item }}{{/helper}}');
         $result = $template(['contents' => [['item' => '**first**'], ['item' => '**second**']]]);
         $this->assertEquals('<h1>**first**</h1><h1>**second**</h1>', $result);
-    }
-
-    public function testRegisterPhpObjectHelper()
-    {
-        $hb = Handlebars::create();
-        $helper = new HandlebarsHelper();
-        $hb->registerHelper($helper);
-        $template = $hb->compile('{{#helper1 contents}}{{ item }}{{/helper1}}'
-            . '{{#helper2 contents}}{{ item }}{{/helper2}}');
-        $result = $template(['contents' => [['item' => '**first**'], ['item' => '**second**']]]);
-        $this->assertEquals('<h1>**first**</h1><h1>**second**</h1><h2>**first**</h2><h2>**second**</h2>', $result);
     }
 
     /**
