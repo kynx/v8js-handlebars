@@ -764,7 +764,7 @@
     "string literal parameters-simple literals work-00": {
         "helpers": {
             "hello": {
-                "php": "function ($param, $times, $bool1, $bool2) { if (!is_int($times)) { $times = 'NaN'; } if (!is_bool($bool1)) { $bool1 = 'NaB'; } if (!is_bool($bool2)) { $bool2 = 'NaB'; } return 'Hello ' . $param . ' ' . $times . ' times: ' . $bool1 . ' ' . $bool2; }"
+              "php": "function($param, $times, $bool1, $bool2) {\n    if(!is_int($times)) { $times = \"NaN\"; }\n    if(!is_bool($bool1)) {\n        $bool1 = \"NaB\";\n    } else {\n        $bool1 = ($bool1 ? 'true' : 'false');\n    }\n    if(!is_bool($bool2)) {\n        $bool2 = \"NaB\";\n    } else {\n        $bool2 = ($bool2 ? 'true' : 'false');\n    }\n\n    return \"Hello $param $times times: $bool1 $bool2\";\n}"
             }
         },
         "globalHelpers": {

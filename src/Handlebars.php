@@ -87,7 +87,9 @@ class Handlebars implements LoggerAwareInterface
                 return obj;
               }
             }
-        ');
+            ',
+            __CLASS__ . '::' . __METHOD__
+        );
 
     }
 
